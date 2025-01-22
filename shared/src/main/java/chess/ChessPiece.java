@@ -54,6 +54,7 @@ public class ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ChessPiece reference = board.getPiece(myPosition);
         System.out.println(reference);
+        System.out.println(myPosition);
         if (reference.getPieceType() == PieceType.KING) {
             return kingMoves(board, myPosition);
         }
