@@ -57,10 +57,29 @@ public class ChessPiece {
         throw new RuntimeException("Not implemented");
     }
 
+    public Collection<ChessMove> kingMoves(ChessPiece king, ChessPosition kingPosition) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Collection<ChessMove> queenMoves(ChessPiece queen, ChessPosition queenPosition) {
+        throw new RuntimeException("Not implemented");
+    }
+
     public Collection<ChessMove> bishopMoves(ChessPiece bishop, ChessPosition bishopPosition) {
         throw new RuntimeException("Not implemented");
     }
 
+    public Collection<ChessMove> knightMoves(ChessPiece knight, ChessPosition knightPosition) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Collection<ChessMove> rookMoves(ChessPiece rook, ChessPosition rookPosition) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Collection<ChessMove> pawnMoves(ChessPiece pawn, ChessPosition pawnPosition) {
+        throw new RuntimeException("Not implemented");
+    }
     @Override
     public String toString() {
         return type + " of " + pieceColor;
