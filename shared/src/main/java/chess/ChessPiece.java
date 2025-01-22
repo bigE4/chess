@@ -98,6 +98,7 @@ public class ChessPiece {
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition pawnPosition) {
         throw new RuntimeException("pawnMoves not implemented");
     }
+
     @Override
     public String toString() {
         return type + " of " + pieceColor;
