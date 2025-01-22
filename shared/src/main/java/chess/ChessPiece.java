@@ -54,34 +54,36 @@ public class ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ChessPiece reference = board.getPiece(myPosition);
         System.out.println(reference);
-        if (reference.getPieceType() == PieceType.BISHOP) {
-            System.out.println("asdfasdfasd");
+        if (reference.getPieceType() == PieceType.KING) {
+            return kingMoves(board, myPosition);
         }
-
+        if (reference.getPieceType() == PieceType.QUEEN) {
+            return queenMoves(board, myPosition);
+        }
         throw new RuntimeException("Not implemented");
     }
 
-    public Collection<ChessMove> kingMoves(ChessPiece king, ChessPosition kingPosition) {
+    public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition kingPosition) {
+        throw new RuntimeException("kingMoves Not implemented");
+    }
+
+    public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition queenPosition) {
+        throw new RuntimeException("queenMoves Not implemented");
+    }
+
+    public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition bishopPosition) {
+        throw new RuntimeException("bishopMoves Not implemented");
+    }
+
+    public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition knightPosition) {
         throw new RuntimeException("Not implemented");
     }
 
-    public Collection<ChessMove> queenMoves(ChessPiece queen, ChessPosition queenPosition) {
+    public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition rookPosition) {
         throw new RuntimeException("Not implemented");
     }
 
-    public Collection<ChessMove> bishopMoves(ChessPiece bishop, ChessPosition bishopPosition) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    public Collection<ChessMove> knightMoves(ChessPiece knight, ChessPosition knightPosition) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    public Collection<ChessMove> rookMoves(ChessPiece rook, ChessPosition rookPosition) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    public Collection<ChessMove> pawnMoves(ChessPiece pawn, ChessPosition pawnPosition) {
+    public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition pawnPosition) {
         throw new RuntimeException("Not implemented");
     }
     @Override
