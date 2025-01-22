@@ -41,7 +41,7 @@ public class ChessPiece {
      * @return which type of chess piece this piece is
      */
     public PieceType getPieceType() {
-        throw new RuntimeException("Not implemented");
+        return type;
     }
 
     /**
@@ -54,6 +54,10 @@ public class ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ChessPiece reference = board.getPiece(myPosition);
         System.out.println(reference);
+        if (reference.getPieceType() == PieceType.BISHOP) {
+            System.out.println("asdfasdfasd");
+        }
+
         throw new RuntimeException("Not implemented");
     }
 
