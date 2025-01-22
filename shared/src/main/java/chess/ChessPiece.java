@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -85,7 +86,48 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition bishopPosition) {
-        throw new RuntimeException("bishopMoves not implemented");
+        // validMoves init (will be returned at end of method)
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        // x and y init
+        int x = bishopPosition.getRow();
+        int y = bishopPosition.getColumn();
+        // WORK IN PROGRESS - validMoves
+        for(int i = 0; i < 7; i++) {
+            if (x + i < 8 && x + y < 8) {
+                validMoves.add(
+                        new ChessMove(bishopPosition,
+                                new ChessPosition(x + i, y + i),
+                                PieceType.BISHOP)
+                );
+
+            }
+            if (x + i < 8 && x - y > 1) {
+                validMoves.add(
+                        new ChessMove(bishopPosition,
+                                new ChessPosition(x + i, y - i),
+                                PieceType.BISHOP)
+                );
+
+            }
+            if (x - i > 1 && x - y > 1) {
+                validMoves.add(
+                        new ChessMove(bishopPosition,
+                                new ChessPosition(x - i, y - i),
+                                PieceType.BISHOP)
+                );
+
+            }
+            if (x - i > 1 && x + y < 8) {
+                validMoves.add(
+                        new ChessMove(bishopPosition,
+                                new ChessPosition(x + i, y + i),
+                                PieceType.BISHOP)
+                );
+
+            }
+        }
+
+        return validMoves;
     }
 
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition knightPosition) {
