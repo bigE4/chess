@@ -10,7 +10,12 @@ import java.util.Collection;
  */
 public class ChessPiece {
 
+    private final ChessGame.TeamColor pieceColor;
+    private final PieceType type;
+
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
+        this.pieceColor = pieceColor;
+        this.type = type;
     }
 
     /**
@@ -47,6 +52,17 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        ChessPiece reference = board.getPiece(myPosition);
+        System.out.println(reference);
         throw new RuntimeException("Not implemented");
+    }
+
+    public Collection<ChessMove> bishopMoves(ChessPiece bishop, ChessPosition bishopPosition) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public String toString() {
+        return type + " of " + pieceColor;
     }
 }
