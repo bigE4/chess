@@ -75,7 +75,7 @@ public class ChessPiece {
         else if (reference.getPieceType() == PieceType.PAWN) {
             return pawnMoves(board, myPosition);
         }
-        throw new RuntimeException("pieceMoves did not call piecetypeMoves");
+        throw new RuntimeException("pieceMoves did not call piecetype Moves");
     }
 
     public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition kingPosition) {
@@ -104,7 +104,7 @@ public class ChessPiece {
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x + i, y + i),
-                                PieceType.BISHOP)
+                                null)
                 );
             }
             if (x + i <= 8 && y - i >= 1) {
@@ -112,7 +112,7 @@ public class ChessPiece {
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x + i, y - i),
-                                PieceType.BISHOP)
+                                null)
                 );
             }
             if (x - i >= 1 && y - i >= 1) {
@@ -120,7 +120,7 @@ public class ChessPiece {
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x - i, y - i),
-                                PieceType.BISHOP)
+                                null)
                 );
             }
             if (x - i >= 1 && y + i <= 8) {
@@ -128,7 +128,7 @@ public class ChessPiece {
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x - i, y + i),
-                                PieceType.BISHOP)
+                                null)
                 );
 
             }
