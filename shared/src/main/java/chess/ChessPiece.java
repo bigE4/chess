@@ -92,48 +92,57 @@ public class ChessPiece {
         // x and y init
         int x = bishopPosition.getRow();
         int y = bishopPosition.getColumn();
+        // booleans init
+        boolean a = true;
+        boolean b = true;
+        boolean c = true;
+        boolean d = true;
         // WORK IN PROGRESS - validMoves
         for(int i = 1; i < 8; i++) {
-            System.out.println(i);
-            if ((x + i <= 8) && (y + i <= 8)) {
-                System.out.println("Cond 1 Met");
-                System.out.println("(" + (x + i) + "," + (y + i) + ")");
-                validMoves.add(
-                        new ChessMove(bishopPosition,
-                                new ChessPosition(x + i, y + i),
-                                null)
-                );
-            }
-            if (x + i <= 8 && y - i >= 1) {
-                System.out.println("Cond 2 Met");
-                System.out.println("(" + (x + i) + "," + (y - i) + ")");
-                validMoves.add(
-                        new ChessMove(bishopPosition,
-                                new ChessPosition(x + i, y - i),
-                                null)
-                );
-            }
-            if (x - i >= 1 && y - i >= 1) {
-                System.out.println("Cond 3 Met");
-                System.out.println("(" + (x - i) + "," + (y - i) + ")");
-                validMoves.add(
-                        new ChessMove(bishopPosition,
-                                new ChessPosition(x - i, y - i),
-                                null)
-                );
-            }
-            if (x - i >= 1 && y + i <= 8) {
-                System.out.println("Cond 4 Met");
-                System.out.println("(" + (x - i) + "," + (y + i) + ")");
-                validMoves.add(
-                        new ChessMove(bishopPosition,
-                                new ChessPosition(x - i, y + i),
-                                null)
-                );
+            System.out.println("For Loop Iteration: " + i);
+            if (x + i <= 8 && y + i <= 8 && a) {
+                ChessPosition newPos = new ChessPosition(x + i, y + i);
+                System.out.println("New"+newPos);
+                if (board.getPiece(newPos) != null) {
 
+                    System.out.println(board.getPiece(newPos));
+                } else {
+                    System.out.println("Adding " + newPos);
+                    validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                }
+            }
+            if (x + i <= 8 && y - i >= 1 && b) {
+                ChessPosition newPos = new ChessPosition(x + i, y - i);
+                System.out.println("New"+newPos);
+                if (board.getPiece(newPos) != null) {
+                    System.out.println(board.getPiece(newPos));
+                } else {
+                    System.out.println("Adding " + newPos);
+                    validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x + i, y - i), null));
+                }
+            }
+            if (x - i >= 1 && y - i >= 1 && c) {
+                ChessPosition newPos = new ChessPosition(x - i,y - i);
+                System.out.println("New"+newPos);
+                if (board.getPiece(newPos) != null) {
+                    System.out.println(board.getPiece(newPos));
+                } else {
+                    System.out.println("Adding " + newPos);
+                    validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x - i, y - i), null));
+                }
+            }
+            if (x - i >= 1 && y + i <= 8 && d) {
+                ChessPosition newPos = new ChessPosition(x - i, y + i);
+                System.out.println("New"+newPos);
+                if (board.getPiece(newPos) != null) {
+                    System.out.println(board.getPiece(newPos));
+                } else {
+                    System.out.println("Adding " + newPos);
+                    validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x - i, y + i), null));
+                }
             }
         }
-
+        System.out.println(validMoves);
         return validMoves;
     }
 

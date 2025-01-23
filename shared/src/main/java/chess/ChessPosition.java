@@ -50,6 +50,6 @@ public class ChessPosition {
 
     @Override
     public String toString() {
-        return "ChessPosition: (Row, Col) = (" + row + ", " + col + ")";
+        return "ChessPosition: (Col, Row) = (" + col + ", " + row + ")";
     }
 }
