@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Represents a single chess piece
@@ -74,7 +75,7 @@ public class ChessPiece {
         else if (reference.getPieceType() == PieceType.PAWN) {
             return pawnMoves(board, myPosition);
         }
-        throw new RuntimeException("pieceMoves not implemented");
+        throw new RuntimeException("pieceMoves did not call piecetypeMoves");
     }
 
     public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition kingPosition) {
@@ -92,35 +93,41 @@ public class ChessPiece {
         int x = bishopPosition.getRow();
         int y = bishopPosition.getColumn();
         // WORK IN PROGRESS - validMoves
-        for(int i = 0; i < 7; i++) {
-            if (x + i < 8 && x + y < 8) {
+        for(int i = 1; i < 8; i++) {
+            System.out.println(i);
+            System.out.println("(" + (x + i) + "," + (y + i) + ")");
+            System.out.println("(" + (x + i) + "," + (y - i) + ")");
+            System.out.println("(" + (x - i) + "," + (y - i) + ")");
+            System.out.println("(" + (x - i) + "," + (y + i) + ")");
+            if ((x + i <= 8) && (y + i <= 8)) {
+                System.out.println("Cond 1 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x + i, y + i),
                                 PieceType.BISHOP)
                 );
-
             }
-            if (x + i < 8 && x - y > 1) {
+            if (x + i < 8 && y - i > 1) {
+                System.out.println("Cond 2 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x + i, y - i),
                                 PieceType.BISHOP)
                 );
-
             }
-            if (x - i > 1 && x - y > 1) {
+            if (x - i > 1 && y - i > 1) {
+                System.out.println("Cond 3 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x - i, y - i),
                                 PieceType.BISHOP)
                 );
-
             }
-            if (x - i > 1 && x + y < 8) {
+            if (x - i > 1 && y + i < 8) {
+                System.out.println("Cond 4 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
-                                new ChessPosition(x + i, y + i),
+                                new ChessPosition(x  i, y + i),
                                 PieceType.BISHOP)
                 );
 
@@ -140,6 +147,20 @@ public class ChessPiece {
 
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition pawnPosition) {
         throw new RuntimeException("pawnMoves not implemented");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessPiece that = (ChessPiece) o;
+        return pieceColor == that.pieceColor && type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceColor, type);
     }
 
     @Override
