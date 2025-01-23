@@ -107,7 +107,7 @@ public class ChessPiece {
                                 PieceType.BISHOP)
                 );
             }
-            if (x + i < 8 && y - i > 1) {
+            if (x + i <= 8 && y - i >= 1) {
                 System.out.println("Cond 2 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
@@ -115,7 +115,7 @@ public class ChessPiece {
                                 PieceType.BISHOP)
                 );
             }
-            if (x - i > 1 && y - i > 1) {
+            if (x - i >= 1 && y - i >= 1) {
                 System.out.println("Cond 3 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
@@ -123,11 +123,11 @@ public class ChessPiece {
                                 PieceType.BISHOP)
                 );
             }
-            if (x - i > 1 && y + i < 8) {
+            if (x - i >= 1 && y + i <= 8) {
                 System.out.println("Cond 4 Met");
                 validMoves.add(
                         new ChessMove(bishopPosition,
-                                new ChessPosition(x  i, y + i),
+                                new ChessPosition(x - i, y + i),
                                 PieceType.BISHOP)
                 );
 
