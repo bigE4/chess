@@ -95,12 +95,9 @@ public class ChessPiece {
         // WORK IN PROGRESS - validMoves
         for(int i = 1; i < 8; i++) {
             System.out.println(i);
-            System.out.println("(" + (x + i) + "," + (y + i) + ")");
-            System.out.println("(" + (x + i) + "," + (y - i) + ")");
-            System.out.println("(" + (x - i) + "," + (y - i) + ")");
-            System.out.println("(" + (x - i) + "," + (y + i) + ")");
             if ((x + i <= 8) && (y + i <= 8)) {
                 System.out.println("Cond 1 Met");
+                System.out.println("(" + (x + i) + "," + (y + i) + ")");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x + i, y + i),
@@ -109,6 +106,7 @@ public class ChessPiece {
             }
             if (x + i <= 8 && y - i >= 1) {
                 System.out.println("Cond 2 Met");
+                System.out.println("(" + (x + i) + "," + (y - i) + ")");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x + i, y - i),
@@ -117,6 +115,7 @@ public class ChessPiece {
             }
             if (x - i >= 1 && y - i >= 1) {
                 System.out.println("Cond 3 Met");
+                System.out.println("(" + (x - i) + "," + (y - i) + ")");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x - i, y - i),
@@ -125,6 +124,7 @@ public class ChessPiece {
             }
             if (x - i >= 1 && y + i <= 8) {
                 System.out.println("Cond 4 Met");
+                System.out.println("(" + (x - i) + "," + (y + i) + ")");
                 validMoves.add(
                         new ChessMove(bishopPosition,
                                 new ChessPosition(x - i, y + i),
@@ -165,6 +165,6 @@ public class ChessPiece {
 
     @Override
     public String toString() {
-        return type + " of " + pieceColor;
+        return "ChessPiece: " + type + " of " + pieceColor;
     }
 }
