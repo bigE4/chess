@@ -83,7 +83,7 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition piecePosition) {
-        throw new RuntimeException("queenMoves not implemented");
+        
     }
 
     public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition piecePosition) {
