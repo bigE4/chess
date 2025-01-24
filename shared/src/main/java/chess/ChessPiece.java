@@ -36,7 +36,7 @@ public class ChessPiece {
      * @return Which team this chess piece belongs to
      */
     public ChessGame.TeamColor getTeamColor() {
-        throw new RuntimeException("Not implemented");
+        return pieceColor;
     }
 
     /**
@@ -55,8 +55,6 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ChessPiece reference = board.getPiece(myPosition);
-        System.out.println(reference);
-        System.out.println(myPosition);
         if (reference.getPieceType() == PieceType.KING) {
             return kingMoves(board, myPosition);
         }
@@ -165,7 +163,7 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition piecePosition) {
-        throw new RuntimeException("knightMoves not implemented");
+        
     }
 
     public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition piecePosition) {
