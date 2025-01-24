@@ -163,7 +163,125 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition piecePosition) {
-        
+        // validMoves init (will be returned at end of method)
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        // x and y init
+        int x = piecePosition.getRow();
+        int y = piecePosition.getColumn();
+        // validMoves list appending
+        // (+1, +2) direction
+        if (x + 1 <= 8 && y + 2 <= 8) {
+            ChessPosition newPos = new ChessPosition(x + 1, y + 2);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("1");
+        // (+2, +1) direction
+        if (x + 2 <= 8 && y + 1 <= 8) {
+            ChessPosition newPos = new ChessPosition(x + 2, y + 1);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("2");
+        // (+2, -1) direction
+        if (x + 2 <= 8 && y - 1 >= 1) {
+            ChessPosition newPos = new ChessPosition(x + 2,y - 1);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("3");
+        // (+1 , -2) direction
+        if (x + 1 <= 8 && y - 2 >= 1) {
+            ChessPosition newPos = new ChessPosition(x + 1, y - 2);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("4");
+        // (-1 , -2) direction
+        if (x - 1 >= 1 && y - 2 >= 1) {
+            ChessPosition newPos = new ChessPosition(x - 1, y - 2);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("5");
+        // (-2 , -1) direction
+        if (x - 2 >= 1 && y - 1 >= 1) {
+            ChessPosition newPos = new ChessPosition(x - 2, y - 1);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("6");
+        // (-2 , +1) direction
+        if (x - 2 >= 1 && y + 1 <= 8) {
+            ChessPosition newPos = new ChessPosition(x - 2, y + 1);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("7");
+        // (-1 , +2) direction
+        if (x - 1 >= 1 && y + 2 <= 8) {
+            ChessPosition newPos = new ChessPosition(x - 1, y + 2);
+            ChessPiece newPiece = board.getPiece(newPos);
+            ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+            if (newPiece != null) {
+                if (newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            } else {
+                validMoves.add(newMove);
+            }
+        }
+        System.out.println("8");
+        return validMoves;
     }
 
     public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition piecePosition) {
