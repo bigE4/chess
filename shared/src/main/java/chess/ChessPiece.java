@@ -83,7 +83,12 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition piecePosition) {
-        
+        Collection<ChessMove> bMoves = bishopMoves(board, piecePosition);
+        Collection<ChessMove> rMoves = rookMoves(board, piecePosition);
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        validMoves.addAll(bMoves);
+        validMoves.addAll(rMoves);
+        return validMoves;
     }
 
     public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition piecePosition) {
