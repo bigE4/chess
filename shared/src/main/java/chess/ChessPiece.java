@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -460,13 +461,63 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition piecePosition) {
+        System.out.println(board);
         // validMoves init (will be returned at end of method)
         Collection<ChessMove> validMoves = new ArrayList<>();
         // x and y init
         int x = piecePosition.getColumn();
         int y = piecePosition.getRow();
-        
+        // WHITE PAWN
+        if (this.pieceColor == ChessGame.TeamColor.WHITE) {
+            // Forward Move (x, y + 1)
+            if (x <= 8 && y + 1 <= 8) {
+                ChessPosition newPos = new ChessPosition(y + 1, x);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                // Promotion logic
+                if (y + 1 == 8) {
+                    validMoves.addAll(Arrays.asList(
+                            new ChessMove(piecePosition, newPos, PieceType.ROOK),
+                            new ChessMove(piecePosition, newPos, PieceType.KNIGHT),
+                            new ChessMove(piecePosition, newPos, PieceType.BISHOP),
+                            new ChessMove(piecePosition, newPos, PieceType.QUEEN))
+                    );
+                } else if (newPiece == null) {
+                    validMoves.add(newMove);
+                }
+            }
+            // Left Capture (x - 1, y + 1)
+            if (x - 1 >= 1 && y + 1 <= 8) {
+                ChessPosition newPos = new ChessPosition(y + 1, x - 1);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null && newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            }
+            // Right Capture (x + 1, y + 1)
+            if (x + 1 <= 8 && y + 1 <= 8) {
+                ChessPosition newPos = new ChessPosition(y + 1, x + 1);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null && newPiece.pieceColor != this.pieceColor) {
+                    validMoves.add(newMove);
+                }
+            }
+            // Double Move (x, y + 2) when y = 2
+            if (y == 2 && x <= 8) {
+                ChessPosition newPos = new ChessPosition(y + 2, x);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece == null) {
+                    validMoves.add(newMove);
+                }
+            }
+        }
+        // BLACK PAWN
+        // Forward Move
         // return validMoves
+        System.out.println(validMoves);
         return validMoves;
     }
 
