@@ -460,7 +460,14 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition piecePosition) {
-        throw new RuntimeException("pawnMoves not implemented");
+        // validMoves init (will be returned at end of method)
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        // x and y init
+        int x = piecePosition.getColumn();
+        int y = piecePosition.getRow();
+        
+        // return validMoves
+        return validMoves;
     }
 
     @Override
@@ -480,9 +487,7 @@ public class ChessPiece {
     @Override
     public String toString() {
         String returnString = "";
-        if (type == null) {
-            returnString += " ";
-        } else if (pieceColor == ChessGame.TeamColor.WHITE && type == PieceType.PAWN) {
+        if (pieceColor == ChessGame.TeamColor.WHITE && type == PieceType.PAWN) {
             returnString += "P";
         } else if (pieceColor == ChessGame.TeamColor.WHITE && type == PieceType.ROOK) {
             returnString += "R";
@@ -506,8 +511,10 @@ public class ChessPiece {
             returnString += "q";
         } else if (pieceColor == ChessGame.TeamColor.BLACK && type == PieceType.KING) {
             returnString += "k";
+        } else {
+            returnString += " ";
         }
-            returnString += "|";
+        returnString += "|";
         return returnString;
     }
 }

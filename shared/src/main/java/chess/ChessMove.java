@@ -61,6 +61,6 @@ public class ChessMove {
 
     @Override
     public String toString() {
-        return "(" + endPosition.getColumn() + ", " + endPosition.getRow() + ")";
+        return "M(C,R): (" + endPosition.getColumn() + ", " + endPosition.getRow() + ")";
     }
 }

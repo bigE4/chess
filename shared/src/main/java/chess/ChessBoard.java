@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ChessBoard {
     private ChessPiece[][] chessBoard = new ChessPiece[8][8];
     public ChessBoard() {
-        
+
     }
 
     /**
@@ -36,8 +36,7 @@ public class ChessBoard {
         return chessBoard[position.getRow() - 1][position.getColumn() - 1];
     }
 
-    /**
-     *
+    /**`
      * |r|n|b|q|k|b|n|r|
      * |p|p|p|p|p|p|p|p|
      * | | | | | | | | |
@@ -46,7 +45,6 @@ public class ChessBoard {
      * | | | | | | | | |
      * |P|P|P|P|P|P|P|P|
      * |R|N|B|Q|K|B|N|R|
-     *
      * Sets the board to the default starting board (above)
      * (How the game of chess normally starts)
      */
@@ -96,14 +94,17 @@ public class ChessBoard {
     @Override
     public String toString() {
         String returnString = "";
-        for (int i = 1; i <= 8; i++) {
-            returnString = returnString + "|";
+        for (int i = 8; i >= 1; i--) {
+            returnString += "|";
             for (int j = 1; j <= 8; j++) {
-                returnString = returnString + this.getPiece(new ChessPosition(i, j));
+                if (this.getPiece(new ChessPosition(i, j)) != null) {
+                    returnString += this.getPiece(new ChessPosition(i,j));
+                } else {
+                    returnString += " |";
+                }
             }
-            returnString = returnString + "\n";
+            returnString += "\n";
         }
-
 
         return returnString;
     }
