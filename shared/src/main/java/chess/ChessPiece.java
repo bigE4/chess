@@ -118,7 +118,10 @@ public class ChessPiece {
                 ChessPosition newPos = new ChessPosition(x + i, y - i);
                 if (board.getPiece(newPos) != null) {
                     b = false;
-                    System.out.println(board.getPiece(newPos));
+                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
+                        System.out.println("Adding " + newPos);
+                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                    }
                 } else {
                     System.out.println("Adding " + newPos);
                     validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x + i, y - i), null));
@@ -128,7 +131,10 @@ public class ChessPiece {
                 ChessPosition newPos = new ChessPosition(x - i,y - i);
                 if (board.getPiece(newPos) != null) {
                     c = false;
-                    System.out.println(board.getPiece(newPos));
+                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
+                        System.out.println("Adding " + newPos);
+                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                    }
                 } else {
                     System.out.println("Adding " + newPos);
                     validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x - i, y - i), null));
@@ -138,7 +144,10 @@ public class ChessPiece {
                 ChessPosition newPos = new ChessPosition(x - i, y + i);
                 if (board.getPiece(newPos) != null) {
                     d = false;
-                    System.out.println(board.getPiece(newPos));
+                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
+                        System.out.println("Adding " + newPos);
+                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                    }
                 } else {
                     System.out.println("Adding " + newPos);
                     validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x - i, y + i), null));
