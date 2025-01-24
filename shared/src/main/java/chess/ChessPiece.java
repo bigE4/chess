@@ -164,7 +164,76 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition piecePosition) {
-        throw new RuntimeException("rookMoves not implemented");
+        // validMoves init (will be returned at end of method)
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        // x and y init
+        int x = piecePosition.getRow();
+        int y = piecePosition.getColumn();
+        // booleans init
+        boolean boolA = true;
+        boolean boolB = true;
+        boolean boolC = true;
+        boolean boolD = true;
+        // validMoves list appending
+        for(int i = 1; i < 8; i++) {
+            // (+1, +1) direction
+            if (x + i <= 8 && y + i <= 8 && boolA) {
+                ChessPosition newPos = new ChessPosition(x + i, y + i);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolA = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
+                    }
+                } else {
+                    validMoves.add(newMove);
+                }
+            }
+            // (+1,-1) direction
+            if (x + i <= 8 && y - i >= 1 && boolB) {
+                ChessPosition newPos = new ChessPosition(x + i, y - i);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolB = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
+                    }
+                } else {
+                    validMoves.add(newMove);
+                }
+            }
+            // (-1,-1) direction
+            if (x - i >= 1 && y - i >= 1 && boolC) {
+                ChessPosition newPos = new ChessPosition(x - i,y - i);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolC = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
+                    }
+                } else {
+                    validMoves.add(newMove);
+                }
+            }
+            // (-1,+1) direction
+            if (x - i >= 1 && y + i <= 8 && boolD) {
+                ChessPosition newPos = new ChessPosition(x - i, y + i);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolD = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
+                    }
+                } else {
+                    validMoves.add(newMove);
+                }
+            }
+        }
+        return validMoves;
     }
 
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition piecePosition) {
