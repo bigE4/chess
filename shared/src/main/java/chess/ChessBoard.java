@@ -10,7 +10,7 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessBoard {
-    private ChessPiece[][] chessBoard = new ChessPiece[9][9];
+    private ChessPiece[][] chessBoard = new ChessPiece[8][8];
     public ChessBoard() {
         
     }
@@ -22,7 +22,7 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        chessBoard[position.getRow()][position.getColumn()] = piece;
+        chessBoard[position.getRow() - 1][position.getColumn() - 1] = piece;
     }
 
     /**
@@ -33,7 +33,7 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        return chessBoard[position.getRow()][position.getColumn()];
+        return chessBoard[position.getRow() - 1][position.getColumn() - 1];
     }
 
     /**
@@ -53,11 +53,11 @@ public class ChessBoard {
 
 
     public void resetBoard() {
-        chessBoard = new ChessPiece[9][9];
+        chessBoard = new ChessPiece[8][8];
 
-        for (int i = 1; i < 8; i++) {
+        for (int i = 1; i <= 8; i++) {
             addPiece(new ChessPosition(2, i), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
-            addPiece(new ChessPosition(7, i), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
+            addPiece(new ChessPosition(7, i), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
         }
 
         addPiece(new ChessPosition(1, 1), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
@@ -91,5 +91,20 @@ public class ChessBoard {
     @Override
     public int hashCode() {
         return Arrays.deepHashCode(chessBoard);
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "";
+        for (int i = 1; i <= 8; i++) {
+            returnString = returnString + "|";
+            for (int j = 1; j <= 8; j++) {
+                returnString = returnString + this.getPiece(new ChessPosition(i, j));
+            }
+            returnString = returnString + "\n";
+        }
+
+
+        return returnString;
     }
 }
