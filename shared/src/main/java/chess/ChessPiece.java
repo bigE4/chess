@@ -78,95 +78,96 @@ public class ChessPiece {
         throw new RuntimeException("pieceMoves did not call piecetype Moves");
     }
 
-    public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition kingPosition) {
+    public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition piecePosition) {
         throw new RuntimeException("kingMoves not implemented");
     }
 
-    public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition queenPosition) {
+    public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition piecePosition) {
         throw new RuntimeException("queenMoves not implemented");
     }
 
-    public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition bishopPosition) {
+    public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition piecePosition) {
         // validMoves init (will be returned at end of method)
         Collection<ChessMove> validMoves = new ArrayList<>();
         // x and y init
-        int x = bishopPosition.getRow();
-        int y = bishopPosition.getColumn();
+        int x = piecePosition.getRow();
+        int y = piecePosition.getColumn();
         // booleans init
-        boolean a = true;
-        boolean b = true;
-        boolean c = true;
-        boolean d = true;
-        // WORK IN PROGRESS - validMoves
+        boolean boolA = true;
+        boolean boolB = true;
+        boolean boolC = true;
+        boolean boolD = true;
+        // validMoves list appending
         for(int i = 1; i < 8; i++) {
-            System.out.println("For Loop Iteration: " + i);
-            if (x + i <= 8 && y + i <= 8 && a) {
+            // (+1, +1) direction
+            if (x + i <= 8 && y + i <= 8 && boolA) {
                 ChessPosition newPos = new ChessPosition(x + i, y + i);
-                if (board.getPiece(newPos) != null) {
-                    a = false;
-                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
-                        System.out.println("Adding " + newPos);
-                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolA = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
                     }
-                    System.out.println(board.getPiece(newPos));
                 } else {
-                    System.out.println("Adding " + newPos);
-                    validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                    validMoves.add(newMove);
                 }
             }
-            if (x + i <= 8 && y - i >= 1 && b) {
+            // (+1,-1) direction
+            if (x + i <= 8 && y - i >= 1 && boolB) {
                 ChessPosition newPos = new ChessPosition(x + i, y - i);
-                if (board.getPiece(newPos) != null) {
-                    b = false;
-                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
-                        System.out.println("Adding " + newPos);
-                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolB = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
                     }
                 } else {
-                    System.out.println("Adding " + newPos);
-                    validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x + i, y - i), null));
+                    validMoves.add(newMove);
                 }
             }
-            if (x - i >= 1 && y - i >= 1 && c) {
+            // (-1,-1) direction
+            if (x - i >= 1 && y - i >= 1 && boolC) {
                 ChessPosition newPos = new ChessPosition(x - i,y - i);
-                if (board.getPiece(newPos) != null) {
-                    c = false;
-                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
-                        System.out.println("Adding " + newPos);
-                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolC = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
                     }
                 } else {
-                    System.out.println("Adding " + newPos);
-                    validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x - i, y - i), null));
+                    validMoves.add(newMove);
                 }
             }
-            if (x - i >= 1 && y + i <= 8 && d) {
+            // (-1,+1) direction
+            if (x - i >= 1 && y + i <= 8 && boolD) {
                 ChessPosition newPos = new ChessPosition(x - i, y + i);
-                if (board.getPiece(newPos) != null) {
-                    d = false;
-                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
-                        System.out.println("Adding " + newPos);
-                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null) {
+                    boolD = false;
+                    if (newPiece.pieceColor != this.pieceColor) {
+                        validMoves.add(newMove);
                     }
                 } else {
-                    System.out.println("Adding " + newPos);
-                    validMoves.add(new ChessMove(bishopPosition, new ChessPosition(x - i, y + i), null));
+                    validMoves.add(newMove);
                 }
             }
         }
-        System.out.println(validMoves);
         return validMoves;
     }
 
-    public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition knightPosition) {
+    public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition piecePosition) {
         throw new RuntimeException("knightMoves not implemented");
     }
 
-    public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition rookPosition) {
+    public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition piecePosition) {
         throw new RuntimeException("rookMoves not implemented");
     }
 
-    public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition pawnPosition) {
+    public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition piecePosition) {
         throw new RuntimeException("pawnMoves not implemented");
     }
 
