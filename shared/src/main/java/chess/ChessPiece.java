@@ -176,9 +176,9 @@ public class ChessPiece {
         boolean boolD = true;
         // validMoves list appending
         for(int i = 1; i < 8; i++) {
-            // (+1, +1) direction
-            if (x + i <= 8 && y + i <= 8 && boolA) {
-                ChessPosition newPos = new ChessPosition(x + i, y + i);
+            // (+1, 0) direction
+            if (x + i <= 8 && y <= 8 && boolA) {
+                ChessPosition newPos = new ChessPosition(x + i, y);
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
                 if (newPiece != null) {
@@ -190,9 +190,9 @@ public class ChessPiece {
                     validMoves.add(newMove);
                 }
             }
-            // (+1,-1) direction
-            if (x + i <= 8 && y - i >= 1 && boolB) {
-                ChessPosition newPos = new ChessPosition(x + i, y - i);
+            // (0, -1) direction
+            if (x <= 8 && y - i >= 1 && boolB) {
+                ChessPosition newPos = new ChessPosition(x, y - i);
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
                 if (newPiece != null) {
@@ -204,9 +204,9 @@ public class ChessPiece {
                     validMoves.add(newMove);
                 }
             }
-            // (-1,-1) direction
-            if (x - i >= 1 && y - i >= 1 && boolC) {
-                ChessPosition newPos = new ChessPosition(x - i,y - i);
+            // (-1, 0) direction
+            if (x - i >= 1 && y >= 1 && boolC) {
+                ChessPosition newPos = new ChessPosition(x - i,y);
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
                 if (newPiece != null) {
@@ -218,9 +218,9 @@ public class ChessPiece {
                     validMoves.add(newMove);
                 }
             }
-            // (-1,+1) direction
-            if (x - i >= 1 && y + i <= 8 && boolD) {
-                ChessPosition newPos = new ChessPosition(x - i, y + i);
+            // (0 , +1) direction
+            if (x >= 1 && y + i <= 8 && boolD) {
+                ChessPosition newPos = new ChessPosition(x, y + i);
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
                 if (newPiece != null) {
