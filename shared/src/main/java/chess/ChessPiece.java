@@ -524,15 +524,83 @@ public class ChessPiece {
             }
             // Double Move (x, y + 2) when y = 2
             if (y == 2 && x <= 8) {
+                ChessPosition doubleCheck = new ChessPosition(y + 1, x);
+                ChessPiece doubleCheckPiece = board.getPiece(doubleCheck);
                 ChessPosition newPos = new ChessPosition(y + 2, x);
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
-                if (newPiece == null) {
+                if (newPiece == null && doubleCheckPiece == null) {
                     validMoves.add(newMove);
                 }
             }
         }
         // BLACK PAWN
+        if (this.pieceColor == ChessGame.TeamColor.BLACK) {
+            // Forward Move (x, y - 1)
+            if (x <= 8 && y - 1 >= 1) {
+                ChessPosition newPos = new ChessPosition(y - 1, x);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                // Promotion logic
+                if (y - 1 == 1) {
+                    validMoves.addAll(Arrays.asList(
+                            new ChessMove(piecePosition, newPos, PieceType.ROOK),
+                            new ChessMove(piecePosition, newPos, PieceType.KNIGHT),
+                            new ChessMove(piecePosition, newPos, PieceType.BISHOP),
+                            new ChessMove(piecePosition, newPos, PieceType.QUEEN))
+                    );
+                } else if (newPiece == null) {
+                    validMoves.add(newMove);
+                }
+            }
+            // Left Capture (x - 1, y - 1)
+            if (x - 1 >= 1 && y - 1 >= 1) {
+                ChessPosition newPos = new ChessPosition(y - 1, x - 1);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null && newPiece.pieceColor != this.pieceColor) {
+                    if (y - 1 == 1) {
+                        validMoves.addAll(Arrays.asList(
+                                new ChessMove(piecePosition, newPos, PieceType.ROOK),
+                                new ChessMove(piecePosition, newPos, PieceType.KNIGHT),
+                                new ChessMove(piecePosition, newPos, PieceType.BISHOP),
+                                new ChessMove(piecePosition, newPos, PieceType.QUEEN))
+                        );
+                    } else {
+                        validMoves.add(newMove);
+                    }
+                }
+            }
+            // Right Capture (x + 1, y - 1)
+            if (x + 1 <= 8 && y - 1 >= 1) {
+                ChessPosition newPos = new ChessPosition(y - 1, x + 1);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece != null && newPiece.pieceColor != this.pieceColor) {
+                    if (y - 1 == 1) {
+                        validMoves.addAll(Arrays.asList(
+                                new ChessMove(piecePosition, newPos, PieceType.ROOK),
+                                new ChessMove(piecePosition, newPos, PieceType.KNIGHT),
+                                new ChessMove(piecePosition, newPos, PieceType.BISHOP),
+                                new ChessMove(piecePosition, newPos, PieceType.QUEEN))
+                        );
+                    } else {
+                        validMoves.add(newMove);
+                    }
+                }
+            }
+            // Double Move (x, y - 2) when y = 7
+            if (y == 7 && x <= 8) {
+                ChessPosition doubleCheck = new ChessPosition(y - 1, x);
+                ChessPiece doubleCheckPiece = board.getPiece(doubleCheck);
+                ChessPosition newPos = new ChessPosition(y - 2, x);
+                ChessPiece newPiece = board.getPiece(newPos);
+                ChessMove newMove = new ChessMove(piecePosition, newPos, null);
+                if (newPiece == null && doubleCheckPiece == null) {
+                    validMoves.add(newMove);
+                }
+            }
+        }
 
         // Forward Move
         // return validMoves
