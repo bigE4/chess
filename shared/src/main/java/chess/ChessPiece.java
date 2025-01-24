@@ -102,9 +102,12 @@ public class ChessPiece {
             System.out.println("For Loop Iteration: " + i);
             if (x + i <= 8 && y + i <= 8 && a) {
                 ChessPosition newPos = new ChessPosition(x + i, y + i);
-                System.out.println("New"+newPos);
                 if (board.getPiece(newPos) != null) {
-
+                    a = false;
+                    if (board.getPiece(newPos).pieceColor != board.getPiece(bishopPosition).pieceColor) {
+                        System.out.println("Adding " + newPos);
+                        validMoves.add(new ChessMove(bishopPosition, newPos, null));
+                    }
                     System.out.println(board.getPiece(newPos));
                 } else {
                     System.out.println("Adding " + newPos);
@@ -113,8 +116,8 @@ public class ChessPiece {
             }
             if (x + i <= 8 && y - i >= 1 && b) {
                 ChessPosition newPos = new ChessPosition(x + i, y - i);
-                System.out.println("New"+newPos);
                 if (board.getPiece(newPos) != null) {
+                    b = false;
                     System.out.println(board.getPiece(newPos));
                 } else {
                     System.out.println("Adding " + newPos);
@@ -123,8 +126,8 @@ public class ChessPiece {
             }
             if (x - i >= 1 && y - i >= 1 && c) {
                 ChessPosition newPos = new ChessPosition(x - i,y - i);
-                System.out.println("New"+newPos);
                 if (board.getPiece(newPos) != null) {
+                    c = false;
                     System.out.println(board.getPiece(newPos));
                 } else {
                     System.out.println("Adding " + newPos);
@@ -133,8 +136,8 @@ public class ChessPiece {
             }
             if (x - i >= 1 && y + i <= 8 && d) {
                 ChessPosition newPos = new ChessPosition(x - i, y + i);
-                System.out.println("New"+newPos);
                 if (board.getPiece(newPos) != null) {
+                    d = false;
                     System.out.println(board.getPiece(newPos));
                 } else {
                     System.out.println("Adding " + newPos);
