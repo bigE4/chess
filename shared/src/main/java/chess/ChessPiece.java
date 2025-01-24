@@ -492,7 +492,16 @@ public class ChessPiece {
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
                 if (newPiece != null && newPiece.pieceColor != this.pieceColor) {
-                    validMoves.add(newMove);
+                    if (y + 1 == 8) {
+                        validMoves.addAll(Arrays.asList(
+                                new ChessMove(piecePosition, newPos, PieceType.ROOK),
+                                new ChessMove(piecePosition, newPos, PieceType.KNIGHT),
+                                new ChessMove(piecePosition, newPos, PieceType.BISHOP),
+                                new ChessMove(piecePosition, newPos, PieceType.QUEEN))
+                        );
+                    } else {
+                        validMoves.add(newMove);
+                    }
                 }
             }
             // Right Capture (x + 1, y + 1)
@@ -501,7 +510,16 @@ public class ChessPiece {
                 ChessPiece newPiece = board.getPiece(newPos);
                 ChessMove newMove = new ChessMove(piecePosition, newPos, null);
                 if (newPiece != null && newPiece.pieceColor != this.pieceColor) {
-                    validMoves.add(newMove);
+                    if (y + 1 == 8) {
+                        validMoves.addAll(Arrays.asList(
+                                new ChessMove(piecePosition, newPos, PieceType.ROOK),
+                                new ChessMove(piecePosition, newPos, PieceType.KNIGHT),
+                                new ChessMove(piecePosition, newPos, PieceType.BISHOP),
+                                new ChessMove(piecePosition, newPos, PieceType.QUEEN))
+                        );
+                    } else {
+                        validMoves.add(newMove);
+                    }
                 }
             }
             // Double Move (x, y + 2) when y = 2
@@ -515,6 +533,7 @@ public class ChessPiece {
             }
         }
         // BLACK PAWN
+
         // Forward Move
         // return validMoves
         System.out.println(validMoves);
