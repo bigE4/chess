@@ -461,7 +461,6 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition piecePosition) {
-        System.out.println(board);
         // validMoves init (will be returned at end of method)
         Collection<ChessMove> validMoves = new ArrayList<>();
         // x and y init
@@ -604,7 +603,6 @@ public class ChessPiece {
 
         // Forward Move
         // return validMoves
-        System.out.println(validMoves);
         return validMoves;
     }
 
