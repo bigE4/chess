@@ -42,7 +42,15 @@ public class ChessBoard {
     }
 
     /**
-     * Sets the board to the default starting board
+     * |r|n|b|q|k|b|n|r|
+     * |p|p|p|p|p|p|p|p|
+     * | | | | | | | | |
+     * | | | | | | | | |
+     * | | | | | | | | |
+     * | | | | | | | | |
+     * |P|P|P|P|P|P|P|P|
+     * |R|N|B|Q|K|B|N|R|
+     * Sets the board to the default starting board (above)
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
