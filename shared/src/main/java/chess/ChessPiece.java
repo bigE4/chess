@@ -57,17 +57,17 @@ public class ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
         switch (type){
-            case BISHOP -> validMoves.addAll(bHelper(board, start));
-            case ROOK -> validMoves.addAll(rHelper(board, start));
-            case QUEEN -> validMoves.addAll(qHelper(board, start));
-            case KING -> validMoves.addAll(kHelper(board, start));
-            case KNIGHT -> validMoves.addAll(nHelper(board, start));
-            case PAWN -> validMoves.addAll(pHelper(board, start));
+            case BISHOP -> validMoves.addAll(bishopHelper(board, start));
+            case ROOK -> validMoves.addAll(rookHelper(board, start));
+            case QUEEN -> validMoves.addAll(queenHelper(board, start));
+            case KING -> validMoves.addAll(kingHelper(board, start));
+            case KNIGHT -> validMoves.addAll(knightHelper(board, start));
+            case PAWN -> validMoves.addAll(pawnHelper(board, start));
         }
         return validMoves;
     }
 
-    public Collection<ChessMove> bHelper(ChessBoard board, ChessPosition start) {
+    public Collection<ChessMove> bishopHelper(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 7, 1, 1, true, false));
         validMoves.addAll(movesCalculator(board, start, 7, 1, -1, true, false));
@@ -76,7 +76,7 @@ public class ChessPiece {
         return validMoves;
     }
 
-    public Collection<ChessMove> rHelper(ChessBoard board, ChessPosition start) {
+    public Collection<ChessMove> rookHelper(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 7, 1, 0, true, false));
         validMoves.addAll(movesCalculator(board, start, 7, 0, -1, true, false));
@@ -85,20 +85,14 @@ public class ChessPiece {
         return validMoves;
     }
 
-    public Collection<ChessMove> qHelper(ChessBoard board, ChessPosition start) {
+    public Collection<ChessMove> queenHelper(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
-        validMoves.addAll(movesCalculator(board, start, 7, 1, 1, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, 1, -1, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, -1, -1, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, -1, 1, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, 1, 0, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, 0, -1, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, -1, 0, true, false));
-        validMoves.addAll(movesCalculator(board, start, 7, 0, 1, true, false));
+        validMoves.addAll(bishopHelper(board, start));
+        validMoves.addAll(rookHelper(board, start));
         return validMoves;
     }
 
-    public Collection<ChessMove> kHelper(ChessBoard board, ChessPosition start) {
+    public Collection<ChessMove> kingHelper(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 1, 1, 1, true, false));
         validMoves.addAll(movesCalculator(board, start, 1, 1, -1, true, false));
@@ -111,7 +105,7 @@ public class ChessPiece {
         return validMoves;
     }
 
-    public Collection<ChessMove> nHelper(ChessBoard board, ChessPosition start) {
+    public Collection<ChessMove> knightHelper(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 1, 1, 2, true, false));
         validMoves.addAll(movesCalculator(board, start, 1, 2, 1, true, false));
@@ -124,7 +118,7 @@ public class ChessPiece {
         return validMoves;
     }
 
-    public Collection<ChessMove> pHelper(ChessBoard board, ChessPosition start) {
+    public Collection<ChessMove> pawnHelper(ChessBoard board, ChessPosition start) {
         Collection<ChessMove> validMoves = new ArrayList<>();
 
         int pawn_dy = 0;
@@ -169,7 +163,7 @@ public class ChessPiece {
                 // capture logic
                 if (newPiece != null) {
                     if (pieceColor != newPiece.pieceColor && capture) {
-                        // promo only
+                        // promotion logic
                         if (type == PieceType.PAWN && (newY == 8 || newY == 1)){
                             validMoves.addAll(List.of(promoMoves));
                             break;
@@ -183,6 +177,7 @@ public class ChessPiece {
                     break;
                 }
 
+                // promotion logic
                 if (type == PieceType.PAWN && (newY == 8 || newY == 1)){
                     validMoves.addAll(List.of(promoMoves));
                     break;
@@ -194,15 +189,15 @@ public class ChessPiece {
     }
 
     private ChessMove[] getPromoMoves(ChessPosition start, ChessPosition end, int newY) {
-        ChessMove[] pawnMoves= new ChessMove[4];
+        ChessMove[] promoMoves= new ChessMove[4];
 
         if (type == PieceType.PAWN && (newY == 8 || newY == 1)) {
-            pawnMoves[0] = new ChessMove(start, end, PieceType.ROOK);
-            pawnMoves[1] = new ChessMove(start, end, PieceType.BISHOP);
-            pawnMoves[2] = new ChessMove(start, end, PieceType.KNIGHT);
-            pawnMoves[3] = new ChessMove(start, end, PieceType.QUEEN);
+            promoMoves[0] = new ChessMove(start, end, PieceType.ROOK);
+            promoMoves[1] = new ChessMove(start, end, PieceType.BISHOP);
+            promoMoves[2] = new ChessMove(start, end, PieceType.KNIGHT);
+            promoMoves[3] = new ChessMove(start, end, PieceType.QUEEN);
         }
-        return pawnMoves;
+        return promoMoves;
     }
 
     @Override
@@ -223,13 +218,13 @@ public class ChessPiece {
     public String toString() {
         String rString;
         switch (type) {
-            case PieceType.PAWN -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "P" : "p";
-            case PieceType.ROOK -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "R" : "r";
-            case PieceType.KNIGHT -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "N" : "n";
-            case PieceType.BISHOP -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "B" : "b";
-            case PieceType.QUEEN -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "Q" : "q";
-            case PieceType.KING -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "K" : "k";
-            default -> rString = " ";
+            case PieceType.PAWN     -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "P" : "p";
+            case PieceType.ROOK     -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "R" : "r";
+            case PieceType.KNIGHT   -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "N" : "n";
+            case PieceType.BISHOP   -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "B" : "b";
+            case PieceType.QUEEN    -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "Q" : "q";
+            case PieceType.KING     -> rString = pieceColor == ChessGame.TeamColor.WHITE ? "K" : "k";
+            default                 -> rString = " ";
         }
         return rString;
     }
