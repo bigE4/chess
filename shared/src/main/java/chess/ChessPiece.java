@@ -55,7 +55,7 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         switch (type){
             case BISHOP -> validMoves.addAll(bishopHelper(board, start));
             case ROOK -> validMoves.addAll(rookHelper(board, start));
@@ -68,7 +68,7 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> bishopHelper(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 7, 1, 1, true, false));
         validMoves.addAll(movesCalculator(board, start, 7, 1, -1, true, false));
         validMoves.addAll(movesCalculator(board, start, 7, -1, -1, true, false));
@@ -77,7 +77,7 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> rookHelper(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 7, 1, 0, true, false));
         validMoves.addAll(movesCalculator(board, start, 7, 0, -1, true, false));
         validMoves.addAll(movesCalculator(board, start, 7, -1, 0, true, false));
@@ -86,14 +86,14 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> queenHelper(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(bishopHelper(board, start));
         validMoves.addAll(rookHelper(board, start));
         return validMoves;
     }
 
     public Collection<ChessMove> kingHelper(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 1, 1, 1, true, false));
         validMoves.addAll(movesCalculator(board, start, 1, 1, -1, true, false));
         validMoves.addAll(movesCalculator(board, start, 1, -1, -1, true, false));
@@ -106,7 +106,7 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> knightHelper(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         validMoves.addAll(movesCalculator(board, start, 1, 1, 2, true, false));
         validMoves.addAll(movesCalculator(board, start, 1, 2, 1, true, false));
         validMoves.addAll(movesCalculator(board, start, 1, 2, -1, true, false));
@@ -119,7 +119,7 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> pawnHelper(ChessBoard board, ChessPosition start) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
 
         int pawn_dy = 0;
         int pawn_range = 1;
@@ -144,7 +144,7 @@ public class ChessPiece {
     public Collection<ChessMove> movesCalculator(ChessBoard board, ChessPosition start,
                                                  int range, int dx, int dy,
                                                  boolean capture, boolean moveIFFcapture) {
-        Collection<ChessMove> validMoves = new ArrayList<>();
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
 
         int x = start.getColumn();
         int y = start.getRow();

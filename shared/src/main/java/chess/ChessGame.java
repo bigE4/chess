@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -77,6 +78,10 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
+        ChessPosition start = move.getStartPosition(), end = move.getEndPosition();
+        ChessPiece piece = chessBoard.getPiece(start);
+        chessBoard.addPiece(end, piece);
+        chessBoard.addPiece(start, null);
         throw new RuntimeException("Not implemented");
     }
 
@@ -93,7 +98,38 @@ public class ChessGame {
         // iterates through that list and extracts the end position into another list
         // if any end position in that list is the same as the position of the current team's king
         // then this function will return true.
-        throw new RuntimeException("Not implemented");
+
+        ChessPosition kingPos = null;
+
+        iLoop:
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j <+ 8; j++) {
+                ChessPosition pos = new ChessPosition(i, j);
+                ChessPiece piece = chessBoard.getPiece(pos);
+                if (piece.getPieceType() == ChessPiece.PieceType.KING && piece.getTeamColor() == teamColor) {
+                    kingPos = pos;
+                    break iLoop;
+                }
+            }
+        }
+
+        ArrayList<ChessMove> allMoves = new ArrayList<>();
+
+        iLoop:
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j <+ 8; j++) {
+                ChessPosition pos = new ChessPosition(i, j);
+                ChessPiece piece = chessBoard.getPiece(pos);
+                allMoves.addAll(piece.pieceMoves(chessBoard, pos));
+            }
+        }
+
+        for (ChessMove move : allMoves) {
+            if (move.getEndPosition() == kingPos) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
