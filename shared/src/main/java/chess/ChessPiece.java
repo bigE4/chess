@@ -155,10 +155,10 @@ public class ChessPiece {
             int newY = y + dy * i;
 
             if (1 <= newX && newX <= 8 && 1 <= newY && newY <= 8) {
-                ChessPosition end = new ChessPosition(newY, newX);
-                ChessPiece newPiece = board.getPiece(end);
-                ChessMove newMove = new ChessMove(start, end, null);
-                ChessMove[] promoMoves = getPromoMoves(start, end, newY);
+                var end = new ChessPosition(newY, newX);
+                var newPiece = board.getPiece(end);
+                var newMove = new ChessMove(start, end, null);
+                var promoMoves = getPromoMoves(start, end, newY);
 
                 // capture logic
                 if (newPiece != null) {
@@ -189,7 +189,7 @@ public class ChessPiece {
     }
 
     private ChessMove[] getPromoMoves(ChessPosition start, ChessPosition end, int newY) {
-        ChessMove[] promoMoves= new ChessMove[4];
+        var promoMoves= new ChessMove[4];
 
         if (type == PieceType.PAWN && (newY == 8 || newY == 1)) {
             promoMoves[0] = new ChessMove(start, end, PieceType.ROOK);
