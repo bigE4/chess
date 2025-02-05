@@ -106,7 +106,7 @@ public class ChessGame {
             for (int j = 1; j <+ 8; j++) {
                 ChessPosition pos = new ChessPosition(i, j);
                 ChessPiece piece = chessBoard.getPiece(pos);
-                if (piece.getPieceType() == ChessPiece.PieceType.KING && piece.getTeamColor() == teamColor) {
+                if (piece != null && piece.getPieceType() == ChessPiece.PieceType.KING && piece.getTeamColor() == teamColor) {
                     kingPos = pos;
                     break iLoop;
                 }
@@ -120,12 +120,13 @@ public class ChessGame {
             for (int j = 1; j <+ 8; j++) {
                 ChessPosition pos = new ChessPosition(i, j);
                 ChessPiece piece = chessBoard.getPiece(pos);
-                allMoves.addAll(piece.pieceMoves(chessBoard, pos));
+                if (piece != null) {
+                    allMoves.addAll(piece.pieceMoves(chessBoard, pos));
+                }
             }
         }
-
         for (ChessMove move : allMoves) {
-            if (move.getEndPosition() == kingPos) {
+            if (Objects.equals(move.getEndPosition(), kingPos)) {
                 return true;
             }
         }
