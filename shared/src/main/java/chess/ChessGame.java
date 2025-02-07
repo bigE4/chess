@@ -91,17 +91,24 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         ChessPosition start = move.getStartPosition(), end = move.getEndPosition();
         ChessPiece piece = chessBoard.getPiece(start);
+
+        if (piece == null) {
+            throw new InvalidMoveException("null");
+        }
+
         Collection<ChessMove> validMoves = validMoves(start);
 
         if (!validMoves.contains(move)) {
-            throw new InvalidMoveException("Move is not in validMoves");
+            throw new InvalidMoveException("move is not in validMoves");
         }
 
-        if (!isValid(move, piece.getTeamColor())) {
-            throw new InvalidMoveException("Move is not valid");
+        if (piece.getTeamColor() != teamTurn) {
+            throw new InvalidMoveException("move is out of turn");
         }
 
-
+        if (move.getPromotionPiece() != null) {
+            piece = new ChessPiece(teamTurn, move.getPromotionPiece());
+        }
 
         chessBoard.addPiece(end, piece);
         chessBoard.addPiece(start, null);
