@@ -91,6 +91,12 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         ChessPosition start = move.getStartPosition(), end = move.getEndPosition();
         ChessPiece piece = chessBoard.getPiece(start);
+        Collection<ChessMove> validMoves = validMoves(start);
+
+        if (!validMoves.contains(move)) {
+            throw new InvalidMoveException("Move is not in validMoves");
+        }
+
         if (!isValid(move, piece.getTeamColor())) {
             throw new InvalidMoveException("Move is not valid");
         }
