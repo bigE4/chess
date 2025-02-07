@@ -39,6 +39,14 @@ public class ChessGame {
         teamTurn = team;
     }
 
+    public void switchTeamTurn() {
+        if (teamTurn == TeamColor.WHITE) {
+            teamTurn = TeamColor.BLACK;
+        } else if (teamTurn == TeamColor.BLACK) {
+            teamTurn = TeamColor.WHITE;
+        }
+    }
+
     /**
      * Enum identifying the 2 possible teams in a chess game
      */
@@ -67,7 +75,6 @@ public class ChessGame {
 
     private boolean isValid(ChessMove move, TeamColor teamColor) {
         ChessPiece temp = makeMoveHelper1(move);
-        ChessPiece piece = chessBoard.getPiece(move.getStartPosition());
         boolean inCheck = isInCheck(teamColor);
         makeMoveHelper2(move, temp);
         System.out.println(move);
@@ -84,12 +91,16 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         ChessPosition start = move.getStartPosition(), end = move.getEndPosition();
         ChessPiece piece = chessBoard.getPiece(start);
-//        if (!isValid(move)) {
-//            System.out.println("RAAAH");
-//        }
+        if (!isValid(move, piece.getTeamColor())) {
+            throw new InvalidMoveException("Move is not valid");
+        }
+
+
+
         chessBoard.addPiece(end, piece);
         chessBoard.addPiece(start, null);
         lastMove = move;
+        switchTeamTurn();
     }
 
     public ChessPiece makeMoveHelper1(ChessMove move) {
