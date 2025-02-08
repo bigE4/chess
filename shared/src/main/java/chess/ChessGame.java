@@ -12,8 +12,8 @@ import java.util.Objects;
  */
 public class ChessGame {
 
-    TeamColor teamTurn;
-    ChessBoard chessBoard;
+    static TeamColor teamTurn;
+    static ChessBoard chessBoard;
     ChessMove lastMove;
 
     public ChessGame() {
@@ -65,6 +65,10 @@ public class ChessGame {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece chessPiece = chessBoard.getPiece(startPosition);
         ArrayList<ChessMove> validMoves = new ArrayList<>();
+
+//        ChessCastle.castleLogic(startPosition, validMoves);
+//        ChessEnPassant.enPassantLogic(startPosition, validMoves);
+
         for(ChessMove move : chessPiece.pieceMoves(chessBoard, startPosition)) {
             if (isValid(move, chessPiece.getTeamColor())) {
                 validMoves.add(move);
@@ -77,8 +81,8 @@ public class ChessGame {
         ChessPiece temp = makeMoveHelper1(move);
         boolean inCheck = isInCheck(teamColor);
         makeMoveHelper2(move, temp);
-        System.out.println(move);
-        System.out.println(!inCheck);
+//        System.out.println(move);
+//        System.out.println(!inCheck);
         return !inCheck;
     }
 
@@ -138,7 +142,7 @@ public class ChessGame {
      * @param teamColor which team to check for check
      * @return True if the specified team is in check
      */
-    public boolean isInCheck(TeamColor teamColor) {
+    public static boolean isInCheck(TeamColor teamColor) {
 
         ChessPosition kingPos = getKingPos(teamColor);
 
@@ -153,7 +157,7 @@ public class ChessGame {
         return false;
     }
 
-    private ChessPosition getKingPos(TeamColor teamColor) {
+    static ChessPosition getKingPos(TeamColor teamColor) {
         // for loop to iterate through the chessBoard and find the kingPos of teamColor
 
         ChessPosition kingPos = null;
@@ -172,7 +176,7 @@ public class ChessGame {
         return kingPos;
     }
 
-    private ArrayList<ChessMove> getEnemyMoves(TeamColor teamColor) {
+    static ArrayList<ChessMove> getEnemyMoves(TeamColor teamColor) {
         ArrayList<ChessMove> enemyMoves = new ArrayList<>();
 
         iLoop:
