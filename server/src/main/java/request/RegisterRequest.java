@@ -1,4 +1,4 @@
 package request;
 
-public class RegisterRequest {
+public class RegisterRequest implements Request {
 }
