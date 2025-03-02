@@ -14,7 +14,21 @@ public class RegisterHandler implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
-        return null;
+        // try to parse the request, call the service, and return the correct response and throw an exception if unsuccessful
+        try {
+            // Parse the request from the server into a RegisterRequest object
+            RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
+            // Call the RegisterService class to do the thing
+            RegisterService registerService = new RegisterService();
+            RegisterResponse registerResponse = registerService.register(registerRequest);
+            // Set successful response
+            response.type("application/json");
+            response.status(200);
+            return gson.toJson(response);
+
+        } catch (Exception e) {
+            response.status(400);
+            return response;
+        }
     }
 }
