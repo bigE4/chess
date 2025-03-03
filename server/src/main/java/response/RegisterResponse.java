@@ -1,9 +1,9 @@
 package response;
 
 public class RegisterResponse {
-    private String username;
-    private String authToken;
-    private int statusCode;
+    private final String username;
+    private final String authToken;
+    private final int statusCode;
 
     public RegisterResponse(String username, String authToken, int statusCode) {
         this.username = username;

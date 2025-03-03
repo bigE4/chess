@@ -24,11 +24,11 @@ public class RegisterHandler implements Route {
             // Set successful response
             response.type("application/json");
             response.status(200);
-            return gson.toJson(response);
-
+            return gson.toJson(registerResponse);
         } catch (Exception e) {
-            response.status(400);
-            return response;
+            response.type("application/json");
+            response.status(500);
+            return gson.toJson(e.getMessage());
         }
     }
 }
