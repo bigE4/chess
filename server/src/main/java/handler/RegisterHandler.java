@@ -1,6 +1,9 @@
 package handler;
 
 import com.google.gson.Gson;
+import exceptions.BadRequestException;
+import exceptions.UsernameUnavailableException;
+import response.ErrorResponse;
 import service.RegisterService;
 import request.RegisterRequest;
 import response.RegisterResponse;
@@ -25,10 +28,21 @@ public class RegisterHandler implements Route {
             response.type("application/json");
             response.status(200);
             return gson.toJson(registerResponse);
+        } catch (BadRequestException badRequestException) {
+            response.type("application/json");
+            response.status(400);
+            ErrorResponse errorResponse = new ErrorResponse("Error: bad request");
+            return gson.toJson(errorResponse);
+        } catch (UsernameUnavailableException userException) {
+            response.type("application/json");
+            response.status(403);
+            ErrorResponse errorResponse = new ErrorResponse("Error: bad request");
+            return gson.toJson(errorResponse);
         } catch (Exception e) {
             response.type("application/json");
             response.status(500);
-            return gson.toJson(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+            return gson.toJson(errorResponse);
         }
     }
 }

@@ -22,4 +22,13 @@ public class RegisterRequest implements Request {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public String toString() {
+        return "RegisterRequest{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
