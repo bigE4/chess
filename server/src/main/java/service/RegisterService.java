@@ -8,7 +8,7 @@ import response.RegisterResponse;
 import java.util.Objects;
 
 
-public class RegisterService implements Service {
+public class RegisterService {
 
     public Boolean goodRequest(RegisterRequest registerRequest) {
         return !Objects.equals(registerRequest.getUsername(), "") &&
@@ -32,7 +32,15 @@ public class RegisterService implements Service {
         }
         try {
             // Try to do the thing with help from UserDAO
-            return new RegisterResponse("exampleUser", "exampleToken", 200);
+            String username = registerRequest.getUsername();
+            String password = registerRequest.getPassword();
+            String usermail = registerRequest.getEmail();
+
+
+            System.out.println(username);
+            System.out.println(password);
+            System.out.println(usermail);
+            return new RegisterResponse(username, "exampleToken", 200);
         } catch (Exception e) {
             throw new Exception("Error: " + e.getMessage());
         }

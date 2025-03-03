@@ -1,4 +1,4 @@
 package service;
 
-public class ClearService implements Service {
+public class ClearService {
 }

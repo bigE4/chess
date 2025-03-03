@@ -1,4 +1,4 @@
 package service;
 
-public class CreateGameService implements Service {
+public class CreateGameService {
 }

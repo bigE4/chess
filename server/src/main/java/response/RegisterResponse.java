@@ -17,7 +17,6 @@ public class RegisterResponse {
         return authToken;
     }
 
-
     public void setExampleResponse() {
         username = "Taymyth";
         authToken = "2486568038";
