@@ -21,11 +21,16 @@ public class ListGamesHandler implements spark.Route {
             if (authToken == null || authToken.isEmpty()) { throw new BadRequestException("Error: bad request"); }
             ListGamesRequest listGamesRequest = new ListGamesRequest(authToken);
             ListGamesService listGamesService = new ListGamesService();
-            ListGamesResponse listGamesResponse = listGamesService.listGames(listGamesRequest);
+            ListGamesResponse listGamesResponse = listGamesService.ListGames(listGamesRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(listGamesResponse);
-        } catch (UnauthorizedException unauthorizedException) {
+        } catch (BadRequestException e) {
+            response.type("application/json");
+            response.status(400);
+            ErrorResponse errorResponse = new ErrorResponse("Error: bad request");
+            return gson.toJson(errorResponse);
+        } catch (UnauthorizedException e) {
             response.type("application/json");
             response.status(401);
             ErrorResponse errorResponse = new ErrorResponse("Error: unauthorized");

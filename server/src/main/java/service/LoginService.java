@@ -15,7 +15,7 @@ public class LoginService {
             String username = loginRequest.username();
             String password = loginRequest.password();
             if (uDAO.AuthenticateUser(username, password)) {
-                String token = AuthTokenGenerator.generateToken();
+                String token = ServiceUtils.GenerateToken();
                 AuthData authData = new AuthData(token, username);
                 aDAO.StoreAuth(authData);
                 return new LoginResponse(username, token);

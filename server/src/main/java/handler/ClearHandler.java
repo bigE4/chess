@@ -15,7 +15,7 @@ public class ClearHandler implements spark.Route {
     public Object handle(Request request, Response response) {
         try {
             ClearService clearService = new ClearService();
-            EmptyResponse logoutResponse = clearService.clear();
+            EmptyResponse logoutResponse = clearService.Clear();
             response.type("application/json");
             response.status(200);
             return gson.toJson(logoutResponse);

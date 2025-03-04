@@ -2,7 +2,7 @@ package handler;
 
 import com.google.gson.Gson;
 import exceptions.BadRequestException;
-import exceptions.AlreadyTaken;
+import exceptions.AlreadyTakenException;
 import response.ErrorResponse;
 import service.RegisterService;
 import request.RegisterRequest;
@@ -32,7 +32,7 @@ public class RegisterHandler implements spark.Route {
             response.status(400);
             ErrorResponse errorResponse = new ErrorResponse("Error: bad request");
             return gson.toJson(errorResponse);
-        } catch (AlreadyTaken alreadyTaken) {
+        } catch (AlreadyTakenException alreadyTaken) {
             response.type("application/json");
             response.status(403);
             ErrorResponse errorResponse = new ErrorResponse("Error: already taken");

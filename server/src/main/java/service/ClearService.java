@@ -9,7 +9,7 @@ public class ClearService {
     AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
     GameDatabaseDAO gDAO = new GameDatabaseDAO();
     UserDatabaseDAO uDAO = new UserDatabaseDAO();
-    public EmptyResponse clear() throws Exception {
+    public EmptyResponse Clear() throws Exception {
         try {
             aDAO.ClearAuth();
             gDAO.ClearGames();
