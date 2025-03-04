@@ -1,4 +1,4 @@
 package request;
 
-public class JoinGameRequest implements Request {
+public record JoinGameRequest() {
 }

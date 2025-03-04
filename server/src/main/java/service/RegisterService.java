@@ -17,13 +17,13 @@ public class RegisterService {
     AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
 
         public Boolean badRequest(RegisterRequest registerRequest) {
-        return Objects.equals(registerRequest.getUsername(), "") &&
-               Objects.equals(registerRequest.getPassword(), "") &&
-               Objects.equals(registerRequest.getEmail(), "");
+        return Objects.equals(registerRequest.username(), "") &&
+               Objects.equals(registerRequest.password(), "") &&
+               Objects.equals(registerRequest.email(), "");
     }
 
     public Boolean usernameUnavailable(RegisterRequest registerRequest) {
-        return uDAO.userExists(registerRequest.getUsername());
+        return uDAO.userExists(registerRequest.username());
     }
 
 
@@ -41,9 +41,9 @@ public class RegisterService {
 
         try {
             // Try to do the thing with help from UserDAO
-            String username = registerRequest.getUsername();
-            String password = registerRequest.getPassword();
-            String usermail = registerRequest.getEmail();
+            String username = registerRequest.username();
+            String password = registerRequest.password();
+            String usermail = registerRequest.email();
 
             UserData data = new UserData(username, password, usermail);
 

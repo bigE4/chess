@@ -1,4 +1,4 @@
 package request;
 
-public class ClearRequest implements Request {
+public record ClearRequest() {
 }
