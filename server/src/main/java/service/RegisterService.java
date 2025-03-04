@@ -3,7 +3,7 @@ package service;
 import dataaccess.AuthDatabaseDAO;
 import dataaccess.UserDatabaseDAO;
 import exceptions.BadRequestException;
-import exceptions.UsernameUnavailableException;
+import exceptions.AlreadyTaken;
 import model.AuthData;
 import model.UserData;
 import request.RegisterRequest;
@@ -17,7 +17,7 @@ public class RegisterService {
     AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
     public RegisterResponse register(RegisterRequest registerRequest) throws Exception {
         if (badRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
-        if (usernameUnavailable(registerRequest)) { throw new UsernameUnavailableException("Error: already taken"); }
+        if (usernameUnavailable(registerRequest)) { throw new AlreadyTaken("Error: already taken"); }
         try {
             String username = registerRequest.username();
             String password = registerRequest.password();

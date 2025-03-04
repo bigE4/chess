@@ -16,7 +16,7 @@ public class LogoutService {
             }
             throw new UnauthorizedException("Error: unauthorized");
         } catch (Exception e) {
-            throw new Exception("Error: " + e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 }
