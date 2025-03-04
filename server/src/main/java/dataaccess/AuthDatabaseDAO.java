@@ -75,5 +75,6 @@ public class AuthDatabaseDAO implements AuthDAO {
     @Override
     public void ClearAuth() {
         authDataList = new ArrayList<>();
+        exDBReader.writeListToFile(authPath, authDataList);
     }
 }
