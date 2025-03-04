@@ -1,10 +1,10 @@
 package dataaccess;
 
-import model.UserData;
-
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import model.UserData;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -12,9 +12,10 @@ import java.util.List;
 
 public class exDBReader {
 
-    private static final Gson gson = new Gson();
+    // Create a Gson instance with pretty printing enabled
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    // Method to write a single UserData object to a JSON file
+    // Method to write a single UserData object to a JSON file with pretty print
     public static void writeUserDataToFile(String filePath, UserData userData) {
         try (FileWriter writer = new FileWriter(filePath)) {
             gson.toJson(userData, writer);
@@ -33,7 +34,7 @@ public class exDBReader {
         }
     }
 
-    // Method to write a list of UserData objects to a JSON file
+    // Method to write a list of UserData objects to a JSON file with pretty print
     public static void writeUserDataListToFile(String filePath, List<UserData> userDataList) {
         try (FileWriter writer = new FileWriter(filePath)) {
             gson.toJson(userDataList, writer);
@@ -53,7 +54,7 @@ public class exDBReader {
         }
     }
 
-    // Method to convert a single UserData object to a JSON string
+    // Method to convert a single UserData object to a pretty-printed JSON string
     public static String writeUserDataToString(UserData userData) {
         return gson.toJson(userData);
     }
@@ -63,7 +64,7 @@ public class exDBReader {
         return gson.fromJson(json, UserData.class);
     }
 
-    // Method to convert a list of UserData objects to a JSON string
+    // Method to convert a list of UserData objects to a pretty-printed JSON string
     public static String writeUserDataListToString(List<UserData> userDataList) {
         return gson.toJson(userDataList);
     }
