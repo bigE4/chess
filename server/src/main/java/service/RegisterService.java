@@ -23,6 +23,7 @@ public class RegisterService {
             String password = registerRequest.password();
             String email = registerRequest.email();
             UserData userData = new UserData(username, password, email);
+            System.out.println(userData);
             uDAO.StoreUser(userData);
             String token = AuthTokenGenerator.generateToken();
             AuthData authData = new AuthData(token, username);
@@ -34,9 +35,10 @@ public class RegisterService {
     }
 
     public Boolean badRequest(RegisterRequest registerRequest) {
-    return Objects.equals(registerRequest.username(), "") &&
-           Objects.equals(registerRequest.password(), "") &&
-           Objects.equals(registerRequest.email(), "");
+        String username = registerRequest.username();
+        String password = registerRequest.password();
+        String email = registerRequest.email();
+        return username == null || password == null || email == null || username.isEmpty() || password.isEmpty() || email.isEmpty();
     }
 
     public Boolean usernameUnavailable(RegisterRequest registerRequest) {

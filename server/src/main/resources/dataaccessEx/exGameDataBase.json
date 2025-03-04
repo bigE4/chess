@@ -1,1 +1,191 @@
-[]
+[
+  {
+    "gameID": 8038,
+    "whiteUsername": "Ian",
+    "blackUsername": "Vivian",
+    "gameName": "Ells",
+    "game": {
+      "teamTurn": "WHITE",
+      "chessBoard": {
+        "chessBoard": [
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "ROOK"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "ROOK"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "KNIGHT"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "KNIGHT"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "BISHOP"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "BISHOP"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "QUEEN"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "QUEEN"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "KING"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "KING"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "BISHOP"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "BISHOP"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "KNIGHT"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "KNIGHT"
+            }
+          ],
+          [
+            {
+              "pieceColor": "WHITE",
+              "type": "ROOK"
+            },
+            {
+              "pieceColor": "WHITE",
+              "type": "PAWN"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "pieceColor": "BLACK",
+              "type": "PAWN"
+            },
+            {
+              "pieceColor": "BLACK",
+              "type": "ROOK"
+            }
+          ]
+        ]
+      }
+    }
+  }
+]
