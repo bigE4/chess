@@ -66,6 +66,7 @@ public class AuthDatabaseDAO implements AuthDAO {
         for (AuthData data: authDataList) {
             if (Objects.equals(data.authToken(), inToken)) {
                 authDataList.remove(data);
+                exDBReader.writeListToFile(authPath, authDataList);
                 return true;
             }
         }

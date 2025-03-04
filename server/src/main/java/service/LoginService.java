@@ -21,6 +21,8 @@ public class LoginService {
                 return new LoginResponse(username, token);
             }
             throw new UnauthorizedException("Error: unauthorized");
+        } catch (UnauthorizedException unauthorizedException) {
+            throw new UnauthorizedException("Error: unauthorized");
         } catch (Exception e) {
             throw new Exception("Error: " + e.getMessage());
         }
