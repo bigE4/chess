@@ -9,9 +9,8 @@ import request.RegisterRequest;
 import response.RegisterResponse;
 import spark.Request;
 import spark.Response;
-import spark.Route;
 
-public class RegisterHandler implements Route {
+public class RegisterHandler implements spark.Route {
 
     private final Gson gson = new Gson();
 

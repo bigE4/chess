@@ -3,10 +3,10 @@ package dataaccess;
 import model.AuthData;
 
 public interface AuthDAO {
-    boolean isAuth(String authToken, String username);
-    boolean storeAuth(String authToken, String username);
-    boolean authenticateAuth(String authToken, String username);
-    AuthData retrieveAuth(String authToken);
-    boolean deleteAuth(String authToken);
-    void clearAuth();
+    boolean AuthExists(String inToken);
+    boolean StoreAuth(AuthData inData);
+    boolean AuthenticateAuth(AuthData inData);
+    AuthData RetrieveAuth(String inToken);
+    boolean DeleteAuth(String inToken);
+    void ClearAuth();
 }
