@@ -1,5 +1,7 @@
 package dataaccess;
 
+import com.google.gson.reflect.TypeToken;
+import dataaccess.ex.exDBReader;
 import model.UserData;
 
 import java.util.ArrayList;
@@ -7,15 +9,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserDatabaseDAO implements UserDAO {
-
-    public List<UserData> userDataList = new ArrayList<>();
+    String userPath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exUserDataBase.json";
+    public List<UserData> userDataList;
 
     public UserDatabaseDAO(List<UserData> userDataList) {
         this.userDataList = userDataList;
     }
 
     public UserDatabaseDAO() {
-
+        this.userDataList = exDBReader.readListFromFile(userPath, new TypeToken<List<UserData>>() {});
+        System.out.println("User Database Init: " + userDataList);
     }
 
     @Override
@@ -32,6 +35,7 @@ public class UserDatabaseDAO implements UserDAO {
     public boolean storeUser(String username, String password, String email) {
         if (!userExists(username)) {
             userDataList.add(new UserData(username, password, email));
+            exDBReader.writeListToFile(userPath, userDataList);
             return true;
         }
         return false;
@@ -43,6 +47,7 @@ public class UserDatabaseDAO implements UserDAO {
             if (Objects.equals(data.username(), username)) {
                 deleteUser(username);
                 storeUser(username, newPassword, newEmail);
+                exDBReader.writeListToFile(userPath, userDataList);
                 return true;
             }
         }
@@ -79,6 +84,7 @@ public class UserDatabaseDAO implements UserDAO {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username)) {
                 userDataList.remove(data);
+                exDBReader.writeListToFile(userPath, userDataList);
                 return true;
             }
         }
@@ -88,5 +94,6 @@ public class UserDatabaseDAO implements UserDAO {
     @Override
     public void clearUsers() {
         userDataList = new ArrayList<>();
+        exDBReader.writeListToFile(userPath, userDataList);
     }
 }
