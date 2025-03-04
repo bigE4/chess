@@ -16,10 +16,10 @@ public class RegisterService {
     UserDatabaseDAO uDAO = new UserDatabaseDAO();
     AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
 
-        public Boolean badRequest(RegisterRequest registerRequest) {
-        return Objects.equals(registerRequest.username(), "") &&
-               Objects.equals(registerRequest.password(), "") &&
-               Objects.equals(registerRequest.email(), "");
+    public Boolean badRequest(RegisterRequest registerRequest) {
+    return Objects.equals(registerRequest.username(), "") &&
+           Objects.equals(registerRequest.password(), "") &&
+           Objects.equals(registerRequest.email(), "");
     }
 
     public Boolean usernameUnavailable(RegisterRequest registerRequest) {
@@ -40,7 +40,7 @@ public class RegisterService {
         }
 
         try {
-            // Try to do the thing with help from UserDAO
+            // Try executing the service -> Store User, Generate AuthToken, Store AuthData, and create/return a RegisterResponse
             String username = registerRequest.username();
             String password = registerRequest.password();
             String usermail = registerRequest.email();
@@ -50,10 +50,10 @@ public class RegisterService {
             System.out.println("New User Data: " + data);
 
             uDAO.storeUser(username, password, usermail);
-            System.out.println("User Stored!");
+            System.out.println("User Stored");
 
             String token = AuthTokenGenerator.generateToken();
-            System.out.println("Token Generated! " + token);
+            System.out.println("Token Generated: " + token);
 
             aDAO.storeAuth(token, username);
             System.out.println("AuthData Stored");
