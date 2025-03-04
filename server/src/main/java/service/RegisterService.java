@@ -32,21 +32,24 @@ public class RegisterService {
 
 
     public RegisterResponse register(RegisterRequest registerRequest) throws Exception {
+
         // is the request good?
         if (!goodRequest(registerRequest)) {
             throw new BadRequestException("Error: bad request");
         }
+
         // is username taken?
         if (usernameUnavailable(registerRequest)) {
             throw new UsernameUnavailableException("Error: already taken");
         }
+
         try {
-            System.out.println("I made it to line 44");
             // Try to do the thing with help from UserDAO
             String username = registerRequest.getUsername();
             String password = registerRequest.getPassword();
             String usermail = registerRequest.getEmail();
 
+            UserData data = new UserData(username, password, usermail);
 
             System.out.println(username);
             System.out.println(password);
