@@ -1,7 +1,6 @@
 package dataaccess;
 
 import com.google.gson.reflect.TypeToken;
-import dataaccess.ex.exDBReader;
 import model.UserData;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean userExists(String username) {
+    public boolean UserExists(String username) {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username)) {
                 return true;
@@ -32,9 +31,9 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean storeUser(String username, String password, String email) {
-        if (!userExists(username)) {
-            userDataList.add(new UserData(username, password, email));
+    public boolean StoreUser(UserData inData) {
+        if (!UserExists(inData.username())) {
+            userDataList.add(inData);
             exDBReader.writeListToFile(userPath, userDataList);
             return true;
         }
@@ -42,11 +41,11 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean updateUser(String username, String newPassword, String newEmail) {
+    public boolean UpdateUser(UserData inData) {
         for (UserData data: userDataList) {
-            if (Objects.equals(data.username(), username)) {
-                deleteUser(username);
-                storeUser(username, newPassword, newEmail);
+            if (Objects.equals(data.username(), inData.username())) {
+                DeleteUser(inData.username());
+                StoreUser(inData);
                 exDBReader.writeListToFile(userPath, userDataList);
                 return true;
             }
@@ -55,7 +54,7 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean authenticateUser(String username, String password) {
+    public boolean AuthenticateUser(String username, String password) {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username) && Objects.equals(data.password(), password)) {
                 return true;
@@ -65,7 +64,7 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public UserData retrieveUser(String username) {
+    public UserData RetrieveUser(String username) {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username)) {
                 return data;
@@ -75,12 +74,12 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public List<UserData> retrieveUsers() {
+    public List<UserData> RetrieveUsers() {
         return userDataList;
     }
 
     @Override
-    public boolean deleteUser(String username) {
+    public boolean DeleteUser(String username) {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username)) {
                 userDataList.remove(data);
@@ -92,7 +91,7 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public void clearUsers() {
+    public void ClearUsers() {
         userDataList = new ArrayList<>();
         exDBReader.writeListToFile(userPath, userDataList);
     }

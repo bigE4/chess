@@ -1,7 +1,6 @@
 package dataaccess;
 
 import com.google.gson.reflect.TypeToken;
-import dataaccess.ex.exDBReader;
 import model.AuthData;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class AuthDatabaseDAO implements AuthDAO {
 
     public AuthDatabaseDAO() {
         this.authDataList = exDBReader.readListFromFile(authPath, new TypeToken<List<AuthData>>() {});
-        System.out.println("User Database Init: " + authDataList);
+        System.out.println("Auth Database Init: " + authDataList);
     }
 
     @Override
@@ -72,7 +71,6 @@ public class AuthDatabaseDAO implements AuthDAO {
         }
         return false;
     }
-
     @Override
     public void ClearAuth() {
         authDataList = new ArrayList<>();

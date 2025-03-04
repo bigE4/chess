@@ -1,5 +1,5 @@
 import chess.ChessGame;
-import dataaccess.ex.exDBReader;
+import dataaccess.exDBReader;
 import model.AuthData;
 import model.GameData;
 import model.UserData;
@@ -20,12 +20,12 @@ public class Main2 {
         ));
 
         List<AuthData> listOfAuths = new ArrayList<>(Arrays.asList(
-                new AuthData("6568038", "bubbles"),
-                new AuthData("4205778", "BUBBLES")
+                new AuthData("692c2a83-88d9-4dcd-b9c8-c96a5570bd44", "Ian"),
+                new AuthData("a4b8e505-dc99-40d2-8f77-862226226e27", "Vivian")
         ));
 
         List<GameData> listOfGames = new ArrayList<>(List.of(
-                new GameData(8038, "Taymyth", "Taylor", "TT", new ChessGame())
+                new GameData(8038, "Ian", "Vivian", "Ells", new ChessGame())
         ));
 
         exDBReader.writeListToFile(userPath, listOfUsers);

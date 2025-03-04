@@ -2,13 +2,28 @@ package service;
 
 import dataaccess.AuthDatabaseDAO;
 import dataaccess.UserDatabaseDAO;
+import exceptions.UnauthorizedException;
+import model.AuthData;
 import request.LoginRequest;
 import response.LoginResponse;
+import response.RegisterResponse;
 
 public class LoginService {
-    public LoginResponse login(LoginRequest loginRequest) {
-        UserDatabaseDAO uDAO = new UserDatabaseDAO();
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        
+    UserDatabaseDAO uDAO = new UserDatabaseDAO();
+    AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
+    public LoginResponse login(LoginRequest loginRequest) throws Exception {
+        try {
+            String username = loginRequest.username();
+            String password = loginRequest.password();
+            if (uDAO.AuthenticateUser(username, password)) {
+                String token = AuthTokenGenerator.generateToken();
+                AuthData authData = new AuthData(token, username);
+                aDAO.StoreAuth(authData);
+                return new LoginResponse(username, token);
+            }
+            throw new UnauthorizedException("Error: unauthorized");
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 }

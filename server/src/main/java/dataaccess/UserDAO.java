@@ -5,12 +5,12 @@ import model.UserData;
 import java.util.List;
 
 public interface UserDAO {
-    boolean userExists(String username);
-    boolean storeUser(String username, String password, String email);
-    boolean updateUser(String username, String newPassword, String email);
-    boolean authenticateUser(String username, String password);
-    UserData retrieveUser(String username);
-    List<UserData> retrieveUsers();
-    boolean deleteUser(String username);
-    void clearUsers();
+    boolean UserExists(String username);
+    boolean StoreUser(UserData inData);
+    boolean UpdateUser(UserData inData);
+    boolean AuthenticateUser(String username, String password);
+    UserData RetrieveUser(String username);
+    List<UserData> RetrieveUsers();
+    boolean DeleteUser(String username);
+    void ClearUsers();
 }
