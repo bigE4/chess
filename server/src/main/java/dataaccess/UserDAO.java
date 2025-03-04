@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface UserDAO {
     boolean UserExists(String username);
-    boolean StoreUser(UserData inData);
-    boolean UpdateUser(UserData inData);
+    boolean StoreUser(UserData userData);
+    boolean UpdateUser(UserData userData);
     boolean AuthenticateUser(String username, String password);
     UserData RetrieveUser(String username);
     List<UserData> RetrieveUsers();

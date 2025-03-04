@@ -31,9 +31,9 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean StoreUser(UserData inData) {
-        if (!UserExists(inData.username())) {
-            userDataList.add(inData);
+    public boolean StoreUser(UserData userData) {
+        if (!UserExists(userData.username())) {
+            userDataList.add(userData);
             exDBReader.writeListToFile(userPath, userDataList);
             return true;
         }
@@ -41,11 +41,11 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean UpdateUser(UserData inData) {
+    public boolean UpdateUser(UserData userData) {
         for (UserData data: userDataList) {
-            if (Objects.equals(data.username(), inData.username())) {
-                DeleteUser(inData.username());
-                StoreUser(inData);
+            if (Objects.equals(data.username(), userData.username())) {
+                DeleteUser(userData.username());
+                StoreUser(userData);
                 exDBReader.writeListToFile(userPath, userDataList);
                 return true;
             }

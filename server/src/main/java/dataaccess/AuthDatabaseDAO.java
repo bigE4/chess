@@ -22,9 +22,9 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public boolean AuthExists(String inToken) {
+    public boolean AuthExists(String authToken) {
         for (AuthData data: authDataList) {
-            if (Objects.equals(data.authToken(), inToken)) {
+            if (Objects.equals(data.authToken(), authToken)) {
                 return true;
             }
         }
@@ -32,9 +32,9 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
      @Override
-    public boolean StoreAuth(AuthData inData) {
-        if (!AuthExists(inData.authToken())) {
-            authDataList.add(inData);
+    public boolean StoreAuth(AuthData authData) {
+        if (!AuthExists(authData.authToken())) {
+            authDataList.add(authData);
             exDBReader.writeListToFile(authPath, authDataList);
             return true;
         }
@@ -42,9 +42,9 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public boolean AuthenticateAuth(String inToken) {
+    public boolean AuthenticateAuth(String authToken) {
         for (AuthData data: authDataList) {
-            if (Objects.equals(data.authToken(), inToken)) {
+            if (Objects.equals(data.authToken(), authToken)) {
                 return true;
             }
         }
@@ -52,9 +52,9 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public AuthData RetrieveAuth(String inToken) {
+    public AuthData RetrieveAuth(String authToken) {
         for (AuthData data: authDataList) {
-            if (Objects.equals(data.authToken(), inToken)) {
+            if (Objects.equals(data.authToken(), authToken)) {
                 return data;
             }
         }
@@ -62,9 +62,9 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public boolean DeleteAuth(String inToken) {
+    public boolean DeleteAuth(String authToken) {
         for (AuthData data: authDataList) {
-            if (Objects.equals(data.authToken(), inToken)) {
+            if (Objects.equals(data.authToken(), authToken)) {
                 authDataList.remove(data);
                 exDBReader.writeListToFile(authPath, authDataList);
                 return true;

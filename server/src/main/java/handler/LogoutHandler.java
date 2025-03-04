@@ -5,7 +5,7 @@ import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import request.LogoutRequest;
 import response.ErrorResponse;
-import response.LogoutResponse;
+import response.EmptyResponse;
 import service.LogoutService;
 import spark.Request;
 import spark.Response;
@@ -15,13 +15,13 @@ public class LogoutHandler implements spark.Route {
     private final Gson gson = new Gson();
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         try {
             String authToken = request.headers("authorization");
             if (authToken == null || authToken.isEmpty()) { throw new BadRequestException("Error: bad request"); }
             LogoutRequest logoutRequest = new LogoutRequest(authToken);
             LogoutService logoutService = new LogoutService();
-            LogoutResponse logoutResponse = logoutService.logout(logoutRequest);
+            EmptyResponse logoutResponse = logoutService.logout(logoutRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(logoutResponse);

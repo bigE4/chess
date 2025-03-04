@@ -1,43 +1,92 @@
 package dataaccess;
 
 import chess.ChessGame;
+import com.google.gson.reflect.TypeToken;
+import model.AuthData;
 import model.GameData;
+import model.UserData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GameDatabaseDAO implements GameDAO {
+
+    String gamePath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exGameDataBase.json";
+    public List<GameData> gameDataList;
+
+    public GameDatabaseDAO(List<GameData> gameDataList) {
+        this.gameDataList = gameDataList;
+    }
+
+    public GameDatabaseDAO() {
+        this.gameDataList = exDBReader.readListFromFile(gamePath, new TypeToken<List<GameData>>() {});
+        System.out.println("Auth Database Init: " + gameDataList);
+    }
+
     @Override
-    public boolean isGame(String gameName) {
+    public boolean GameExists(String gameName) {
+        for (GameData data: gameDataList) {
+            if (Objects.equals(data.gameName(), gameName)) {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public boolean storeGame(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGame game) {
+    public boolean StoreGame(GameData gameData) {
+        if (!GameExists(gameData.gameName())) {
+            gameDataList.add(gameData);
+            exDBReader.writeListToFile(gamePath, gameDataList);
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean updateGame(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGame game) {
+    public boolean UpdateGame(GameData gameData) {
+        for (GameData data: gameDataList) {
+            if (Objects.equals(data.gameID(), gameData.gameID())) {
+                DeleteGame(gameData.gameID());
+                StoreGame(gameData);
+                exDBReader.writeListToFile(gamePath, gameDataList);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public GameData retrieveGame(String gameName) {
+    public GameData RetrieveGame(int gameID) {
+        for (GameData data: gameDataList) {
+            if (Objects.equals(data.gameID(), gameID)) {
+                return data;
+            }
+        }
         return null;
     }
 
     @Override
-    public List<GameData> retrieveGames() {
-        return List.of();
+    public List<GameData> RetrieveGames() {
+        return gameDataList;
     }
 
     @Override
-    public boolean deleteGame(int gameID) {
+    public boolean DeleteGame(int gameID) {
+        for (GameData data: gameDataList) {
+            if (Objects.equals(data.gameID(), gameID)) {
+                gameDataList.remove(data);
+                exDBReader.writeListToFile(gamePath, gameDataList);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public void clearGames() {
-
+    public void ClearGames() {
+        gameDataList = new ArrayList<>();
+        exDBReader.writeListToFile(gamePath, gameDataList);
     }
 }
