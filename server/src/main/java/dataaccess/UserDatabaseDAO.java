@@ -8,14 +8,18 @@ import java.util.Objects;
 
 public class UserDatabaseDAO implements UserDAO {
 
+    public List<UserData> userDataList = new ArrayList<>();
+
     public UserDatabaseDAO(List<UserData> userDataList) {
         this.userDataList = userDataList;
     }
 
-    public List<UserData> userDataList = new ArrayList<>();
+    public UserDatabaseDAO() {
+
+    }
 
     @Override
-    public boolean isUser(String username) {
+    public boolean userExists(String username) {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username)) {
                 return true;
@@ -26,7 +30,7 @@ public class UserDatabaseDAO implements UserDAO {
 
     @Override
     public boolean storeUser(String username, String password, String email) {
-        if (!isUser(username)) {
+        if (!userExists(username)) {
             userDataList.add(new UserData(username, password, email));
             return true;
         }
