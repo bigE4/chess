@@ -42,9 +42,9 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public boolean AuthenticateAuth(AuthData inData) {
+    public boolean AuthenticateAuth(String inToken) {
         for (AuthData data: authDataList) {
-            if (data == inData) {
+            if (Objects.equals(data.authToken(), inToken)) {
                 return true;
             }
         }

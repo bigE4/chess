@@ -6,7 +6,6 @@ import exceptions.UnauthorizedException;
 import model.AuthData;
 import request.LoginRequest;
 import response.LoginResponse;
-import response.RegisterResponse;
 
 public class LoginService {
     UserDatabaseDAO uDAO = new UserDatabaseDAO();
