@@ -6,27 +6,14 @@ import dataaccess.UserDatabaseDAO;
 import model.GameData;
 import request.*;
 
-import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
 public class ServiceUtils {
 
-    public static String GenerateToken() {
-        return UUID.randomUUID().toString();
-    }
-
     public static int GenerateGameID() {
         Random random = new Random();
         return random.nextInt(1000, 9999);
-    }
-
-    public static boolean AuthenticateToken(AuthDatabaseDAO aDAO, AuthRequest request) {
-        return aDAO.AuthenticateAuth(request.authToken());
-    }
-
-    public static boolean AuthenticateUser(UserDatabaseDAO uDAO, LoginRequest loginRequest) {
-        return uDAO.AuthenticateUser(loginRequest.username(), loginRequest.password());
     }
 
     public static Boolean BadRequest(CreateGameRequest createGameRequest) {
@@ -56,6 +43,18 @@ public class ServiceUtils {
         GameData game = gDAO.RetrieveGame(joinGameRequest.gameID());
         String playerColor = joinGameRequest.playerColor();
         return playerColor.equals("WHITE") && game.whiteUsername() != null || playerColor.equals("BLACK") && game.blackUsername() != null;
+    }
+
+    public static String GenerateToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    public static boolean AuthenticateToken(AuthDatabaseDAO aDAO, AuthRequest request) {
+        return aDAO.AuthenticateAuth(request.authToken());
+    }
+
+    public static boolean AuthenticateUser(UserDatabaseDAO uDAO, LoginRequest loginRequest) {
+        return uDAO.AuthenticateUser(loginRequest.username(), loginRequest.password());
     }
 
     public static Boolean BadRequest(RegisterRequest registerRequest) {
