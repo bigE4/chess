@@ -41,7 +41,7 @@ public class ServiceUtils {
         return !gameExists;
     }
 
-    public static boolean GameColorUnavailable(GameDatabaseDAO gDAO, JoinGameRequest joinGameRequest) {
+    public static boolean GameColorTaken(GameDatabaseDAO gDAO, JoinGameRequest joinGameRequest) {
         GameData game = gDAO.RetrieveGame(joinGameRequest.gameID());
         String playerColor = joinGameRequest.playerColor();
         return playerColor.equals("WHITE") && game.whiteUsername() != null || playerColor.equals("BLACK") && game.blackUsername() != null;
@@ -51,12 +51,12 @@ public class ServiceUtils {
         return UUID.randomUUID().toString();
     }
 
-    public static boolean AuthenticateToken(AuthDatabaseDAO aDAO, AuthRequest request) {
-        return aDAO.AuthenticateAuth(request.authToken());
+    public static boolean BadToken(AuthDatabaseDAO aDAO, AuthRequest request) {
+        return !aDAO.AuthenticateAuth(request.authToken());
     }
 
-    public static boolean AuthenticateUser(UserDatabaseDAO uDAO, LoginRequest loginRequest) {
-        return uDAO.AuthenticateUser(loginRequest.username(), loginRequest.password());
+    public static boolean BadUser(UserDatabaseDAO uDAO, LoginRequest loginRequest) {
+        return !uDAO.AuthenticateUser(loginRequest.username(), loginRequest.password());
     }
 
     public static Boolean BadRequest(RegisterRequest registerRequest) {
@@ -66,7 +66,7 @@ public class ServiceUtils {
         return username == null || password == null || email == null || username.isEmpty() || password.isEmpty() || email.isEmpty();
     }
 
-    public static Boolean UsernameUnavailable(UserDatabaseDAO uDAO, RegisterRequest registerRequest) {
+    public static Boolean UsernameTaken(UserDatabaseDAO uDAO, RegisterRequest registerRequest) {
         return uDAO.UserExists(registerRequest.username());
     }
 }

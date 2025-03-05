@@ -14,7 +14,7 @@ public class CreateGameService {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
         if (ServiceUtils.BadRequest(createGameRequest)) { throw new BadRequestException("Error: bad request"); }
-        if (!ServiceUtils.AuthenticateToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.BadToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             int ID = ServiceUtils.GenerateGameID();
             ChessGame chessGame = new ChessGame();

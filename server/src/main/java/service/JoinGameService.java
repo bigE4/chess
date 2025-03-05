@@ -14,8 +14,8 @@ public class JoinGameService {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
         if (ServiceUtils.BadRequest(joinGameRequest)) { throw new BadRequestException("Error: bad request"); }
-        if (!ServiceUtils.AuthenticateToken(aDAO, joinGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
-        if (ServiceUtils.GameColorUnavailable(gDAO, joinGameRequest)) { throw new AlreadyTakenException("Error: already taken"); }
+        if (ServiceUtils.BadToken(aDAO, joinGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.GameColorTaken(gDAO, joinGameRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
             String authToken = joinGameRequest.authToken();
             String playerColor = joinGameRequest.playerColor();
