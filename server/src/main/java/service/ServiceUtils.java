@@ -16,13 +16,13 @@ public class ServiceUtils {
         return random.nextInt(1000, 9999);
     }
 
-    public static boolean BadRequest(CreateGameRequest createGameRequest) {
+    public static boolean IsABadRequest(CreateGameRequest createGameRequest) {
         String authToken = createGameRequest.authToken();
         String gameName = createGameRequest.gameName();
         return authToken == null || gameName == null || authToken.isEmpty() || gameName.isEmpty();
     }
 
-    public static boolean BadRequest(JoinGameRequest joinGameRequest) {
+    public static boolean IsABadRequest(JoinGameRequest joinGameRequest) {
         String authToken = joinGameRequest.authToken();
         String playerColor = joinGameRequest.playerColor();
         int ID = joinGameRequest.gameID();
@@ -51,15 +51,15 @@ public class ServiceUtils {
         return UUID.randomUUID().toString();
     }
 
-    public static boolean BadToken(AuthDatabaseDAO aDAO, AuthRequest request) {
+    public static boolean IsABadToken(AuthDatabaseDAO aDAO, AuthRequest request) {
         return !aDAO.AuthenticateAuth(request.authToken());
     }
 
-    public static boolean BadUser(UserDatabaseDAO uDAO, LoginRequest loginRequest) {
+    public static boolean IsABadUser(UserDatabaseDAO uDAO, LoginRequest loginRequest) {
         return !uDAO.AuthenticateUser(loginRequest.username(), loginRequest.password());
     }
 
-    public static Boolean BadRequest(RegisterRequest registerRequest) {
+    public static Boolean IsABadRequest(RegisterRequest registerRequest) {
         String username = registerRequest.username();
         String password = registerRequest.password();
         String email = registerRequest.email();

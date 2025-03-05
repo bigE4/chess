@@ -13,8 +13,8 @@ public class CreateGameService {
     public CreateGameResponse CreateGame(CreateGameRequest createGameRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        if (ServiceUtils.BadRequest(createGameRequest)) { throw new BadRequestException("Error: bad request"); }
-        if (ServiceUtils.BadToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.IsABadRequest(createGameRequest)) { throw new BadRequestException("Error: bad request"); }
+        if (ServiceUtils.IsABadToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             int ID = ServiceUtils.GenerateGameID();
             ChessGame chessGame = new ChessGame();

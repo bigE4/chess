@@ -11,7 +11,7 @@ public class LoginService {
     public LoginResponse Login(LoginRequest loginRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         UserDatabaseDAO uDAO = new UserDatabaseDAO();
-        if (ServiceUtils.BadUser(uDAO, loginRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.IsABadUser(uDAO, loginRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             String authToken = ServiceUtils.GenerateToken();
             aDAO.StoreAuth(new AuthData(authToken, loginRequest.username()));

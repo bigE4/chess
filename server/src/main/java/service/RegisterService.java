@@ -14,7 +14,7 @@ public class RegisterService {
     public RegisterResponse Register(RegisterRequest registerRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         UserDatabaseDAO uDAO = new UserDatabaseDAO();
-        if (ServiceUtils.BadRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
+        if (ServiceUtils.IsABadRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.UsernameTaken(uDAO, registerRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
             String authToken = ServiceUtils.GenerateToken();

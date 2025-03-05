@@ -9,7 +9,7 @@ public class LogoutService {
 
     public EmptyResponse Logout(LogoutRequest logoutRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        if (ServiceUtils.BadToken(aDAO, logoutRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.IsABadToken(aDAO, logoutRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             aDAO.DeleteAuth(logoutRequest.authToken());
             return new EmptyResponse();
