@@ -21,7 +21,7 @@ public class LogoutHandler implements spark.Route {
             if (authToken == null || authToken.isEmpty()) { throw new BadRequestException("Error: bad request"); }
             LogoutRequest logoutRequest = new LogoutRequest(authToken);
             LogoutService logoutService = new LogoutService();
-            EmptyResponse logoutResponse = logoutService.logout(logoutRequest);
+            EmptyResponse logoutResponse = logoutService.Logout(logoutRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(logoutResponse);

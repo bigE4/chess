@@ -6,10 +6,10 @@ import dataaccess.UserDatabaseDAO;
 import response.EmptyResponse;
 
 public class ClearService {
-    AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-    GameDatabaseDAO gDAO = new GameDatabaseDAO();
-    UserDatabaseDAO uDAO = new UserDatabaseDAO();
     public EmptyResponse Clear() throws Exception {
+        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
+        GameDatabaseDAO gDAO = new GameDatabaseDAO();
+        UserDatabaseDAO uDAO = new UserDatabaseDAO();
         try {
             aDAO.ClearAuth();
             gDAO.ClearGames();

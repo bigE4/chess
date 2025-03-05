@@ -18,7 +18,7 @@ public class LoginHandler implements spark.Route {
         try {
             LoginRequest loginRequest = gson.fromJson(request.body(), LoginRequest.class);
             LoginService loginService = new LoginService();
-            LoginResponse loginResponse = loginService.login(loginRequest);
+            LoginResponse loginResponse = loginService.Login(loginRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(loginResponse);

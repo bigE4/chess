@@ -7,11 +7,14 @@ import response.EmptyResponse;
 
 public class LogoutService {
 
-    public EmptyResponse logout(LogoutRequest logoutRequest) throws Exception {
+    public EmptyResponse Logout(LogoutRequest logoutRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        String authToken = logoutRequest.authToken();
-        if (!aDAO.AuthenticateAuth(authToken)) { throw new UnauthorizedException("Error: unauthorized"); }
-        aDAO.DeleteAuth(authToken);
-        return new EmptyResponse();
+        if (!ServiceUtils.AuthenticateToken(aDAO, logoutRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        try {
+            aDAO.DeleteAuth(logoutRequest.authToken());
+            return new EmptyResponse();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }
