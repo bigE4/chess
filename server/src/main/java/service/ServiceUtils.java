@@ -16,27 +16,29 @@ public class ServiceUtils {
         return random.nextInt(1000, 9999);
     }
 
-    public static Boolean BadRequest(CreateGameRequest createGameRequest) {
+    public static boolean BadRequest(CreateGameRequest createGameRequest) {
         String authToken = createGameRequest.authToken();
         String gameName = createGameRequest.gameName();
         return authToken == null || gameName == null || authToken.isEmpty() || gameName.isEmpty();
     }
 
-    public static Boolean BadRequest(JoinGameRequest joinGameRequest) {
+    public static boolean BadRequest(JoinGameRequest joinGameRequest) {
         String authToken = joinGameRequest.authToken();
         String playerColor = joinGameRequest.playerColor();
         int ID = joinGameRequest.gameID();
         return authToken == null || playerColor == null || authToken.isEmpty() || playerColor.isEmpty() || InvalidColor(playerColor) || InvalidID(ID);
     }
 
-    private static Boolean InvalidColor(String playerColor) {
+    private static boolean InvalidColor(String playerColor) {
         String white = "WHITE";
         String black = "BLACK";
         return !(playerColor.equals(white) || playerColor.equals(black));
     }
 
-    private static Boolean InvalidID(int ID) {
-        return !(1000 <= ID && ID <= 9999);
+    private static boolean InvalidID(int ID) {
+        GameDatabaseDAO gDAO = new GameDatabaseDAO();
+        boolean gameExists = gDAO.GameExists(ID);
+        return !gameExists;
     }
 
     public static boolean GameColorUnavailable(GameDatabaseDAO gDAO, JoinGameRequest joinGameRequest) {
