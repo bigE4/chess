@@ -1,10 +1,7 @@
 package dataaccess;
 
-import chess.ChessGame;
 import com.google.gson.reflect.TypeToken;
-import model.AuthData;
 import model.GameData;
-import model.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,6 @@ public class GameDatabaseDAO implements GameDAO {
 
     public GameDatabaseDAO() {
         this.gameDataList = exDBReader.readListFromFile(gamePath, new TypeToken<List<GameData>>() {});
-        System.out.println("Auth Database Init: " + gameDataList);
     }
 
     @Override
@@ -35,13 +31,21 @@ public class GameDatabaseDAO implements GameDAO {
     }
 
     @Override
-    public boolean StoreGame(GameData gameData) {
+    public boolean GameExists(int gameID) {
+        for (GameData data: gameDataList) {
+            if (Objects.equals(data.gameID(), gameID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void StoreGame(GameData gameData) {
         if (!GameExists(gameData.gameName())) {
             gameDataList.add(gameData);
             exDBReader.writeListToFile(gamePath, gameDataList);
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -73,15 +77,14 @@ public class GameDatabaseDAO implements GameDAO {
     }
 
     @Override
-    public boolean DeleteGame(int gameID) {
+    public void DeleteGame(int gameID) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameID)) {
                 gameDataList.remove(data);
                 exDBReader.writeListToFile(gamePath, gameDataList);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     @Override

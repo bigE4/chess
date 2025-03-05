@@ -17,7 +17,6 @@ public class UserDatabaseDAO implements UserDAO {
 
     public UserDatabaseDAO() {
         this.userDataList = exDBReader.readListFromFile(userPath, new TypeToken<List<UserData>>() {});
-        System.out.println("User Database Init: " + userDataList);
     }
 
     @Override
@@ -31,13 +30,11 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean StoreUser(UserData userData) {
+    public void StoreUser(UserData userData) {
         if (!UserExists(userData.username())) {
             userDataList.add(userData);
             exDBReader.writeListToFile(userPath, userDataList);
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -79,15 +76,14 @@ public class UserDatabaseDAO implements UserDAO {
     }
 
     @Override
-    public boolean DeleteUser(String username) {
+    public void DeleteUser(String username) {
         for (UserData data: userDataList) {
             if (Objects.equals(data.username(), username)) {
                 userDataList.remove(data);
                 exDBReader.writeListToFile(userPath, userDataList);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     @Override

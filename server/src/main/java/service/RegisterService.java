@@ -21,7 +21,6 @@ public class RegisterService {
             String password = registerRequest.password();
             String email = registerRequest.email();
             UserData userData = new UserData(username, password, email);
-            System.out.println(userData);
             uDAO.StoreUser(userData);
             String token = ServiceUtils.GenerateToken();
             AuthData authData = new AuthData(token, username);

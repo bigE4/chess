@@ -18,7 +18,6 @@ public class AuthDatabaseDAO implements AuthDAO {
 
     public AuthDatabaseDAO() {
         this.authDataList = exDBReader.readListFromFile(authPath, new TypeToken<List<AuthData>>() {});
-        System.out.println("Auth Database Init: " + authDataList);
     }
 
     @Override
@@ -32,14 +31,12 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
      @Override
-    public boolean StoreAuth(AuthData authData) {
-        if (!AuthExists(authData.authToken())) {
+    public void StoreAuth(AuthData authData) {
+        if (RetrieveAuth(authData.authToken()) == null) {
             authDataList.add(authData);
             exDBReader.writeListToFile(authPath, authDataList);
-            return true;
         }
-        return false;
-    }
+     }
 
     @Override
     public boolean AuthenticateAuth(String authToken) {
@@ -62,15 +59,14 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public boolean DeleteAuth(String authToken) {
+    public void DeleteAuth(String authToken) {
         for (AuthData data: authDataList) {
             if (Objects.equals(data.authToken(), authToken)) {
                 authDataList.remove(data);
                 exDBReader.writeListToFile(authPath, authDataList);
-                return true;
+                return;
             }
         }
-        return false;
     }
     @Override
     public void ClearAuth() {

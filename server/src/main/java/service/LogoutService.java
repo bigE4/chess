@@ -6,16 +6,12 @@ import request.LogoutRequest;
 import response.EmptyResponse;
 
 public class LogoutService {
-    private final AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
 
     public EmptyResponse logout(LogoutRequest logoutRequest) throws Exception {
+        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         String authToken = logoutRequest.authToken();
-
-        if (!aDAO.AuthenticateAuth(authToken)) {
-            throw new UnauthorizedException("Error: unauthorized");
-        }
-
+        if (!aDAO.AuthenticateAuth(authToken)) { throw new UnauthorizedException("Error: unauthorized"); }
         aDAO.DeleteAuth(authToken);
-        return new EmptyResponse(); // Successfully logged out
+        return new EmptyResponse();
     }
 }

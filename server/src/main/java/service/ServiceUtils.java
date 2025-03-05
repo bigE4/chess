@@ -1,13 +1,37 @@
 package service;
-import dataaccess.UserDatabaseDAO;
-import request.RegisterRequest;
 
+import dataaccess.AuthDatabaseDAO;
+import dataaccess.GameDatabaseDAO;
+import dataaccess.UserDatabaseDAO;
+import request.AuthRequest;
+import request.CreateGameRequest;
+import request.RegisterRequest;
+import java.util.Random;
 import java.util.UUID;
 
 public class ServiceUtils {
 
     public static String GenerateToken() {
         return UUID.randomUUID().toString();
+    }
+
+    public static int GenerateGameID() {
+        Random random = new Random();
+        return random.nextInt(1000, 9999);
+    }
+
+    public static boolean AuthenticateToken(AuthDatabaseDAO aDAO, AuthRequest request) {
+        return aDAO.AuthenticateAuth(request.authToken());
+    }
+
+    public static Boolean BadRequest(CreateGameRequest createGameRequest) {
+        String authToken = createGameRequest.authToken();
+        String gameName = createGameRequest.gameName();
+        return authToken == null || gameName == null || authToken.isEmpty() || gameName.isEmpty();
+    }
+
+    public static Boolean GameNameUnavailable(GameDatabaseDAO gDAO, CreateGameRequest createGameRequest) {
+        return gDAO.GameExists(createGameRequest.gameName());
     }
 
     public static Boolean BadRequest(RegisterRequest registerRequest) {
