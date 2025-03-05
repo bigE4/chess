@@ -15,7 +15,7 @@ public class ListGamesService {
     public ListGamesResponse ListGames(ListGamesRequest listGamesRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        if (ServiceUtils.AuthenticateToken(aDAO, listGamesRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (!ServiceUtils.AuthenticateToken(aDAO, listGamesRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             List<GameDataDTO> gameDTOs = new ArrayList<>();
             for (GameData gameData: gDAO.RetrieveGames()) {

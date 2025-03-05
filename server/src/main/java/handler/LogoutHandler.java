@@ -18,18 +18,12 @@ public class LogoutHandler implements spark.Route {
     public Object handle(Request request, Response response) {
         try {
             String authToken = request.headers("authorization");
-            if (authToken == null || authToken.isEmpty()) { throw new BadRequestException("Error: bad request"); }
             LogoutRequest logoutRequest = new LogoutRequest(authToken);
             LogoutService logoutService = new LogoutService();
             EmptyResponse logoutResponse = logoutService.Logout(logoutRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(logoutResponse);
-        } catch (BadRequestException badRequestException) {
-            response.type("application/json");
-            response.status(400);
-            ErrorResponse errorResponse = new ErrorResponse("Error: bad request");
-            return gson.toJson(errorResponse);
         } catch (UnauthorizedException unauthorizedException) {
             response.type("application/json");
             response.status(401);

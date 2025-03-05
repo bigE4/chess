@@ -13,8 +13,9 @@ public class LoginService {
         UserDatabaseDAO uDAO = new UserDatabaseDAO();
         if (!ServiceUtils.AuthenticateUser(uDAO, loginRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
-            aDAO.StoreAuth(new AuthData(ServiceUtils.GenerateToken(), loginRequest.username()));
-            return new LoginResponse(loginRequest.username(), ServiceUtils.GenerateToken());
+            String authToken = ServiceUtils.GenerateToken();
+            aDAO.StoreAuth(new AuthData(authToken, loginRequest.username()));
+            return new LoginResponse(loginRequest.username(), authToken);
         } catch (Exception e) {
             throw new Exception("Error: " + e.getMessage());
         }

@@ -17,9 +17,10 @@ public class RegisterService {
         if (ServiceUtils.BadRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.UsernameUnavailable(uDAO, registerRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
-            aDAO.StoreAuth(new AuthData(ServiceUtils.GenerateToken(), registerRequest.username()));
+            String authToken = ServiceUtils.GenerateToken();
+            aDAO.StoreAuth(new AuthData(authToken, registerRequest.username()));
             uDAO.StoreUser(new UserData(registerRequest.username(), registerRequest.password(), registerRequest.email()));
-            return new RegisterResponse(registerRequest.username(), ServiceUtils.GenerateToken());
+            return new RegisterResponse(registerRequest.username(), authToken);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
