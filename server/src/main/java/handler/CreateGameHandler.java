@@ -40,12 +40,7 @@ public class CreateGameHandler implements spark.Route {
             response.status(401);
             ErrorResponse errorResponse = new ErrorResponse("Error: unauthorized");
             return gson.toJson(errorResponse);
-        } catch (AlreadyTakenException e) {
-            response.type("application/json");
-            response.status(403);
-            ErrorResponse errorResponse = new ErrorResponse("Error: already taken");
-            return gson.toJson(errorResponse);
-        }catch (Exception e) {
+        } catch (Exception e) {
             response.type("application/json");
             response.status(500);
             ErrorResponse errorResponse = new ErrorResponse(e.getMessage());

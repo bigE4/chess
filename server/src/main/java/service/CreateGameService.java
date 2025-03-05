@@ -2,7 +2,6 @@ package service;
 
 import dataaccess.AuthDatabaseDAO;
 import dataaccess.GameDatabaseDAO;
-import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import request.CreateGameRequest;
@@ -14,10 +13,10 @@ public class CreateGameService {
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
         if (ServiceUtils.BadRequest(createGameRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.AuthenticateToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
-        if (ServiceUtils.GameNameUnavailable(gDAO, createGameRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
+            int ID = ServiceUtils.GenerateGameID();
             // Implement CreateGame Business Logic Here
-            return null;
+            return new CreateGameResponse(ID);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

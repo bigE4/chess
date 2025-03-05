@@ -3,10 +3,10 @@ package service;
 import dataaccess.AuthDatabaseDAO;
 import dataaccess.GameDatabaseDAO;
 import dataaccess.UserDatabaseDAO;
-import request.AuthRequest;
-import request.CreateGameRequest;
-import request.LoginRequest;
-import request.RegisterRequest;
+import model.GameData;
+import request.*;
+
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -35,8 +35,27 @@ public class ServiceUtils {
         return authToken == null || gameName == null || authToken.isEmpty() || gameName.isEmpty();
     }
 
-    public static Boolean GameNameUnavailable(GameDatabaseDAO gDAO, CreateGameRequest createGameRequest) {
-        return gDAO.GameExists(createGameRequest.gameName());
+    public static Boolean BadRequest(JoinGameRequest joinGameRequest) {
+        String authToken = joinGameRequest.authToken();
+        String playerColor = joinGameRequest.playerColor();
+        int ID = joinGameRequest.gameID();
+        return authToken == null || playerColor == null || authToken.isEmpty() || playerColor.isEmpty() || InvalidColor(playerColor) || InvalidID(ID);
+    }
+
+    private static Boolean InvalidColor(String playerColor) {
+        String white = "WHITE";
+        String black = "BLACK";
+        return !(playerColor.equals(white) || playerColor.equals(black));
+    }
+
+    private static Boolean InvalidID(int ID) {
+        return !(1000 <= ID && ID <= 9999);
+    }
+
+    public static boolean GameColorUnavailable(GameDatabaseDAO gDAO, JoinGameRequest joinGameRequest) {
+        GameData game = gDAO.RetrieveGame(joinGameRequest.gameID());
+        String playerColor = joinGameRequest.playerColor();
+        return playerColor.equals("WHITE") && game.whiteUsername() != null || playerColor.equals("BLACK") && game.blackUsername() != null;
     }
 
     public static Boolean BadRequest(RegisterRequest registerRequest) {

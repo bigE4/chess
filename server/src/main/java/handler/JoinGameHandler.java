@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
+import request.JoinGameRequest;
+import response.EmptyResponse;
 import response.ErrorResponse;
+import service.JoinGameService;
 import spark.Request;
 import spark.Response;
 
@@ -15,8 +18,14 @@ public class JoinGameHandler implements spark.Route {
     @Override
     public Object handle(Request request, Response response) {
         try {
-            // Implement handle here
-            return null;
+            String authToken = request.headers("authorization");
+            JoinGameRequest body = gson.fromJson(request.body(), JoinGameRequest.class);
+            JoinGameRequest joinGameRequest = new JoinGameRequest(authToken, body);
+            JoinGameService joinGameService = new JoinGameService();
+            EmptyResponse emptyResponse = joinGameService.JoinGame(joinGameRequest);
+            response.type("application/json");
+            response.status(200);
+            return gson.toJson(emptyResponse);
         } catch (BadRequestException e) {
             response.type("application/json");
             response.status(400);
