@@ -1,4 +1,4 @@
-package passoff.server;
+package service;
 
 import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import request.*;
-import service.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
