@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserDatabaseDAO implements UserDAO {
-    String userPath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exUserDataBase.json";
+//    String userPath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exUserDataBase.json";
+    String userPath = "src/main/java/dataaccess/dataaccessEx/exUserDataBase.json";
     public List<UserData> userDataList;
 
     public UserDatabaseDAO(List<UserData> userDataList) {

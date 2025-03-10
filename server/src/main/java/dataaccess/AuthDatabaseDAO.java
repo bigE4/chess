@@ -9,7 +9,8 @@ import java.util.Objects;
 
 public class AuthDatabaseDAO implements AuthDAO {
 
-    String authPath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exAuthDataBase.json";
+//    String authPath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exAuthDataBase.json";
+    String authPath = "src/main/java/dataaccess/dataaccessEx/exAuthDataBase.json";
     public List<AuthData> authDataList;
 
     public AuthDatabaseDAO(List<AuthData> authDataList) {
