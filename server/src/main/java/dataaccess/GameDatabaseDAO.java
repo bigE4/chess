@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class GameDatabaseDAO implements GameDAO {
 
-    String gamePath = "src/main/java/dataaccess/exampledatabase/exGameDataBase.json";
+    String gamePath = "src\\main\\java\\dataaccess\\exampledatabase\\exGameDataBase.json";
     public List<GameData> gameDataList;
 
     public GameDatabaseDAO() {

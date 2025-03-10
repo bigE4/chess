@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class UserDatabaseDAO implements UserDAO {
 
-    String userPath = "src/main/java/dataaccess/exampledatabase/exUserDataBase.json";
+    String userPath = "src\\main\\java\\dataaccess\\exampledatabase\\exUserDataBase.json";
     public List<UserData> userDataList;
 
     public UserDatabaseDAO() {

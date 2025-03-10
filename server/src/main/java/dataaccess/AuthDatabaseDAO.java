@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class AuthDatabaseDAO implements AuthDAO {
 
-    String authPath = "src/main/java/dataaccess/exampledatabase/exAuthDataBase.json";
+    String authPath = "src\\main\\java\\dataaccess\\exampledatabase\\exAuthDataBase.json";
     public List<AuthData> authDataList;
 
     public AuthDatabaseDAO() {
