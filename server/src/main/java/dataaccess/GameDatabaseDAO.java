@@ -9,30 +9,15 @@ import java.util.Objects;
 
 public class GameDatabaseDAO implements GameDAO {
 
-//    String gamePath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exGameDataBase.json";
-    String gamePath = "src/main/java/dataaccess/dataaccessEx/exGameDataBase.json";
+    String gamePath = "src/main/java/dataaccess/exampledatabase/exGameDataBase.json";
     public List<GameData> gameDataList;
 
-    public GameDatabaseDAO(List<GameData> gameDataList) {
-        this.gameDataList = gameDataList;
-    }
-
     public GameDatabaseDAO() {
-        this.gameDataList = exDBReader.readListFromFile(gamePath, new TypeToken<List<GameData>>() {});
+        this.gameDataList = ExampleDatabaseReader.readListFromFile(gamePath, new TypeToken<List<GameData>>() {});
     }
 
     @Override
-    public boolean GameExists(String gameName) {
-        for (GameData data: gameDataList) {
-            if (Objects.equals(data.gameName(), gameName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean GameExists(int gameID) {
+    public boolean gameExists(int gameID) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameID)) {
                 return true;
@@ -42,28 +27,27 @@ public class GameDatabaseDAO implements GameDAO {
     }
 
     @Override
-    public void StoreGame(GameData gameData) {
-        if (!GameExists(gameData.gameName())) {
+    public void storeGame(GameData gameData) {
+        if (!gameExists(gameData.gameID())) {
             gameDataList.add(gameData);
-            exDBReader.writeListToFile(gamePath, gameDataList);
+            ExampleDatabaseReader.writeListToFile(gamePath, gameDataList);
         }
     }
 
     @Override
-    public boolean UpdateGame(GameData gameData) {
+    public void updateGame(GameData gameData) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameData.gameID())) {
-                DeleteGame(gameData.gameID());
-                StoreGame(gameData);
-                exDBReader.writeListToFile(gamePath, gameDataList);
-                return true;
+                deleteGame(gameData.gameID());
+                storeGame(gameData);
+                ExampleDatabaseReader.writeListToFile(gamePath, gameDataList);
+                return;
             }
         }
-        return false;
     }
 
     @Override
-    public GameData RetrieveGame(int gameID) {
+    public GameData retrieveGame(int gameID) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameID)) {
                 return data;
@@ -73,24 +57,24 @@ public class GameDatabaseDAO implements GameDAO {
     }
 
     @Override
-    public List<GameData> RetrieveGames() {
+    public List<GameData> retrieveGames() {
         return gameDataList;
     }
 
     @Override
-    public void DeleteGame(int gameID) {
+    public void deleteGame(int gameID) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameID)) {
                 gameDataList.remove(data);
-                exDBReader.writeListToFile(gamePath, gameDataList);
+                ExampleDatabaseReader.writeListToFile(gamePath, gameDataList);
                 return;
             }
         }
     }
 
     @Override
-    public void ClearGames() {
+    public void clearGames() {
         gameDataList = new ArrayList<>();
-        exDBReader.writeListToFile(gamePath, gameDataList);
+        ExampleDatabaseReader.writeListToFile(gamePath, gameDataList);
     }
 }

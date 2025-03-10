@@ -1,17 +1,12 @@
 package handler;
 
 import com.google.gson.Gson;
-import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import request.CreateGameRequest;
-import request.ListGamesRequest;
-import request.LoginRequest;
 import response.CreateGameResponse;
 import response.ErrorResponse;
-import response.ListGamesResponse;
 import service.CreateGameService;
-import service.ListGamesService;
 import spark.Request;
 import spark.Response;
 
@@ -26,7 +21,7 @@ public class CreateGameHandler implements spark.Route {
             CreateGameRequest body = gson.fromJson(request.body(), CreateGameRequest.class);
             CreateGameRequest createGameRequest = new CreateGameRequest(authToken, body);
             CreateGameService createGameService = new CreateGameService();
-            CreateGameResponse createGameResponse = createGameService.CreateGame(createGameRequest);
+            CreateGameResponse createGameResponse = createGameService.createGame(createGameRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(createGameResponse);

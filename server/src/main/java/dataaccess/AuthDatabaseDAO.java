@@ -9,38 +9,23 @@ import java.util.Objects;
 
 public class AuthDatabaseDAO implements AuthDAO {
 
-//    String authPath = "C:/Users/IanJE/Documents/byu_cs/cs240/chess/server/src/main/resources/dataaccessEx/exAuthDataBase.json";
-    String authPath = "src/main/java/dataaccess/dataaccessEx/exAuthDataBase.json";
+    String authPath = "src/main/java/dataaccess/exampledatabase/exAuthDataBase.json";
     public List<AuthData> authDataList;
 
-    public AuthDatabaseDAO(List<AuthData> authDataList) {
-        this.authDataList = authDataList;
-    }
-
     public AuthDatabaseDAO() {
-        this.authDataList = exDBReader.readListFromFile(authPath, new TypeToken<List<AuthData>>() {});
-    }
-
-    @Override
-    public boolean AuthExists(String authToken) {
-        for (AuthData data: authDataList) {
-            if (Objects.equals(data.authToken(), authToken)) {
-                return true;
-            }
-        }
-        return false;
+        this.authDataList = ExampleDatabaseReader.readListFromFile(authPath, new TypeToken<List<AuthData>>() {});
     }
 
      @Override
-    public void StoreAuth(AuthData authData) {
-        if (RetrieveAuth(authData.authToken()) == null) {
+    public void storeAuth(AuthData authData) {
+        if (retrieveAuth(authData.authToken()) == null) {
             authDataList.add(authData);
-            exDBReader.writeListToFile(authPath, authDataList);
+            ExampleDatabaseReader.writeListToFile(authPath, authDataList);
         }
      }
 
     @Override
-    public boolean AuthenticateAuth(String authToken) {
+    public boolean authenticateAuth(String authToken) {
         for (AuthData data: authDataList) {
             if (Objects.equals(data.authToken(), authToken)) {
                 return true;
@@ -50,7 +35,7 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public AuthData RetrieveAuth(String authToken) {
+    public AuthData retrieveAuth(String authToken) {
         for (AuthData data: authDataList) {
             if (Objects.equals(data.authToken(), authToken)) {
                 return data;
@@ -60,18 +45,18 @@ public class AuthDatabaseDAO implements AuthDAO {
     }
 
     @Override
-    public void DeleteAuth(String authToken) {
+    public void deleteAuth(String authToken) {
         for (AuthData data: authDataList) {
             if (Objects.equals(data.authToken(), authToken)) {
                 authDataList.remove(data);
-                exDBReader.writeListToFile(authPath, authDataList);
+                ExampleDatabaseReader.writeListToFile(authPath, authDataList);
                 return;
             }
         }
     }
     @Override
-    public void ClearAuth() {
+    public void clearAuth() {
         authDataList = new ArrayList<>();
-        exDBReader.writeListToFile(authPath, authDataList);
+        ExampleDatabaseReader.writeListToFile(authPath, authDataList);
     }
 }

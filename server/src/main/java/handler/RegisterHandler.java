@@ -22,7 +22,7 @@ public class RegisterHandler implements spark.Route {
             RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
             // Call the RegisterService class to do the thing
             RegisterService registerService = new RegisterService();
-            RegisterResponse registerResponse = registerService.Register(registerRequest);
+            RegisterResponse registerResponse = registerService.register(registerRequest);
             // Set successful response
             response.type("application/json");
             response.status(200);

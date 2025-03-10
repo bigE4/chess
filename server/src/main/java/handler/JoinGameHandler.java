@@ -22,7 +22,7 @@ public class JoinGameHandler implements spark.Route {
             JoinGameRequest body = gson.fromJson(request.body(), JoinGameRequest.class);
             JoinGameRequest joinGameRequest = new JoinGameRequest(authToken, body);
             JoinGameService joinGameService = new JoinGameService();
-            EmptyResponse emptyResponse = joinGameService.JoinGame(joinGameRequest);
+            EmptyResponse emptyResponse = joinGameService.joinGame(joinGameRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(emptyResponse);

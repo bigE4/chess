@@ -1,7 +1,6 @@
 package handler;
 
 import com.google.gson.Gson;
-import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import request.LogoutRequest;
 import response.ErrorResponse;
@@ -20,7 +19,7 @@ public class LogoutHandler implements spark.Route {
             String authToken = request.headers("authorization");
             LogoutRequest logoutRequest = new LogoutRequest(authToken);
             LogoutService logoutService = new LogoutService();
-            EmptyResponse logoutResponse = logoutService.Logout(logoutRequest);
+            EmptyResponse logoutResponse = logoutService.logout(logoutRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(logoutResponse);

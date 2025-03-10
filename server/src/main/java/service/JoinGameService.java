@@ -10,20 +10,20 @@ import request.JoinGameRequest;
 import response.EmptyResponse;
 
 public class JoinGameService {
-    public EmptyResponse JoinGame(JoinGameRequest joinGameRequest) throws Exception {
+    public EmptyResponse joinGame(JoinGameRequest joinGameRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        if (ServiceUtils.IsABadRequest(joinGameRequest)) { throw new BadRequestException("Error: bad request"); }
-        if (ServiceUtils.IsABadToken(aDAO, joinGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
-        if (ServiceUtils.GameColorTaken(gDAO, joinGameRequest)) { throw new AlreadyTakenException("Error: already taken"); }
+        if (ServiceUtils.isABadRequest(joinGameRequest)) { throw new BadRequestException("Error: bad request"); }
+        if (ServiceUtils.isABadToken(aDAO, joinGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.gameColorTaken(gDAO, joinGameRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
             String authToken = joinGameRequest.authToken();
             String playerColor = joinGameRequest.playerColor();
             int ID = joinGameRequest.gameID();
-            GameData oldGameData = gDAO.RetrieveGame(ID);
-            String username = aDAO.RetrieveAuth(authToken).username();
+            GameData oldGameData = gDAO.retrieveGame(ID);
+            String username = aDAO.retrieveAuth(authToken).username();
             GameData newGameData = getGameData(playerColor, oldGameData, username);
-            gDAO.UpdateGame(newGameData);
+            gDAO.updateGame(newGameData);
             return new EmptyResponse();
         } catch (Exception e) {
             throw new Exception(e.getMessage());

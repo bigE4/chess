@@ -8,13 +8,13 @@ import request.LoginRequest;
 import response.LoginResponse;
 
 public class LoginService {
-    public LoginResponse Login(LoginRequest loginRequest) throws Exception {
+    public LoginResponse login(LoginRequest loginRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         UserDatabaseDAO uDAO = new UserDatabaseDAO();
-        if (ServiceUtils.IsABadUser(uDAO, loginRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.isABadUser(uDAO, loginRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
-            String authToken = ServiceUtils.GenerateToken();
-            aDAO.StoreAuth(new AuthData(authToken, loginRequest.username()));
+            String authToken = ServiceUtils.generateToken();
+            aDAO.storeAuth(new AuthData(authToken, loginRequest.username()));
             return new LoginResponse(loginRequest.username(), authToken);
         } catch (Exception e) {
             throw new Exception("Error: " + e.getMessage());

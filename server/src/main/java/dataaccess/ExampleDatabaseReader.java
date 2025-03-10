@@ -9,13 +9,13 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class exDBReader {
+public class ExampleDatabaseReader {
 
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static <T> void writeListToFile(String filePath, List<T> dataList) {
         try (FileWriter writer = new FileWriter(filePath)) {
-            gson.toJson(dataList, writer);
+            GSON.toJson(dataList, writer);
         } catch (IOException e) {
             System.err.println("Error writing data list to file: " + e.getMessage());
         }
@@ -24,7 +24,7 @@ public class exDBReader {
     public static <T> List<T> readListFromFile(String filePath, TypeToken<List<T>> typeToken) {
         try (FileReader reader = new FileReader(filePath)) {
             Type listType = typeToken.getType();
-            return gson.fromJson(reader, listType);
+            return GSON.fromJson(reader, listType);
         } catch (IOException | JsonSyntaxException e) {
             System.err.println("Error reading data list from file: " + e.getMessage());
             return null;

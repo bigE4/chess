@@ -1,5 +1,5 @@
 import chess.ChessGame;
-import dataaccess.exDBReader;
+import dataaccess.ExampleDatabaseReader;
 import model.AuthData;
 import model.GameData;
 import model.UserData;
@@ -28,9 +28,9 @@ public class Main2 {
                 new GameData(8038, "Ian", "Vivian", "Ells", new ChessGame())
         ));
 
-        exDBReader.writeListToFile(userPath, listOfUsers);
-        exDBReader.writeListToFile(authPath, listOfAuths);
-        exDBReader.writeListToFile(gamePath, listOfGames);
+        ExampleDatabaseReader.writeListToFile(userPath, listOfUsers);
+        ExampleDatabaseReader.writeListToFile(authPath, listOfAuths);
+        ExampleDatabaseReader.writeListToFile(gamePath, listOfGames);
 
         System.out.println("Complete");
     }

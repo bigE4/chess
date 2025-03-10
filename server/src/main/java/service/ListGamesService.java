@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListGamesService {
-    public ListGamesResponse ListGames(ListGamesRequest listGamesRequest) throws Exception {
+    public ListGamesResponse listGames(ListGamesRequest listGamesRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        if (ServiceUtils.IsABadToken(aDAO, listGamesRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
+        if (ServiceUtils.isABadToken(aDAO, listGamesRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             List<GameDataDTO> gameDTOs = new ArrayList<>();
-            for (GameData gameData: gDAO.RetrieveGames()) {
+            for (GameData gameData: gDAO.retrieveGames()) {
                 gameDTOs.add(new GameDataDTO(gameData));
             }
             return new ListGamesResponse(gameDTOs);

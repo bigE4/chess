@@ -1,7 +1,6 @@
 package handler;
 
 import com.google.gson.Gson;
-import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import request.ListGamesRequest;
 import response.ErrorResponse;
@@ -20,7 +19,7 @@ public class ListGamesHandler implements spark.Route {
             String authToken = request.headers("authorization");
             ListGamesRequest listGamesRequest = new ListGamesRequest(authToken);
             ListGamesService listGamesService = new ListGamesService();
-            ListGamesResponse listGamesResponse = listGamesService.ListGames(listGamesRequest);
+            ListGamesResponse listGamesResponse = listGamesService.listGames(listGamesRequest);
             response.type("application/json");
             response.status(200);
             return gson.toJson(listGamesResponse);

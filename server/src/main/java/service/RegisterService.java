@@ -11,15 +11,15 @@ import response.RegisterResponse;
 
 
 public class RegisterService {
-    public RegisterResponse Register(RegisterRequest registerRequest) throws Exception {
+    public RegisterResponse register(RegisterRequest registerRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         UserDatabaseDAO uDAO = new UserDatabaseDAO();
-        if (ServiceUtils.IsABadRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
-        if (ServiceUtils.UsernameTaken(uDAO, registerRequest)) { throw new AlreadyTakenException("Error: already taken"); }
+        if (ServiceUtils.isABadRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
+        if (ServiceUtils.usernameTaken(uDAO, registerRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
-            String authToken = ServiceUtils.GenerateToken();
-            aDAO.StoreAuth(new AuthData(authToken, registerRequest.username()));
-            uDAO.StoreUser(new UserData(registerRequest.username(), registerRequest.password(), registerRequest.email()));
+            String authToken = ServiceUtils.generateToken();
+            aDAO.storeAuth(new AuthData(authToken, registerRequest.username()));
+            uDAO.storeUser(new UserData(registerRequest.username(), registerRequest.password(), registerRequest.email()));
             return new RegisterResponse(registerRequest.username(), authToken);
         } catch (Exception e) {
             throw new Exception(e.getMessage());

@@ -5,12 +5,11 @@ import model.GameData;
 import java.util.List;
 
 public interface GameDAO {
-    boolean GameExists(String gameName);
-    boolean GameExists(int gameID);
-    void StoreGame(GameData gameData);
-    boolean UpdateGame(GameData gameData);
-    GameData RetrieveGame(int gameID);
-    List<GameData> RetrieveGames();
-    void DeleteGame(int gameID);
-    void ClearGames();
+    boolean gameExists(int gameID);
+    void storeGame(GameData gameData);
+    void updateGame(GameData gameData);
+    GameData retrieveGame(int gameID);
+    List<GameData> retrieveGames();
+    void deleteGame(int gameID);
+    void clearGames();
 }
