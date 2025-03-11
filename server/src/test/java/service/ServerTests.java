@@ -117,7 +117,9 @@ public class ServerTests {
     @Order(11)
     void testUnauthorizedGameCreation() throws Exception {
         registerService.register(new RegisterRequest("UserA", "UserA.Password", "UserA@email.com"));
-        Exception exception = assertThrows(UnauthorizedException.class, () -> createGameService.createGame(new CreateGameRequest("badToken", "exampleGame")));
+        Exception exception = assertThrows(UnauthorizedException.class, () -> createGameService.createGame(
+                new CreateGameRequest("badToken", "exampleGame")
+        ));
         assertEquals("Error: unauthorized", exception.getMessage());
     }
 
@@ -134,7 +136,9 @@ public class ServerTests {
     void testUnauthorizedGameJoin() throws Exception {
         String validToken = registerService.register(new RegisterRequest("UserA", "UserA.Password", "UserA@email.com")).authToken();
         int goodID = createGameService.createGame(new CreateGameRequest(validToken, "exampleGame")).gameID();
-        Exception exception = assertThrows(UnauthorizedException.class, () -> joinGameService.joinGame(new JoinGameRequest("badToken", "WHITE", goodID)));
+        Exception exception = assertThrows(UnauthorizedException.class, () -> joinGameService.joinGame(
+                new JoinGameRequest("badToken", "WHITE", goodID)
+        ));
         assertEquals("Error: unauthorized", exception.getMessage());
     }
 

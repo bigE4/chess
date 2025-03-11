@@ -16,10 +16,10 @@ public class CreateGameService {
         if (ServiceUtils.isABadRequest(createGameRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.isABadToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
-            int ID = ServiceUtils.generateGameID();
+            int id = ServiceUtils.generateGameID();
             ChessGame chessGame = new ChessGame();
-            gDAO.storeGame(new GameData(ID, null, null, createGameRequest.gameName(), chessGame));
-            return new CreateGameResponse(ID);
+            gDAO.storeGame(new GameData(id, null, null, createGameRequest.gameName(), chessGame));
+            return new CreateGameResponse(id);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

@@ -121,22 +121,22 @@ public class ChessPiece {
     public Collection<ChessMove> pawnHelper(ChessBoard board, ChessPosition start) {
         ArrayList<ChessMove> validMoves = new ArrayList<>();
 
-        int pawn_dy = 0;
-        int pawn_range = 1;
+        int pawnDy = 0;
+        int pawnRange = 1;
 
         switch (pieceColor) {
-            case WHITE -> pawn_dy = 1;
-            case BLACK -> pawn_dy = -1;
+            case WHITE -> pawnDy = 1;
+            case BLACK -> pawnDy = -1;
         }
 
         switch (start.getRow()) {
-            case 2 -> pawn_range = pieceColor == ChessGame.TeamColor.WHITE ? 2 : 1;
-            case 7 -> pawn_range = pieceColor == ChessGame.TeamColor.BLACK ? 2 : 1;
+            case 2 -> pawnRange = pieceColor == ChessGame.TeamColor.WHITE ? 2 : 1;
+            case 7 -> pawnRange = pieceColor == ChessGame.TeamColor.BLACK ? 2 : 1;
         }
 
-        validMoves.addAll(movesCalculator(board, start, pawn_range, 0, pawn_dy, false, false));
-        validMoves.addAll(movesCalculator(board, start, pawn_range, -1, pawn_dy, true, true));
-        validMoves.addAll(movesCalculator(board, start, pawn_range, 1, pawn_dy, true, true));
+        validMoves.addAll(movesCalculator(board, start, pawnRange, 0, pawnDy, false, false));
+        validMoves.addAll(movesCalculator(board, start, pawnRange, -1, pawnDy, true, true));
+        validMoves.addAll(movesCalculator(board, start, pawnRange, 1, pawnDy, true, true));
 
         return validMoves;
     }
@@ -160,16 +160,7 @@ public class ChessPiece {
                 var newMove = new ChessMove(start, end, null);
                 var promoMoves = getPromoMoves(start, end, newY);
 
-                // capture logic
-                if (newPiece != null) {
-                    if (pieceColor != newPiece.pieceColor && capture) {
-                        // promotion logic
-                        if (type == PieceType.PAWN && (newY == 8 || newY == 1)){
-                            validMoves.addAll(List.of(promoMoves));
-                            break;
-                        }
-                        validMoves.add(newMove);
-                    }
+                if (handleCaptureLogic(capture, newPiece, newY, validMoves, promoMoves, newMove)) {
                     break;
                 }
 
@@ -182,10 +173,30 @@ public class ChessPiece {
                     validMoves.addAll(List.of(promoMoves));
                     break;
                 }
+
                 validMoves.add(newMove);
             }
         }
+
         return validMoves;
+    }
+
+    private boolean handleCaptureLogic(boolean capture, ChessPiece newPiece,
+                                       int newY, ArrayList<ChessMove> validMoves,
+                                       ChessMove[] promoMoves, ChessMove newMove) {
+        // capture logic
+        if (newPiece != null) {
+            if (pieceColor != newPiece.pieceColor && capture) {
+                // promotion logic
+                if (type == PieceType.PAWN && (newY == 8 || newY == 1)){
+                    validMoves.addAll(List.of(promoMoves));
+                    return true;
+                }
+                validMoves.add(newMove);
+            }
+            return true;
+        }
+        return false;
     }
 
     private ChessMove[] getPromoMoves(ChessPosition start, ChessPosition end, int newY) {

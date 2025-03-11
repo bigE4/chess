@@ -25,8 +25,8 @@ public class ServiceUtils {
     public static boolean isABadRequest(JoinGameRequest joinGameRequest) {
         String authToken = joinGameRequest.authToken();
         String playerColor = joinGameRequest.playerColor();
-        int ID = joinGameRequest.gameID();
-        return authToken == null || playerColor == null || authToken.isEmpty() || playerColor.isEmpty() || invalidColor(playerColor) || invalidID(ID);
+        int id = joinGameRequest.gameID();
+        return authToken == null || playerColor == null || authToken.isEmpty() || playerColor.isEmpty() || invalidColor(playerColor) || invalidID(id);
     }
 
     private static boolean invalidColor(String playerColor) {
@@ -35,9 +35,9 @@ public class ServiceUtils {
         return !(playerColor.equals(white) || playerColor.equals(black));
     }
 
-    private static boolean invalidID(int ID) {
+    private static boolean invalidID(int id) {
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        boolean gameExists = gDAO.gameExists(ID);
+        boolean gameExists = gDAO.gameExists(id);
         return !gameExists;
     }
 

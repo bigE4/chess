@@ -19,8 +19,8 @@ public class JoinGameService {
         try {
             String authToken = joinGameRequest.authToken();
             String playerColor = joinGameRequest.playerColor();
-            int ID = joinGameRequest.gameID();
-            GameData oldGameData = gDAO.retrieveGame(ID);
+            int id = joinGameRequest.gameID();
+            GameData oldGameData = gDAO.retrieveGame(id);
             String username = aDAO.retrieveAuth(authToken).username();
             GameData newGameData = getGameData(playerColor, oldGameData, username);
             gDAO.updateGame(newGameData);
