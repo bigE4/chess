@@ -13,7 +13,7 @@ public class JoinGameService {
     public EmptyResponse joinGame(JoinGameRequest joinGameRequest) throws Exception {
         AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
         GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        if (ServiceUtils.isABadRequest(joinGameRequest)) { throw new BadRequestException("Error: bad request"); }
+        if (ServiceUtils.isABadRequest(gDAO, joinGameRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.isABadToken(aDAO, joinGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         if (ServiceUtils.gameColorTaken(gDAO, joinGameRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {
