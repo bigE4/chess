@@ -1,6 +1,7 @@
 package service;
 
 import dataaccess.*;
+import exceptions.DataAccessException;
 import model.GameData;
 import request.*;
 
@@ -53,11 +54,11 @@ public class ServiceUtils {
         return UUID.randomUUID().toString();
     }
 
-    public static boolean isABadToken(AuthDAO aDAO, AuthRequest request) {
+    public static boolean isABadToken(AuthDAO aDAO, AuthRequest request) throws DataAccessException {
         return !aDAO.authenticateAuth(request.authToken());
     }
 
-    public static boolean isABadUser(UserDAO uDAO, LoginRequest loginRequest) {
+    public static boolean isABadUser(UserDAO uDAO, LoginRequest loginRequest) throws DataAccessException {
         return !uDAO.authenticateUser(loginRequest.username(), loginRequest.password());
     }
 
@@ -68,7 +69,7 @@ public class ServiceUtils {
         return username == null || password == null || email == null || username.isEmpty() || password.isEmpty() || email.isEmpty();
     }
 
-    public static Boolean usernameTaken(UserDAO uDAO, RegisterRequest registerRequest) {
+    public static Boolean usernameTaken(UserDAO uDAO, RegisterRequest registerRequest) throws DataAccessException {
         return uDAO.userExists(registerRequest.username());
     }
 }

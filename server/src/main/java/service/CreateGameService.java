@@ -1,8 +1,7 @@
 package service;
 
 import chess.ChessGame;
-import dataaccess.AuthDatabaseDAO;
-import dataaccess.GameDatabaseDAO;
+import dataaccess.*;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import model.GameData;
@@ -11,8 +10,8 @@ import response.CreateGameResponse;
 
 public class CreateGameService {
     public CreateGameResponse createGame(CreateGameRequest createGameRequest) throws Exception {
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        GameDatabaseDAO gDAO = new GameDatabaseDAO();
+        AuthDAO aDAO = new AuthSQLDAO();
+        GameDAO gDAO = new GameSQLDAO();
         if (ServiceUtils.isABadRequest(createGameRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.isABadToken(aDAO, createGameRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {

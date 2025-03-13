@@ -1,6 +1,6 @@
 package service;
 
-import dataaccess.AuthDatabaseDAO;
+import dataaccess.AuthSQLDAO;
 import exceptions.UnauthorizedException;
 import request.LogoutRequest;
 import response.EmptyResponse;
@@ -8,7 +8,7 @@ import response.EmptyResponse;
 public class LogoutService {
 
     public EmptyResponse logout(LogoutRequest logoutRequest) throws Exception {
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
+        AuthSQLDAO aDAO = new AuthSQLDAO();
         if (ServiceUtils.isABadToken(aDAO, logoutRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             aDAO.deleteAuth(logoutRequest.authToken());

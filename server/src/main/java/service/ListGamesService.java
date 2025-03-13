@@ -1,7 +1,6 @@
 package service;
 
-import dataaccess.AuthDatabaseDAO;
-import dataaccess.GameDatabaseDAO;
+import dataaccess.*;
 import exceptions.UnauthorizedException;
 import model.GameData;
 import request.ListGamesRequest;
@@ -13,8 +12,8 @@ import java.util.List;
 
 public class ListGamesService {
     public ListGamesResponse listGames(ListGamesRequest listGamesRequest) throws Exception {
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        GameDatabaseDAO gDAO = new GameDatabaseDAO();
+        AuthDAO aDAO = new AuthSQLDAO();
+        GameDAO gDAO = new GameSQLDAO();
         if (ServiceUtils.isABadToken(aDAO, listGamesRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             List<GameDataDTO> gameDTOs = new ArrayList<>();

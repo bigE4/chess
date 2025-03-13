@@ -1,7 +1,6 @@
 package service;
 
-import dataaccess.AuthDatabaseDAO;
-import dataaccess.UserDatabaseDAO;
+import dataaccess.*;
 import exceptions.BadRequestException;
 import exceptions.AlreadyTakenException;
 import model.AuthData;
@@ -12,8 +11,8 @@ import response.RegisterResponse;
 
 public class RegisterService {
     public RegisterResponse register(RegisterRequest registerRequest) throws Exception {
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        UserDatabaseDAO uDAO = new UserDatabaseDAO();
+        AuthDAO aDAO = new AuthSQLDAO();
+        UserDAO uDAO = new UserSQLDAO();
         if (ServiceUtils.isABadRequest(registerRequest)) { throw new BadRequestException("Error: bad request"); }
         if (ServiceUtils.usernameTaken(uDAO, registerRequest)) { throw new AlreadyTakenException("Error: already taken"); }
         try {

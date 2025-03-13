@@ -1,7 +1,6 @@
 package service;
 
-import dataaccess.AuthDatabaseDAO;
-import dataaccess.UserDatabaseDAO;
+import dataaccess.*;
 import exceptions.UnauthorizedException;
 import model.AuthData;
 import request.LoginRequest;
@@ -9,8 +8,8 @@ import response.LoginResponse;
 
 public class LoginService {
     public LoginResponse login(LoginRequest loginRequest) throws Exception {
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        UserDatabaseDAO uDAO = new UserDatabaseDAO();
+        AuthDAO aDAO = new AuthSQLDAO();
+        UserDAO uDAO = new UserSQLDAO();
         if (ServiceUtils.isABadUser(uDAO, loginRequest)) { throw new UnauthorizedException("Error: unauthorized"); }
         try {
             String authToken = ServiceUtils.generateToken();

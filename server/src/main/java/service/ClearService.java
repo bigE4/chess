@@ -1,15 +1,13 @@
 package service;
 
-import dataaccess.AuthDatabaseDAO;
-import dataaccess.GameDatabaseDAO;
-import dataaccess.UserDatabaseDAO;
+import dataaccess.*;
 import response.EmptyResponse;
 
 public class ClearService {
     public EmptyResponse clear() throws Exception {
-        AuthDatabaseDAO aDAO = new AuthDatabaseDAO();
-        GameDatabaseDAO gDAO = new GameDatabaseDAO();
-        UserDatabaseDAO uDAO = new UserDatabaseDAO();
+        AuthDAO aDAO = new AuthSQLDAO();
+        GameDAO gDAO = new GameSQLDAO();
+        UserDAO uDAO = new UserSQLDAO();
         try {
             aDAO.clearAuth();
             gDAO.clearGames();
