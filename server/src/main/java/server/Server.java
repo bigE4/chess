@@ -1,5 +1,7 @@
 package server;
 
+import dataaccess.DatabaseManager;
+import exceptions.DataAccessException;
 import handler.*;
 import spark.*;
 
@@ -25,6 +27,14 @@ public class Server {
         System.out.println("put/game registered");
         Spark.delete("/db", new ClearHandler());
         System.out.println("delete/db registered");
+        System.out.println("Ensuring Database Exists With Correct Tables...");
+        try {
+            DatabaseManager.createDatabase();
+            DatabaseManager.createTables();
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Success!");
         //This line initializes the server and can be removed once you have a functioning endpoint
         Spark.init();
         Spark.awaitInitialization();
