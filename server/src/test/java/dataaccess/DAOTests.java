@@ -1,8 +1,11 @@
 package dataaccess;
 
 import exceptions.DataAccessException;
+import model.GameData;
 import model.UserData;
 import org.junit.jupiter.api.*;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,4 +66,52 @@ public class DAOTests {
         assertFalse(userDAO.authenticateUser("UserA", "badPassword"));
     }
 
+    @Test
+    @Order(7)
+    void testStoreGameSuccess() {
+        GameData game = new GameData(1, "WhitePlayer", "BlackPlayer", "ChessGame", new chess.ChessGame());
+        assertDoesNotThrow(() -> gameDAO.storeGame(game));
+    }
+
+    @Test
+    @Order(8)
+    void testStoreGameDuplicate() throws Exception {
+        GameData game = new GameData(1, "WhitePlayer", "BlackPlayer", "ChessGame", new chess.ChessGame());
+        gameDAO.storeGame(game);
+        assertThrows(DataAccessException.class, () -> gameDAO.storeGame(game));
+    }
+
+    @Test
+    @Order(9)
+    void testGameExistsTrue() throws Exception {
+        gameDAO.storeGame(new GameData(1, "WhitePlayer", "BlackPlayer", "ChessGame", new chess.ChessGame()));
+        assertTrue(gameDAO.gameExists(1));
+    }
+
+    @Test
+    @Order(10)
+    void testGameExistsFalse() throws Exception {
+        assertFalse(gameDAO.gameExists(999));
+    }
+
+    @Test
+    @Order(11)
+    void testRetrieveGameSuccess() throws Exception {
+        GameData game = new GameData(1, "WhitePlayer", "BlackPlayer", "ChessGame", new chess.ChessGame());
+        gameDAO.storeGame(game);
+        assertNotNull(gameDAO.retrieveGame(1));
+    }
+
+    @Test
+    @Order(12)
+    void testRetrieveGameFail() throws Exception {
+        assertNull(gameDAO.retrieveGame(999));
+    }
+
+    @Test
+    @Order(13)
+    void testRetrieveGamesEmpty() throws Exception {
+        List<GameData> games = gameDAO.retrieveGames();
+        assertTrue(games.isEmpty());
+    }
 }
