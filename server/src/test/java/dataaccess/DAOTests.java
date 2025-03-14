@@ -132,7 +132,7 @@ public class DAOTests {
     @Test
     @Order(16)
     void testAuthenticateAuthFail() throws Exception {
-        assertFalse(authDAO.authenticateAuth("invalidToken"));
+        assertFalse(authDAO.authenticateAuth("badToken"));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class DAOTests {
     @Test
     @Order(18)
     void testRetrieveAuthFail() throws Exception {
-        assertNull(authDAO.retrieveAuth("invalidToken"));
+        assertNull(authDAO.retrieveAuth("badToken"));
     }
 
     @Test
@@ -158,6 +158,6 @@ public class DAOTests {
     @Test
     @Order(20)
     void testDeleteAuthFail() throws Exception {
-        assertDoesNotThrow(() -> authDAO.deleteAuth("invalidToken"));
+        assertDoesNotThrow(() -> authDAO.deleteAuth("badToken"));
     }
 }
