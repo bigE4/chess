@@ -1,6 +1,7 @@
 package dataaccess;
 
 import exceptions.DataAccessException;
+import model.AuthData;
 import model.GameData;
 import model.UserData;
 import org.junit.jupiter.api.*;
@@ -113,5 +114,50 @@ public class DAOTests {
     void testRetrieveGamesEmpty() throws Exception {
         List<GameData> games = gameDAO.retrieveGames();
         assertTrue(games.isEmpty());
+    }
+
+    @Test
+    @Order(14)
+    void testStoreAuthSuccess() {
+        assertDoesNotThrow(() -> authDAO.storeAuth(new AuthData("auth123", "UserA")));
+    }
+
+    @Test
+    @Order(15)
+    void testAuthenticateAuthSuccess() throws Exception {
+        authDAO.storeAuth(new AuthData("auth123", "UserA"));
+        assertTrue(authDAO.authenticateAuth("auth123"));
+    }
+
+    @Test
+    @Order(16)
+    void testAuthenticateAuthFail() throws Exception {
+        assertFalse(authDAO.authenticateAuth("invalidToken"));
+    }
+
+    @Test
+    @Order(17)
+    void testRetrieveAuthSuccess() throws Exception {
+        authDAO.storeAuth(new AuthData("auth123", "UserA"));
+        assertNotNull(authDAO.retrieveAuth("auth123"));
+    }
+
+    @Test
+    @Order(18)
+    void testRetrieveAuthFail() throws Exception {
+        assertNull(authDAO.retrieveAuth("invalidToken"));
+    }
+
+    @Test
+    @Order(19)
+    void testDeleteAuthSuccess() throws Exception {
+        authDAO.storeAuth(new AuthData("auth123", "UserA"));
+        assertDoesNotThrow(() -> authDAO.deleteAuth("auth123"));
+    }
+
+    @Test
+    @Order(20)
+    void testDeleteAuthFail() throws Exception {
+        assertDoesNotThrow(() -> authDAO.deleteAuth("invalidToken"));
     }
 }
