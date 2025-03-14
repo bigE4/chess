@@ -45,7 +45,7 @@ public class ServiceUtils {
     public static boolean gameColorTaken(GameDAO gDAO, JoinGameRequest joinGameRequest) throws DataAccessException {
         GameData game = gDAO.retrieveGame(joinGameRequest.gameID());
         String playerColor = joinGameRequest.playerColor();
-        return
+         return
                 playerColor.equals("WHITE") && game.whiteUsername() != null ||
                 playerColor.equals("BLACK") && game.blackUsername() != null;
     }

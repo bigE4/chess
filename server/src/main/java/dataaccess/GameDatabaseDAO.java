@@ -35,7 +35,7 @@ public class GameDatabaseDAO implements GameDAO {
     }
 
     @Override
-    public void updateGame(GameData gameData) {
+    public void updatePlayerColors(GameData gameData) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameData.gameID())) {
                 deleteGame(gameData.gameID());

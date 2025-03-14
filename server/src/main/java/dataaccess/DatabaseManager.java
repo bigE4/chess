@@ -51,24 +51,23 @@ public class DatabaseManager {
     }
 
     public static void createTables() throws DataAccessException {
-        String createGameDataTable = "CREATE TABLE IF NOT EXISTS `gameData` (" +
-                "`gameID` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "`whiteUsername` VARCHAR(255) NULL, " +
-                "`blackUsername` VARCHAR(255) NULL, " +
-                "`game` JSON NOT NULL" +
+        String createGameDataTable = "CREATE TABLE IF NOT EXISTS gameData (" +
+                "gameID SMALLINT UNSIGNED NOT NULL PRIMARY KEY, " +
+                "whiteUsername VARCHAR(255) NULL, " +
+                "blackUsername VARCHAR(255) NULL, " +
+                "gameName VARCHAR(255) NOT NULL," +
+                "game JSON NOT NULL" +
                 ");";
 
-        String createAuthDataTable = "CREATE TABLE IF NOT EXISTS `authData` (" +
-                "`authToken` CHAR(36) NOT NULL, " +
-                "`username` VARCHAR(255) NOT NULL, " +
-                "PRIMARY KEY(`authToken`)" +
+        String createAuthDataTable = "CREATE TABLE IF NOT EXISTS authData (" +
+                "authToken CHAR(36) NOT NULL PRIMARY KEY, " +
+                "username VARCHAR(255) NOT NULL" +
                 ");";
 
-        String createUserDataTable = "CREATE TABLE IF NOT EXISTS `userData` (" +
-                "`username` VARCHAR(255) NOT NULL, " +
-                "`password` VARCHAR(255) NOT NULL, " +
-                "`email` VARCHAR(255) NOT NULL, " +
-                "PRIMARY KEY(`username`)" +
+        String createUserDataTable = "CREATE TABLE IF NOT EXISTS userData (" +
+                "username VARCHAR(255) NOT NULL PRIMARY KEY, " +
+                "password VARCHAR(255) NOT NULL, " +
+                "email VARCHAR(255) NOT NULL " +
                 ");";
 
         try (var conn = getConnection()) {

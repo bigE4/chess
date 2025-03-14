@@ -22,7 +22,7 @@ public class JoinGameService {
             GameData oldGameData = gDAO.retrieveGame(id);
             String username = aDAO.retrieveAuth(authToken).username();
             GameData newGameData = getGameData(playerColor, oldGameData, username);
-            gDAO.updateGame(newGameData);
+            gDAO.updatePlayerColors(newGameData);
             return new EmptyResponse();
         } catch (Exception e) {
             throw new Exception(e.getMessage());

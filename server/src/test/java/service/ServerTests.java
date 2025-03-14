@@ -1,5 +1,6 @@
 package service;
 
+import dataaccess.DatabaseManager;
 import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
@@ -22,6 +23,8 @@ public class ServerTests {
 
     @BeforeEach
     void setUp() throws Exception {
+        DatabaseManager.createDatabase();
+        DatabaseManager.createTables();
         registerService = new RegisterService();
         loginService = new LoginService();
         logoutService = new LogoutService();
