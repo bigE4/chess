@@ -1,6 +1,5 @@
 import chess.*;
 
-import com.google.gson.Gson;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,24 +25,23 @@ public class ClientMain {
                 "Email: "
         );
 
-        List<String> quitList = List.of(
-                "Quit", "quit", "Q", "q");
-
         Scanner scanner = new Scanner(System.in);
-        String response = "";
+        boolean cont = true;
         printMenu(helpMenu);
 
-        while (!quitList.contains(response)) {
-            response = scanner.nextLine();
+        while (cont) {
+            String response = scanner.nextLine();
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
                 case "L", "l", "Login", "login" -> printMenu(loginMenu);
                 case "R", "r", "Register", "register" -> printMenu(registerMenu);
-                case "Q", "q", "Quit", "quit" -> System.out.println("Thanks!");
+                case "Q", "q", "Quit", "quit" -> {
+                    cont = false;
+                    System.out.println("See ya!");
+                }
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
             }
             System.out.println("----------");
-
         }
     }
 
