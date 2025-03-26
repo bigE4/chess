@@ -1,5 +1,4 @@
-import chess.*;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,16 +30,18 @@ public class ClientMain {
 
         while (cont) {
             String response = scanner.nextLine();
+            List<String> responses = new ArrayList<>();
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
-                case "L", "l", "Login", "login" -> printMenu(loginMenu);
-                case "R", "r", "Register", "register" -> printMenu(registerMenu);
+                case "L", "l", "Login", "login" -> responses = queryMenu(loginMenu, scanner);
+                case "R", "r", "Register", "register" -> responses = queryMenu(registerMenu, scanner);
                 case "Q", "q", "Quit", "quit" -> {
                     cont = false;
                     System.out.println("See ya!");
                 }
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
             }
+            System.out.println("You input: " + responses);
             System.out.println("----------");
         }
     }
@@ -51,4 +52,12 @@ public class ClientMain {
         }
     }
 
+    private static List<String> queryMenu(List<String> menu, Scanner scanner) {
+        ArrayList<String> responses = new ArrayList<>();
+        for (String line : menu) {
+            System.out.println(line);
+            responses.add(scanner.nextLine());
+        }
+        return responses;
+    }
 }
