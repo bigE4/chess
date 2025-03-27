@@ -1,5 +1,10 @@
 package client;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 
@@ -10,21 +15,40 @@ public class ServerFacade {
         serverUrl = url;
     }
 
-    public static int login(String username, String password) throws Exception {
-        var path = "/session";
-        LoginRequest request = new LoginRequest(username, password);
-        return makeRequest("POST", path, request);
-    }
-
-    public static int register(String username, String password, String email) throws Exception {
+    public int register(String username, String password, String email) throws Exception {
         var path = "/user";
         RegisterRequest request = new RegisterRequest(username, password, email);
         return makeRequest("POST", path, request);
     }
 
-    public static int makeRequest(String method, String path, Object request) throws Exception {
-        URL url = (new URI(serverUrl + path)).toURL();
-        return 0;
+    public int login(String username, String password) throws Exception {
+        var path = "/session";
+        LoginRequest request = new LoginRequest(username, password);
+        return makeRequest("POST", path, request);
+    }
+
+    public int makeRequest(String method, String path, Object request) throws Exception {
+         try {
+            URL url = (new URI(serverUrl + path)).toURL();
+            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            http.setRequestMethod(method);
+            http.setDoOutput(true);
+            writeBody(request, http);
+            http.connect();
+            return http.getResponseCode();
+        } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+    }
+
+    private void writeBody(Object request, HttpURLConnection http) throws IOException {
+        if (request != null) {
+            http.addRequestProperty("Content-Type", "application/json");
+            String reqData = new Gson().toJson(request);
+            try (OutputStream reqBody = http.getOutputStream()) {
+                reqBody.write(reqData.getBytes());
+            }
+        }
     }
 
     private static class LoginRequest {

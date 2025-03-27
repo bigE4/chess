@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class REPLOne {
-    public static void replMain(Scanner scanner, REPLFlags flags) throws Exception {
+    public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade) throws Exception {
         System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 
         var menus = initMenus();
@@ -19,8 +19,8 @@ public class REPLOne {
             String response = scanner.nextLine();
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
-                case "L", "l", "Login", "login" -> login(loginMenu, scanner);
-                case "R", "r", "Register", "register" -> register(registerMenu, scanner);
+                case "L", "l", "Login", "login" -> login(loginMenu, scanner, facade);
+                case "R", "r", "Register", "register" -> register(registerMenu, scanner, facade);
                 case "V" -> flags.replTwo = true;
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = false;
@@ -32,20 +32,20 @@ public class REPLOne {
         }
     }
 
-    public static void login(List<String> loginMenu, Scanner scanner) throws Exception {
+    public static void login(List<String> loginMenu, Scanner scanner, ServerFacade facade) throws Exception {
         List<String> responses = new ArrayList<>();
         responses = queryMenu(loginMenu, scanner);
-        int serverResponse = ServerFacade.login(responses.get(0), responses.get(1));
+        int serverResponse = facade.login(responses.get(0), responses.get(1));
     }
 
     private static void login200() {
 
     }
 
-    private static void register(List<String> registerMenu, Scanner scanner) throws Exception {
+    private static void register(List<String> registerMenu, Scanner scanner, ServerFacade facade) throws Exception {
         List<String> responses = new ArrayList<>();
         responses = queryMenu(registerMenu, scanner);
-        int serverResponse = ServerFacade.register(responses.get(0), responses.get(1), responses.get(2));
+        int serverResponse = facade.register(responses.get(0), responses.get(1), responses.get(2));
     }
 
     private static void register200() {
