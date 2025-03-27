@@ -1,13 +1,12 @@
 package client;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import records.REPLToken;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.Map;
 
 public class ServerFacade {
     private static String serverUrl;
@@ -17,15 +16,34 @@ public class ServerFacade {
     }
 
     public HttpURLConnection register(String username, String password, String email) throws Exception {
-        var path = "/user";
         RegisterRequest request = new RegisterRequest(username, password, email);
-        return makeRequest("POST", path, request);
+        return makeRequest("POST", "/user", request);
     }
 
     public HttpURLConnection login(String username, String password) throws Exception {
-        var path = "/session";
         LoginRequest request = new LoginRequest(username, password);
-        return makeRequest("POST", path, request);
+        return makeRequest("POST", "/session", request);
+    }
+
+    public HttpURLConnection create(String gameName, REPLToken authToken) throws Exception {
+        CreateRequest request = new CreateRequest(gameName, authToken.authToken);
+        return makeRequest("POST", "/game", null);
+    }
+
+    public HttpURLConnection list(REPLToken authToken) throws Exception {
+        return makeRequest("GET", "/game", null);
+    }
+
+    public HttpURLConnection play(String color, int gameID, REPLToken authToken) throws Exception {
+        JoinRequest request = new JoinRequest(color, gameID, authToken.authToken);
+        System.out.println(gameID + 5);
+        return makeRequest("PUT", "/game", null);
+
+    }
+
+    public HttpURLConnection logout() throws Exception {
+        var path = "/session";
+        return makeRequest("DELETE", path, null);
     }
 
     public HttpURLConnection makeRequest(String method, String path, Object request) throws Exception {
@@ -49,6 +67,11 @@ public class ServerFacade {
             try (OutputStream requestBody = http.getOutputStream()) {
                 requestBody.write(requestData.getBytes());
             }
+        } else {
+            http.addRequestProperty("Content-Type", "application/json");
+            try (OutputStream requestBody = http.getOutputStream()) {
+                requestBody.write("{}".getBytes());
+            }
         }
     }
 
@@ -56,9 +79,9 @@ public class ServerFacade {
 
     public static record RegisterRequest(String username, String password, String email) {}
 
-    public static record CreateRequest(String gameName) {}
+    public static record CreateRequest(String gameName, String authToken) {}
 
-    public static record JoinRequest(String playerColor, int gameID) {}
+    public static record JoinRequest(String playerColor, int gameID, String authToken) {}
 
     public static record AuthResponse(String username, String authToken) {}
 

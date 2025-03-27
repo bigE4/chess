@@ -55,15 +55,14 @@ public class REPLOne {
         List<String> responses = queryMenu(registerMenu, scanner);
         HttpURLConnection response = facade.register(responses.get(0), responses.get(1), responses.get(2));
         switch (response.getResponseCode()) {
-            case 200: {
+            case 200 -> {
                 ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
                 token.authToken = authResponse.authToken();
                 flags.replTwo = true;
-                break;
             }
-            case 400: System.out.println("Username, Password, and Email cannot be empty."); break;
-            case 403: System.out.println("Username already taken."); break;
-            default: System.out.println("Server Error."); break;
+            case 400 -> System.out.println("Username, Password, or Email cannot be empty.");
+            case 403 -> System.out.println("Username already taken.");
+            default -> System.out.println("Server Error.");
         }
     }
 
@@ -100,11 +99,7 @@ public class REPLOne {
             System.out.println(line);
             responses.add(scanner.nextLine());
         }
-        System.out.println("You input: " + responses);
         return responses;
     }
 
-    private static class LoginResponse {
-
-    }
 }
