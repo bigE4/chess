@@ -1,4 +1,4 @@
-import client.REPLFlags;
+import records.REPLFlags;
 import client.REPLOne;
 import client.REPLTwo;
 import client.ServerFacade;
@@ -10,11 +10,12 @@ public class ClientMain {
         Scanner scanner = new Scanner(System.in);
         REPLFlags flags = new REPLFlags(true, false);
         ServerFacade facade = new ServerFacade("http://localhost:8080");
+        String authToken = "asdf";
 
         while (flags.replOne || flags.replTwo) {
             REPLOne.replMain(scanner, flags, facade);
             if (flags.replTwo) {
-                REPLTwo.replMain(scanner, flags, facade);
+                REPLTwo.replMain(scanner, flags, facade, authToken);
             }
         }
     }

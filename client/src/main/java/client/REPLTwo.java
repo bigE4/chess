@@ -1,5 +1,7 @@
 package client;
 
+import records.REPLFlags;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +24,7 @@ public class REPLTwo {
             List<String> responses = new ArrayList<>();
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
-                case "C", "c", "Create", "create" -> responses = queryMenu(createMenu, scanner);
+                case "C", "c", "Create", "create" -> create(createMenu, scanner, facade, authToken);
                 case "L", "l", "List", "list" -> printMenu(listMenu);
                 case "P", "p", "Play", "play" -> responses = queryMenu(playMenu, scanner);
                 case "S", "s", "Spectate", "spectate" -> responses = queryMenu(spectateMenu, scanner);
@@ -38,9 +40,13 @@ public class REPLTwo {
 
     }
 
+    private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, String authToken) {
+
+    }
+
     private static List<List<String>> initMenus() {
         List<String> helpMenu = List.of(
-                "Options: ",
+                "Options:",
                 "Help: (H, h, Help, help)",
                 "Create Game: (C, c, Create, create)",
                 "List Games: (L, l, List, list)",
@@ -49,11 +55,10 @@ public class REPLTwo {
                 "Logout: (Q, q, Quit, quit)"
         );
         List<String> createMenu = List.of(
-                "Game Name: "
+                "Game Name:"
         );
-        // client.ServerFacade.ListGames
         List<String> listMenu = List.of(
-                "Not Implemented"
+                "Game List:"
         );
         List<String> playMenu = List.of(
                 "Select a Game: (1 - Length of listMenu)",
