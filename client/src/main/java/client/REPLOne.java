@@ -1,12 +1,14 @@
+package client;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class REPLOne {
-    public static void Main(Scanner scanner, REPLFlags flags) {
+    public static void replMain(Scanner scanner, REPLFlags flags) throws Exception {
         System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 
-        var menus = InitMenus();
+        var menus = initMenus();
         var helpMenu = menus.get(0);
         var loginMenu = menus.get(1);
         var registerMenu = menus.get(2);
@@ -30,18 +32,27 @@ public class REPLOne {
         }
     }
 
-    private static String login(List<String> loginMenu, Scanner scanner) {
+    public static void login(List<String> loginMenu, Scanner scanner) throws Exception {
         List<String> responses = new ArrayList<>();
         responses = queryMenu(loginMenu, scanner);
-        return
+        int serverResponse = ServerFacade.login(responses.get(0), responses.get(1));
     }
 
-    private static void register(List<String> registerMenu, Scanner scanner) {
+    private static void login200() {
+
+    }
+
+    private static void register(List<String> registerMenu, Scanner scanner) throws Exception {
         List<String> responses = new ArrayList<>();
         responses = queryMenu(registerMenu, scanner);
+        int serverResponse = ServerFacade.register(responses.get(0), responses.get(1), responses.get(2));
     }
 
-    private static List<List<String>> InitMenus() {
+    private static void register200() {
+
+    }
+
+    private static List<List<String>> initMenus() {
         List<String> helpMenu = List.of(
                 "Options: ",
                 "Help: (H, h, Help, help)",

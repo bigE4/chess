@@ -1,3 +1,5 @@
+package client;
+
 public class REPLFlags {
     public boolean replOne;
     public boolean replTwo;

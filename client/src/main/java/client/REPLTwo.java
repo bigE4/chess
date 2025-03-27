@@ -1,12 +1,14 @@
+package client;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class REPLTwo {
-    public static void Main(Scanner scanner, REPLFlags flags) {
+    public static void replMain(Scanner scanner, REPLFlags flags) {
         System.out.println("♕ Login Successful! ♕");
 
-        var menus = InitMenus();
+        var menus = initMenus();
         var helpMenu = menus.get(0);
         var createMenu = menus.get(1);
         var listMenu = menus.get(2);
@@ -36,7 +38,7 @@ public class REPLTwo {
 
     }
 
-    private static List<List<String>> InitMenus() {
+    private static List<List<String>> initMenus() {
         List<String> helpMenu = List.of(
                 "Options: ",
                 "Help: (H, h, Help, help)",
@@ -49,7 +51,7 @@ public class REPLTwo {
         List<String> createMenu = List.of(
                 "Game Name: "
         );
-        // ServerFacade.ListGames
+        // client.ServerFacade.ListGames
         List<String> listMenu = List.of(
                 "Not Implemented"
         );
