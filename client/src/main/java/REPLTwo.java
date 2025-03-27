@@ -31,6 +31,7 @@ public class REPLTwo {
                 }
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
             }
+            System.out.println("----------");
         }
 
     }

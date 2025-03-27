@@ -13,22 +13,32 @@ public class REPLOne {
 
         printMenu(helpMenu);
 
-        while (flags.replOne) {
+        while (flags.replOne && !flags.replTwo) {
             String response = scanner.nextLine();
-            List<String> responses = new ArrayList<>();
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
-                case "L", "l", "Login", "login" -> responses = queryMenu(loginMenu, scanner);
-                case "R", "r", "Register", "register" -> responses = queryMenu(registerMenu, scanner);
+                case "L", "l", "Login", "login" -> login(loginMenu, scanner);
+                case "R", "r", "Register", "register" -> register(registerMenu, scanner);
                 case "V" -> flags.replTwo = true;
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = false;
-                    System.out.println("See ya!");
+                    System.out.println("♕ See ya! ♕");
                 }
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
             }
             System.out.println("----------");
         }
+    }
+
+    private static String login(List<String> loginMenu, Scanner scanner) {
+        List<String> responses = new ArrayList<>();
+        responses = queryMenu(loginMenu, scanner);
+        return
+    }
+
+    private static void register(List<String> registerMenu, Scanner scanner) {
+        List<String> responses = new ArrayList<>();
+        responses = queryMenu(registerMenu, scanner);
     }
 
     private static List<List<String>> InitMenus() {

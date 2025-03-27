@@ -6,7 +6,6 @@ public class ClientMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         REPLFlags flags = new REPLFlags(true, false);
-
         while (flags.replOne || flags.replTwo) {
             REPLOne.Main(scanner, flags);
             if (flags.replTwo) {
