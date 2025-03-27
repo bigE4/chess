@@ -4,7 +4,6 @@ import records.REPLFlags;
 import records.REPLToken;
 
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,17 +11,17 @@ public class REPLOne {
     public static void replMain(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
         System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 
-        var menus = initMenus();
+        var menus = ClientUtils.initMenusOne();
         var helpMenu = menus.get(0);
         var loginMenu = menus.get(1);
         var registerMenu = menus.get(2);
 
-        printMenu(helpMenu);
+        ClientUtils.printMenu(helpMenu);
 
         while (flags.replOne && !flags.replTwo) {
             String response = scanner.nextLine();
             switch (response) {
-                case "H", "h", "Help", "help" -> printMenu(helpMenu);
+                case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
                 case "L", "l", "Login", "login" -> login(loginMenu, scanner, flags, token, facade);
                 case "R", "r", "Register", "register" -> register(registerMenu, scanner, flags, token, facade);
                 case "V" -> flags.replTwo = true;
@@ -37,7 +36,7 @@ public class REPLOne {
     }
 
     private static void login(List<String> loginMenu, Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade)  throws Exception {
-        List<String> responses = queryMenu(loginMenu, scanner);
+        List<String> responses = ClientUtils.queryMenu(loginMenu, scanner);
         HttpURLConnection response = facade.login(responses.get(0), responses.get(1));
         int code = response.getResponseCode();
         if (code == 200) {
@@ -50,9 +49,8 @@ public class REPLOne {
 
     }
 
-
     private static void register(List<String> registerMenu, Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
-        List<String> responses = queryMenu(registerMenu, scanner);
+        List<String> responses = ClientUtils.queryMenu(registerMenu, scanner);
         HttpURLConnection response = facade.register(responses.get(0), responses.get(1), responses.get(2));
         switch (response.getResponseCode()) {
             case 200 -> {
@@ -65,41 +63,4 @@ public class REPLOne {
             default -> System.out.println("Server Error.");
         }
     }
-
-    private static List<List<String>> initMenus() {
-        List<String> helpMenu = List.of(
-                "Options: ",
-                "Help: (H, h, Help, help)",
-                "Login: (L, l, Login, login)",
-                "Register: (R, r, Register, register)",
-                "Quit: (Q, q, Quit, quit)"
-        );
-        List<String> loginMenu = List.of(
-                "Username: ",
-                "Password: "
-        );
-        List<String> registerMenu = List.of(
-                "Username: ",
-                "Password: ",
-                "Email: "
-        );
-
-        return List.of(helpMenu, loginMenu, registerMenu);
-    }
-
-    private static void printMenu(List<String> menu) {
-        for (String line : menu) {
-            System.out.println(line);
-        }
-    }
-
-    private static List<String> queryMenu(List<String> menu, Scanner scanner) {
-        ArrayList<String> responses = new ArrayList<>();
-        for (String line : menu) {
-            System.out.println(line);
-            responses.add(scanner.nextLine());
-        }
-        return responses;
-    }
-
 }

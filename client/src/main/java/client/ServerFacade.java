@@ -1,7 +1,6 @@
 package client;
 
 import com.google.gson.Gson;
-import records.REPLToken;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -25,17 +24,18 @@ public class ServerFacade {
         return makeRequest("POST", "/session", request);
     }
 
-    public HttpURLConnection create(String gameName, REPLToken authToken) throws Exception {
-        CreateRequest request = new CreateRequest(gameName, authToken.authToken);
+    public HttpURLConnection list(String authToken) throws Exception {
+        ListRequest request = new ListRequest(authToken);
+        return makeRequest("GET", "/game", request);
+    }
+
+    public HttpURLConnection create(String gameName, String authToken) throws Exception {
+        CreateRequest request = new CreateRequest(gameName, authToken);
         return makeRequest("POST", "/game", null);
     }
 
-    public HttpURLConnection list(REPLToken authToken) throws Exception {
-        return makeRequest("GET", "/game", null);
-    }
-
-    public HttpURLConnection play(String color, int gameID, REPLToken authToken) throws Exception {
-        JoinRequest request = new JoinRequest(color, gameID, authToken.authToken);
+    public HttpURLConnection play(String color, int gameID, String authToken) throws Exception {
+        JoinRequest request = new JoinRequest(color, gameID, authToken);
         System.out.println(gameID + 5);
         return makeRequest("PUT", "/game", null);
 
@@ -46,18 +46,34 @@ public class ServerFacade {
         return makeRequest("DELETE", path, null);
     }
 
-    public HttpURLConnection makeRequest(String method, String path, Object request) throws Exception {
-         try {
+    private HttpURLConnection makeRequest(String method, String path, Object request) throws Exception {
+        System.out.println("Making the request");
+        System.out.println(method);
+        System.out.println(path);
+        System.out.println(request);
+        try {
             URL url = (new URI(serverUrl + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(method);
             http.setDoOutput(true);
+            setAuthToken(request, http);
             writeBody(request, http);
             http.connect();
             return http;
         } catch (Exception e) {
              throw new RuntimeException(e);
          }
+    }
+
+    private void setAuthToken (Object request, HttpURLConnection http) {
+        if (request instanceof CreateRequest createRequest) {
+            http.addRequestProperty("authorization", createRequest.authToken());
+        } else if (request instanceof JoinRequest joinRequest) {
+            http.addRequestProperty("authorization", joinRequest.authToken());
+        } else if (request instanceof ListRequest listRequest) {
+            System.out.println("I made it here");
+            http.addRequestProperty("authorization", listRequest.authToken);
+        }
     }
 
     private void writeBody(Object request, HttpURLConnection http) throws IOException {
@@ -78,6 +94,8 @@ public class ServerFacade {
     public static record LoginRequest(String username, String password) {}
 
     public static record RegisterRequest(String username, String password, String email) {}
+
+    public static record ListRequest(String authToken) {}
 
     public static record CreateRequest(String gameName, String authToken) {}
 
