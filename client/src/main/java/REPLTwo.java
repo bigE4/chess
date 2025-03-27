@@ -4,9 +4,33 @@ import java.util.Scanner;
 
 public class REPLTwo {
     public static void Main(Scanner scanner, REPLFlags flags) {
+        System.out.println("♕ Login Successful! ♕");
 
-        if (flags.replTwo) {
-            System.out.println("Login Successful ");
+        var menus = InitMenus();
+        var helpMenu = menus.get(0);
+        var createMenu = menus.get(1);
+        var listMenu = menus.get(2);
+        var playMenu  = menus.get(3);
+        var spectateMenu = menus.get(4);
+
+        printMenu(helpMenu);
+
+        while (flags.replTwo) {
+            String response = scanner.nextLine();
+            List<String> responses = new ArrayList<>();
+            switch (response) {
+                case "H", "h", "Help", "help" -> printMenu(helpMenu);
+                case "C", "c", "Create", "create" -> responses = queryMenu(createMenu, scanner);
+                case "L", "l", "List", "list" -> printMenu(listMenu);
+                case "P", "p", "Play", "play" -> responses = queryMenu(playMenu, scanner);
+                case "S", "s", "Spectate", "spectate" -> responses = queryMenu(spectateMenu, scanner);
+                case "Q", "q", "Quit", "quit" -> {
+                    flags.replOne = true;
+                    flags.replTwo = false;
+                    System.out.println("♕ Returning to Login ♕");
+                }
+                default -> System.out.println("'" + response + "' is not a valid input. Try again.");
+            }
         }
 
     }
@@ -14,22 +38,29 @@ public class REPLTwo {
     private static List<List<String>> InitMenus() {
         List<String> helpMenu = List.of(
                 "Options: ",
-                "Login: (L, l, Login, login)",
-                "Register: (R, r, Register, register)",
                 "Help: (H, h, Help, help)",
-                "Quit: (Q, q, Quit, quit)"
+                "Create Game: (C, c, Create, create)",
+                "List Games: (L, l, List, list)",
+                "Play Game: (P, p, Play, play)",
+                "Spectate Game: (S, s, Spectate, spectate)",
+                "Logout: (Q, q, Quit, quit)"
         );
-        List<String> loginMenu = List.of(
-                "Username: ",
-                "Password: "
+        List<String> createMenu = List.of(
+                "Game Name: "
         );
-        List<String> registerMenu = List.of(
-                "Username: ",
-                "Password: ",
-                "Email: "
+        // ServerFacade.ListGames
+        List<String> listMenu = List.of(
+                "Not Implemented"
+        );
+        List<String> playMenu = List.of(
+                "Select a Game: (1 - Length of listMenu)",
+                "Select a Color: (White, white, W, w, Black, black, B, b)"
+        );
+        List<String> spectateMenu = List.of(
+                "Select a Game: (1 - Length of listMenu)"
         );
 
-        return List.of(helpMenu, loginMenu, registerMenu);
+        return List.of(helpMenu, createMenu, listMenu, playMenu, spectateMenu);
     }
 
     private static void printMenu(List<String> menu) {

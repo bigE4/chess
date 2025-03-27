@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class REPLOne {
     public static void Main(Scanner scanner, REPLFlags flags) {
+        System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 
         var menus = InitMenus();
         var helpMenu = menus.get(0);
@@ -33,9 +34,9 @@ public class REPLOne {
     private static List<List<String>> InitMenus() {
         List<String> helpMenu = List.of(
                 "Options: ",
+                "Help: (H, h, Help, help)",
                 "Login: (L, l, Login, login)",
                 "Register: (R, r, Register, register)",
-                "Help: (H, h, Help, help)",
                 "Quit: (Q, q, Quit, quit)"
         );
         List<String> loginMenu = List.of(
