@@ -16,25 +16,28 @@ public class ServerFacade {
 
     public HttpURLConnection register(String username, String password, String email) throws Exception {
         RegisterRequest request = new RegisterRequest(username, password, email);
-        return makeRequest("POST", "/user", request);
+        return makeRequest("POST", "/user", request, null);
     }
 
     public HttpURLConnection login(String username, String password) throws Exception {
         LoginRequest request = new LoginRequest(username, password);
-        return makeRequest("POST", "/session", request);
+        return makeRequest("POST", "/session", request, null);
     }
 
-    public HttpURLConnection list() throws Exception {
-        return makeRequest("GET", "/game", null);
+    public HttpURLConnection list(ServerFacade facade, String authToken) throws Exception {
+        System.out.println(authToken);
+        return makeRequest("GET", "/game", null, authToken);
     }
 
-
-    public HttpURLConnection logout() throws Exception {
-        var path = "/session";
-        return makeRequest("DELETE", path, null);
+    public HttpURLConnection create() throws Exception {
+        return makeRequest("POST", "/game", null, null);
     }
 
-    private HttpURLConnection makeRequest(String method, String path, Object request) throws Exception {
+    public HttpURLConnection join() throws Exception {
+        return makeRequest("PUT", "/game", null, null);
+    }
+
+    private HttpURLConnection makeRequest(String method, String path, Object request, String authToken) throws Exception {
         System.out.println("Making the request");
         System.out.println(method);
         System.out.println(path);
@@ -45,6 +48,9 @@ public class ServerFacade {
             http.setRequestMethod(method);
             http.setDoOutput(true);
             writeBody(request, http);
+            if (authToken != null) {
+                http.addRequestProperty("Authorization", authToken);
+            }
             http.connect();
             return http;
         } catch (Exception e) {

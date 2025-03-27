@@ -3,6 +3,7 @@ package client;
 import records.REPLFlags;
 import records.REPLToken;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class REPLTwo {
         var menus = ClientUtils.initMenusTwo();
         var helpMenu = menus.get(0);
         var createMenu = menus.get(1);
-        var playMenu  = menus.get(2);
+        var joinMenu  = menus.get(2);
         var spectateMenu = menus.get(3);
 
         ClientUtils.printMenu(helpMenu);
@@ -27,7 +28,7 @@ public class REPLTwo {
                 case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
                 case "C", "c", "Create", "create" -> create(createMenu, scanner, facade, authToken);
                 case "L", "l", "List", "list" -> list(facade, authToken);
-                case "P", "p", "Play", "play" -> play(playMenu, scanner, facade, authToken);
+                case "J", "j", "Join", "join" -> join(joinMenu, scanner, facade, authToken);
                 case "S", "s", "Spectate", "spectate" -> spectate(spectateMenu, scanner, facade, authToken);
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = true;
@@ -41,18 +42,22 @@ public class REPLTwo {
 
     }
 
-    private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) {
-
-    }
-
     private static void list(ServerFacade facade, REPLToken authToken) throws Exception {
-        HttpURLConnection response = facade.list();
+        HttpURLConnection response = facade.list(facade, authToken.authToken);
         int code = response.getResponseCode();
         System.out.println(code);
     }
 
-    private static void play(List<String> playMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) {
+    private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) throws Exception {
+        HttpURLConnection response = facade.create();
+        int code = response.getResponseCode();
+        System.out.println(code);
+    }
 
+    private static void join(List<String> joinMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) throws Exception {
+        HttpURLConnection response = facade.join();
+        int code = response.getResponseCode();
+        System.out.println(code);
     }
 
     private static void spectate(List<String> spectateMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) {

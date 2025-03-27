@@ -20,7 +20,6 @@ public class ListGamesHandler implements spark.Route {
         System.out.println(request.body());
         try {
             String authToken = request.headers("authorization");
-            System.out.println(request.headers());
             ListGamesRequest listGamesRequest = new ListGamesRequest(authToken);
             ListGamesService listGamesService = new ListGamesService();
             ListGamesResponse listGamesResponse = listGamesService.listGames(listGamesRequest);
