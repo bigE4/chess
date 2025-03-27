@@ -25,32 +25,29 @@ public class ServerFacade {
     }
 
     public HttpURLConnection list(ServerFacade facade, String authToken) throws Exception {
-        System.out.println(authToken);
         return makeRequest("GET", "/game", null, authToken);
     }
 
-    public HttpURLConnection create() throws Exception {
-        return makeRequest("POST", "/game", null, null);
+    public HttpURLConnection create(String gameName, String authToken) throws Exception {
+        CreateRequest request = new CreateRequest(gameName);
+        return makeRequest("POST", "/game", request, authToken);
     }
 
-    public HttpURLConnection join() throws Exception {
-        return makeRequest("PUT", "/game", null, null);
+    public HttpURLConnection join(String authToken) throws Exception {
+
+        return makeRequest("PUT", "/game", null, authToken);
     }
 
     private HttpURLConnection makeRequest(String method, String path, Object request, String authToken) throws Exception {
-        System.out.println("Making the request");
-        System.out.println(method);
-        System.out.println(path);
-        System.out.println(request);
         try {
             URL url = (new URI(serverUrl + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(method);
             http.setDoOutput(true);
-            writeBody(request, http);
             if (authToken != null) {
                 http.addRequestProperty("Authorization", authToken);
             }
+            writeBody(request, http);
             http.connect();
             return http;
         } catch (Exception e) {
@@ -71,6 +68,8 @@ public class ServerFacade {
     public static record LoginRequest(String username, String password) {}
 
     public static record RegisterRequest(String username, String password, String email) {}
+
+    public static record CreateRequest(String gameName) {}
 
     public static record AuthResponse(String username, String authToken) {}
 

@@ -3,7 +3,6 @@ package client;
 import records.REPLFlags;
 import records.REPLToken;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,13 +48,14 @@ public class REPLTwo {
     }
 
     private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) throws Exception {
-        HttpURLConnection response = facade.create();
+        List<String> responses = ClientUtils.queryMenu(createMenu, scanner);
+        HttpURLConnection response = facade.create(responses.getFirst(), authToken.authToken);
         int code = response.getResponseCode();
         System.out.println(code);
     }
 
     private static void join(List<String> joinMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) throws Exception {
-        HttpURLConnection response = facade.join();
+        HttpURLConnection response = facade.join(authToken.authToken);
         int code = response.getResponseCode();
         System.out.println(code);
     }

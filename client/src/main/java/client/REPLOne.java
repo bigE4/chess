@@ -62,8 +62,4 @@ public class REPLOne {
             default -> System.out.println("Server Error.");
         }
     }
-
-    private static void list() {
-
-    }
 }
