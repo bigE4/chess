@@ -6,6 +6,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public class ServerFacade {
     private static String serverUrl;
@@ -72,5 +74,9 @@ public class ServerFacade {
     public static record CreateRequest(String gameName) {}
 
     public static record AuthResponse(String username, String authToken) {}
+
+    public static record Game(int gameID, String gameName) {};
+
+    public static record ListResponse(List<Game> games) {}
 
 }

@@ -45,6 +45,16 @@ public class REPLTwo {
         HttpURLConnection response = facade.list(facade, authToken.authToken);
         int code = response.getResponseCode();
         System.out.println(code);
+        switch (response.getResponseCode()) {
+            case 200 -> {
+                ServerFacade.ListResponse listResponse = ClientUtils.readBody(response, ServerFacade.ListResponse.class);
+                for (ServerFacade.Game game : listResponse.games()) {
+                    System.out.println(game);
+                }
+
+            }
+            default -> System.out.println("Server Error.");
+        }
     }
 
     private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) throws Exception {
