@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class REPLTwo {
-    public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade) {
+    public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade, String authToken) {
         System.out.println("♕ Login Successful! ♕");
 
         var menus = initMenus();

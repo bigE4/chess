@@ -18,16 +18,18 @@ public class ServerFacade {
     public int register(String username, String password, String email) throws Exception {
         var path = "/user";
         RegisterRequest request = new RegisterRequest(username, password, email);
-        return makeRequest("POST", path, request);
+        HttpURLConnection response = makeRequest("POST", path, request);
+        return response.getResponseCode();
     }
 
     public int login(String username, String password) throws Exception {
         var path = "/session";
         LoginRequest request = new LoginRequest(username, password);
-        return makeRequest("POST", path, request);
+        HttpURLConnection response = makeRequest("POST", path, request);
+        return response.getResponseCode();
     }
 
-    public int makeRequest(String method, String path, Object request) throws Exception {
+    public HttpURLConnection makeRequest(String method, String path, Object request) throws Exception {
          try {
             URL url = (new URI(serverUrl + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -35,7 +37,7 @@ public class ServerFacade {
             http.setDoOutput(true);
             writeBody(request, http);
             http.connect();
-            return http.getResponseCode();
+            return http;
         } catch (Exception e) {
              throw new RuntimeException(e);
          }

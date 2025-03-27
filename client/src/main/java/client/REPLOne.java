@@ -36,20 +36,14 @@ public class REPLOne {
         List<String> responses = new ArrayList<>();
         responses = queryMenu(loginMenu, scanner);
         int serverResponse = facade.login(responses.get(0), responses.get(1));
-    }
-
-    private static void login200() {
-
+        System.out.println(serverResponse);
     }
 
     private static void register(List<String> registerMenu, Scanner scanner, ServerFacade facade) throws Exception {
         List<String> responses = new ArrayList<>();
         responses = queryMenu(registerMenu, scanner);
         int serverResponse = facade.register(responses.get(0), responses.get(1), responses.get(2));
-    }
-
-    private static void register200() {
-
+        System.out.println(serverResponse);
     }
 
     private static List<List<String>> initMenus() {

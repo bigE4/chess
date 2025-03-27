@@ -10,6 +10,7 @@ public class ClientMain {
         Scanner scanner = new Scanner(System.in);
         REPLFlags flags = new REPLFlags(true, false);
         ServerFacade facade = new ServerFacade("http://localhost:8080");
+
         while (flags.replOne || flags.replTwo) {
             REPLOne.replMain(scanner, flags, facade);
             if (flags.replTwo) {
