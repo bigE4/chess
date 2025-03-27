@@ -15,8 +15,12 @@ public class ListGamesHandler implements spark.Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        System.out.println(" --- Handling a List request");
+        System.out.println(request.headers());
+        System.out.println(request.body());
         try {
             String authToken = request.headers("authorization");
+            System.out.println(request.headers());
             ListGamesRequest listGamesRequest = new ListGamesRequest(authToken);
             ListGamesService listGamesService = new ListGamesService();
             ListGamesResponse listGamesResponse = listGamesService.listGames(listGamesRequest);

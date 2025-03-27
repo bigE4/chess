@@ -16,7 +16,7 @@ public class ClientMain {
         while (flags.replOne || flags.replTwo) {
             REPLOne.replMain(scanner, flags, token, facade);
             if (flags.replTwo) {
-                REPLTwo.replMain(scanner, flags, facade, token);
+                REPLTwo.replMain(scanner, flags, token, facade);
             }
         }
     }

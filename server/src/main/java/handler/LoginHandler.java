@@ -15,6 +15,9 @@ public class LoginHandler implements spark.Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        System.out.println(" --- Handling a Login request");
+        System.out.println(request.headers());
+        System.out.println(request.body());
         try {
             LoginRequest loginRequest = gson.fromJson(request.body(), LoginRequest.class);
             LoginService loginService = new LoginService();

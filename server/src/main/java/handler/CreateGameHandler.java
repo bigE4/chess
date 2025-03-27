@@ -16,7 +16,9 @@ public class CreateGameHandler implements spark.Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        try {
+        System.out.println(" --- Handling a Create request");
+        System.out.println(request.headers());
+        System.out.println(request.body());        try {
             String authToken = request.headers("authorization");
             CreateGameRequest body = gson.fromJson(request.body(), CreateGameRequest.class);
             CreateGameRequest createGameRequest = new CreateGameRequest(authToken, body);

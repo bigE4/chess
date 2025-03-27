@@ -17,6 +17,9 @@ public class JoinGameHandler implements spark.Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        System.out.println(" --- Handling a Join request");
+        System.out.println(request.headers());
+        System.out.println(request.body());
         try {
             String authToken = request.headers("authorization");
             JoinGameRequest body = gson.fromJson(request.body(), JoinGameRequest.class);

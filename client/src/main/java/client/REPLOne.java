@@ -46,7 +46,6 @@ public class REPLOne {
         } else {
             System.out.println("Unauthorized credentials.");
         }
-
     }
 
     private static void register(List<String> registerMenu, Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
@@ -62,5 +61,9 @@ public class REPLOne {
             case 403 -> System.out.println("Username already taken.");
             default -> System.out.println("Server Error.");
         }
+    }
+
+    private static void list() {
+
     }
 }

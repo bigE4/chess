@@ -13,6 +13,9 @@ public class ClearHandler implements spark.Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        System.out.println(" --- Handling a Clear request");
+        System.out.println(request.headers());
+        System.out.println(request.body());
         try {
             ClearService clearService = new ClearService();
             EmptyResponse logoutResponse = clearService.clear();

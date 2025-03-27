@@ -16,6 +16,9 @@ public class RegisterHandler implements spark.Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        System.out.println(" --- Handling a Register request");
+        System.out.println(request.headers());
+        System.out.println(request.body());
         // try to parse the request, call the service, and return the correct response and throw an exception if unsuccessful
         try {
             // Parse the request from the server into a RegisterRequest object
