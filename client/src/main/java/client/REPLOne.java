@@ -24,7 +24,7 @@ public class REPLOne {
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
                 case "L", "l", "Login", "login" -> login(loginMenu, scanner, flags, token, facade);
-                case "R", "r", "Register", "register" -> register(registerMenu, scanner, facade, flags);
+                case "R", "r", "Register", "register" -> register(registerMenu, scanner, flags, token, facade);
                 case "V" -> flags.replTwo = true;
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = false;
@@ -41,18 +41,30 @@ public class REPLOne {
         HttpURLConnection response = facade.login(responses.get(0), responses.get(1));
         int code = response.getResponseCode();
         if (code == 200) {
-            System.out.println(ClientUtils.readBody(response, ServerFacade.AuthResponse.class));
+            ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
+            token.authToken = authResponse.authToken();
+            flags.replTwo = true;
         } else {
-            System.out.println("something else happened");
+            System.out.println("Unauthorized credentials.");
         }
 
     }
 
 
-    private static void register(List<String> registerMenu, Scanner scanner, ServerFacade facade, REPLFlags flags) throws Exception {
+    private static void register(List<String> registerMenu, Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
         List<String> responses = queryMenu(registerMenu, scanner);
-        HttpURLConnection serverResponse = facade.register(responses.get(0), responses.get(1), responses.get(2));
-        System.out.println(serverResponse.getResponseCode());
+        HttpURLConnection response = facade.register(responses.get(0), responses.get(1), responses.get(2));
+        switch (response.getResponseCode()) {
+            case 200: {
+                ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
+                token.authToken = authResponse.authToken();
+                flags.replTwo = true;
+                break;
+            }
+            case 400: System.out.println("Username, Password, and Email cannot be empty."); break;
+            case 403: System.out.println("Username already taken."); break;
+            default: System.out.println("Server Error."); break;
+        }
     }
 
     private static List<List<String>> initMenus() {
