@@ -1,13 +1,14 @@
 package client;
 
 import records.REPLFlags;
+import records.REPLToken;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class REPLTwo {
-    public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade, String authToken) {
+    public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade, REPLToken authToken) {
         System.out.println("♕ Login Successful! ♕");
 
         var menus = initMenus();
@@ -40,7 +41,7 @@ public class REPLTwo {
 
     }
 
-    private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, String authToken) {
+    private static void create(List<String> createMenu, Scanner scanner, ServerFacade facade, REPLToken authToken) {
 
     }
 

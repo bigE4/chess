@@ -1,6 +1,7 @@
 package client;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -51,49 +52,14 @@ public class ServerFacade {
         }
     }
 
-    private static class LoginRequest {
-        String username;
-        String password;
+    public static record LoginRequest(String username, String password) {}
 
-        public LoginRequest(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-    }
+    public static record RegisterRequest(String username, String password, String email) {}
 
-    private static class RegisterRequest {
-        String username;
-        String password;
-        String email;
+    public static record CreateRequest(String gameName) {}
 
-        public RegisterRequest(String username, String password, String email) {
-            this.username = username;
-            this.password = password;
-            this.email = email;
-        }
-    }
+    public static record JoinRequest(String playerColor, int gameID) {}
 
-    private static class CreateRequest {
-        String gameName;
-
-        public CreateRequest(String gameName) {
-            this.gameName = gameName;
-        }
-    }
-
-    private static class JoinRequest {
-        String playerColor;
-        int gameID;
-
-        public JoinRequest(String playerColor, int gameID) {
-            this.playerColor = playerColor;
-            this.gameID = gameID;
-        }
-    }
-
-    private static class AuthResponse {
-        String username;
-        String authToken;
-    }
+    public static record AuthResponse(String username, String authToken) {}
 
 }

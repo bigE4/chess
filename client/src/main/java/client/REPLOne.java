@@ -1,13 +1,15 @@
 package client;
 
 import records.REPLFlags;
+import records.REPLToken;
+
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class REPLOne {
-    public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade) throws Exception {
+    public static void replMain(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
         System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 
         var menus = initMenus();
@@ -21,8 +23,8 @@ public class REPLOne {
             String response = scanner.nextLine();
             switch (response) {
                 case "H", "h", "Help", "help" -> printMenu(helpMenu);
-                case "L", "l", "Login", "login" -> login(loginMenu, scanner, facade);
-                case "R", "r", "Register", "register" -> register(registerMenu, scanner, facade);
+                case "L", "l", "Login", "login" -> login(loginMenu, scanner, flags, token, facade);
+                case "R", "r", "Register", "register" -> register(registerMenu, scanner, facade, flags);
                 case "V" -> flags.replTwo = true;
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = false;
@@ -34,18 +36,23 @@ public class REPLOne {
         }
     }
 
-    public static void login(List<String> loginMenu, Scanner scanner, ServerFacade facade) throws Exception {
-        List<String> responses = new ArrayList<>();
-        responses = queryMenu(loginMenu, scanner);
-        HttpURLConnection serverResponse = facade.login(responses.get(0), responses.get(1));
-        System.out.println(serverResponse.getResponseMessage());
+    private static void login(List<String> loginMenu, Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade)  throws Exception {
+        List<String> responses = queryMenu(loginMenu, scanner);
+        HttpURLConnection response = facade.login(responses.get(0), responses.get(1));
+        int code = response.getResponseCode();
+        if (code == 200) {
+            System.out.println(ClientUtils.readBody(response, ServerFacade.AuthResponse.class));
+        } else {
+            System.out.println("something else happened");
+        }
+
     }
 
-    private static void register(List<String> registerMenu, Scanner scanner, ServerFacade facade) throws Exception {
-        List<String> responses = new ArrayList<>();
-        responses = queryMenu(registerMenu, scanner);
+
+    private static void register(List<String> registerMenu, Scanner scanner, ServerFacade facade, REPLFlags flags) throws Exception {
+        List<String> responses = queryMenu(registerMenu, scanner);
         HttpURLConnection serverResponse = facade.register(responses.get(0), responses.get(1), responses.get(2));
-        System.out.println(serverResponse.getContent());
+        System.out.println(serverResponse.getResponseCode());
     }
 
     private static List<List<String>> initMenus() {
