@@ -1,3 +1,5 @@
+package engine;
+
 /**
  * This class contains constants and functions relating to ANSI Escape Sequences that are useful in the Client display
  */
@@ -57,7 +59,21 @@ public class EscapeSequences {
     public static final String BLACK_KNIGHT = " ♞ ";
     public static final String BLACK_ROOK = " ♜ ";
     public static final String BLACK_PAWN = " ♟ ";
-    public static final String EMPTY = " \u2003 ";
+    public static final String EMPTY_WIDE = " \u2003 ";
+
+    public static final String W_KING = EscapeSequences.SET_TEXT_COLOR_RED + " K ";
+    public static final String W_QUEEN = EscapeSequences.SET_TEXT_COLOR_RED + " Q ";
+    public static final String W_BISHOP = EscapeSequences.SET_TEXT_COLOR_RED + " B ";
+    public static final String W_KNIGHT = EscapeSequences.SET_TEXT_COLOR_RED + " N ";
+    public static final String W_ROOK = EscapeSequences.SET_TEXT_COLOR_RED + " R ";
+    public static final String W_PAWN = EscapeSequences.SET_TEXT_COLOR_RED + " P ";
+    public static final String B_KING = EscapeSequences.SET_TEXT_COLOR_BLUE + " K ";
+    public static final String B_QUEEN = EscapeSequences.SET_TEXT_COLOR_BLUE + " Q ";
+    public static final String B_BISHOP = EscapeSequences.SET_TEXT_COLOR_BLUE + " B ";
+    public static final String B_KNIGHT = EscapeSequences.SET_TEXT_COLOR_BLUE + " N ";
+    public static final String B_ROOK = EscapeSequences.SET_TEXT_COLOR_BLUE + " R ";
+    public static final String B_PAWN = EscapeSequences.SET_TEXT_COLOR_BLUE + " P ";
+    public static final String EMPTY = "   ";
 
     public static String moveCursorToLocation(int x, int y) { return UNICODE_ESCAPE + "[" + y + ";" + x + "H"; }
 }

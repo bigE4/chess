@@ -1,5 +1,6 @@
 package client;
 
+import engine.ChessGameEngine;
 import records.REPLFlags;
 import records.REPLToken;
 
@@ -24,7 +25,7 @@ public class REPLOne {
                 case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
                 case "L", "l", "Login", "login" -> login(loginMenu, scanner, flags, token, facade);
                 case "R", "r", "Register", "register" -> register(registerMenu, scanner, flags, token, facade);
-                case "V" -> flags.replTwo = true;
+                case "V" -> ChessGameEngine.printChessboard("WHITE");
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = false;
                     System.out.println("♕ See ya! ♕");
