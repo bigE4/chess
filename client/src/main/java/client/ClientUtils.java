@@ -51,22 +51,22 @@ public class ClientUtils {
                 "Help: (H, h, Help, help)",
                 "Create Game: (C, c, Create, create)",
                 "List Games: (L, l, List, list)",
-                "Play Game: (P, p, Play, play)",
+                "Join Game: (J, j, Join, join)",
                 "Spectate Game: (S, s, Spectate, spectate)",
                 "Logout: (Q, q, Quit, quit)"
         );
         List<String> createMenu = List.of(
                 "Game Name:"
         );
-        List<String> playMenu = List.of(
-                "Select a Color: (White, white, W, w, Black, black, B, b)",
+        List<String> joinMenu = List.of(
+                "Select a Color: (WHITE, BLACK)",
                 "Select a Game: (Type the number of the game you want to join)"
         );
         List<String> spectateMenu = List.of(
                 "Select a Game: (Type the number of the game you want to join)"
         );
 
-        return List.of(helpMenu, createMenu, playMenu, spectateMenu);
+        return List.of(helpMenu, createMenu, joinMenu, spectateMenu);
     }
 
     public static void printMenu(List<String> menu) {
@@ -81,7 +81,6 @@ public class ClientUtils {
             System.out.println(line);
             responses.add(scanner.nextLine());
         }
-        System.out.println("You input: " + responses);
         return responses;
     }
 }

@@ -25,7 +25,7 @@ public class REPLOne {
                 case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
                 case "L", "l", "Login", "login" -> login(loginMenu, scanner, flags, token, facade);
                 case "R", "r", "Register", "register" -> register(registerMenu, scanner, flags, token, facade);
-                case "V" -> ChessGameEngine.printChessboard("WHITE");
+                case "V" -> ChessGameEngine.printChessboard("BLACK");
                 case "Q", "q", "Quit", "quit" -> {
                     flags.replOne = false;
                     System.out.println("♕ See ya! ♕");

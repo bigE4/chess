@@ -8,7 +8,6 @@ public class ChessGameEngine {
         ChessBoard gameBoard = new ChessBoard();
         gameBoard.resetBoard();
         String[][] stringBoard = ChessBoardConverter.toStringBoard(gameBoard.getChessBoard());
-
         if (playerColor.equals("WHITE")) {
             whitePerspective(stringBoard);
         } else if (playerColor.equals("BLACK")) {

@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 public class ServerFacade {
     private static String serverUrl;
@@ -26,7 +25,7 @@ public class ServerFacade {
         return makeRequest("POST", "/session", request, null);
     }
 
-    public HttpURLConnection list(ServerFacade facade, String authToken) throws Exception {
+    public HttpURLConnection list(String authToken) throws Exception {
         return makeRequest("GET", "/game", null, authToken);
     }
 
@@ -35,9 +34,17 @@ public class ServerFacade {
         return makeRequest("POST", "/game", request, authToken);
     }
 
-    public HttpURLConnection join(String authToken) throws Exception {
+    public HttpURLConnection join(String playerColor, String stringID, String authToken) throws Exception {
+        int gameID = 0;
+        try {
+            gameID = Integer.parseInt(stringID);
+        } catch (Exception ignored) {}
+        JoinRequest request = new JoinRequest(playerColor, gameID);
+        return makeRequest("PUT", "/game", request, authToken);
+    }
 
-        return makeRequest("PUT", "/game", null, authToken);
+    public HttpURLConnection logout(String authToken) throws Exception {
+        return makeRequest("DELETE", "/session", null, authToken);
     }
 
     private HttpURLConnection makeRequest(String method, String path, Object request, String authToken) throws Exception {
@@ -72,6 +79,8 @@ public class ServerFacade {
     public static record RegisterRequest(String username, String password, String email) {}
 
     public static record CreateRequest(String gameName) {}
+
+    public static record JoinRequest(String playerColor, int gameID) {}
 
     public static record AuthResponse(String username, String authToken) {}
 
