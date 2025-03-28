@@ -9,14 +9,14 @@ import java.util.Scanner;
 public class ClientMain {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        REPLFlags flags = new REPLFlags(true, false);
+        REPLFlags flags = new REPLFlags(true, false, false, false);
         REPLToken token = new REPLToken("");
         ServerFacade facade = new ServerFacade("http://localhost:8080");
 
         while (flags.replOne || flags.replTwo) {
             REPLOne.replMain(scanner, flags, token, facade);
             if (flags.replTwo) {
-                REPLTwo.replMain(scanner, flags, token, facade);
+                REPLTwo.replMain(scanner, flags, facade, token);
             }
         }
     }
