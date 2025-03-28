@@ -85,8 +85,11 @@ public class REPLTwo {
         if (flags.listQueried) {
             List<String> responses = ClientUtils.queryMenu(joinMenu, scanner);
             String selectionString = responses.get(1);
-            int selectionIndex = Integer.parseInt(selectionString) - 1;
-            int gameID = gameIDs.get(selectionIndex);
+            int gameID = 0;
+            try {
+                int selectionIndex = Integer.parseInt(selectionString) - 1;
+                gameID = gameIDs.get(selectionIndex);
+            } catch (Exception ignored) {}
             HttpURLConnection response = facade.join(responses.getFirst(), String.valueOf(gameID), authToken.authToken);
             switch (response.getResponseCode()) {
                 case 200 -> {
@@ -128,6 +131,7 @@ public class REPLTwo {
             case 200 -> {
                 flags.replOne = true;
                 flags.replTwo = false;
+                flags.listQueried = false;
                 System.out.println("♕ Returning to Login ♕");
             }
             case 401 -> System.out.println("Fatal Client error. Please restart the Client.");

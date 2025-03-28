@@ -60,8 +60,8 @@ public class ServerFacade {
             http.connect();
             return http;
         } catch (Exception e) {
-             throw new RuntimeException(e);
-         }
+            throw new RuntimeException(e);
+        }
     }
 
     private void writeBody(Object request, HttpURLConnection http) throws IOException {
@@ -83,6 +83,8 @@ public class ServerFacade {
     public static record JoinRequest(String playerColor, int gameID) {}
 
     public static record AuthResponse(String username, String authToken) {}
+
+    public static record CreateResponse(int gameID) {}
 
     public static record Game(int gameID, String gameName) {};
 
