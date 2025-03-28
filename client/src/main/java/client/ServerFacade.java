@@ -47,7 +47,7 @@ public class ServerFacade {
         return makeRequest("DELETE", "/session", null, authToken);
     }
 
-    private HttpURLConnection makeRequest(String method, String path, Object request, String authToken) throws Exception {
+    public HttpURLConnection makeRequest(String method, String path, Object request, String authToken) throws Exception {
         try {
             URL url = (new URI(serverUrl + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -64,7 +64,7 @@ public class ServerFacade {
         }
     }
 
-    private void writeBody(Object request, HttpURLConnection http) throws IOException {
+    public void writeBody(Object request, HttpURLConnection http) throws IOException {
         if (request != null) {
             http.addRequestProperty("Content-Type", "application/json");
             String requestData = new Gson().toJson(request);

@@ -33,7 +33,7 @@ public class REPLTwo {
                 case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
                 case "C", "c", "Create", "create" -> create(createMenu, scanner, facade, authToken);
                 case "L", "l", "List", "list" -> list(joinMenu2, gameIDs, flags, facade, authToken);
-                case "J", "j", "Join", "join" -> join(joinMenu, joinMenu2, gameIDs, scanner, flags, facade, authToken);
+                case "J", "j", "Join", "join" -> join(joinMenu, gameIDs, scanner, flags, facade, authToken);
                 case "S", "s", "Spectate", "spectate" -> spectate(spectateMenu, scanner, flags, facade, authToken);
                 case "Q", "q", "Quit", "quit" -> logout(flags, authToken, facade);
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
@@ -43,7 +43,10 @@ public class REPLTwo {
 
     }
 
-    private static void list(List<String> joinMenu2, List<Integer> gameIDs, REPLFlags flags, ServerFacade facade, REPLToken authToken) throws Exception {
+    private static void list(
+            List<String> joinMenu2, List<Integer> gameIDs, REPLFlags flags,
+            ServerFacade facade, REPLToken authToken
+    ) throws Exception {
         HttpURLConnection response = facade.list(authToken.authToken);
         switch (response.getResponseCode()) {
             case 200 -> {
@@ -81,7 +84,10 @@ public class REPLTwo {
         }
     }
 
-    private static void join(List<String> joinMenu, List<String> joinMenu2, List<Integer> gameIDs, Scanner scanner, REPLFlags flags, ServerFacade facade, REPLToken authToken) throws Exception {
+    private static void join(
+            List<String> joinMenu, List<Integer> gameIDs, Scanner scanner,
+            REPLFlags flags, ServerFacade facade, REPLToken authToken
+    ) throws Exception {
         if (flags.listQueried) {
             List<String> responses = ClientUtils.queryMenu(joinMenu, scanner);
             String selectionString = responses.get(1);
@@ -91,33 +97,41 @@ public class REPLTwo {
                 gameID = gameIDs.get(selectionIndex);
             } catch (Exception ignored) {}
             HttpURLConnection response = facade.join(responses.getFirst(), String.valueOf(gameID), authToken.authToken);
-            switch (response.getResponseCode()) {
-                case 200 -> {
-                    switch (responses.getFirst()) {
-                        // Implement Get ChessGame Logic Here,
-                        // Modify printChessboard to take ChessGame chessGame and use chessGame.getBoard().getBoard()
-                        case "WHITE" -> {
-                            System.out.println("Game Successfully Joined!");
-                            ChessGameEngine.printChessboard("WHITE");
-                        }
-                        case "BLACK" -> {
-                            System.out.println("Game Successfully Joined!");
-                            ChessGameEngine.printChessboard("BLACK");
-                        }
-                    }
-                }
-                case 400 -> {
-                    System.out.println("Color must be WHITE or BLACK.");
-                    System.out.println("Number must be on the list.");
-                }
-                case 401 -> System.out.println("Unauthorized credentials. Please re-login.");
-                case 403 -> System.out.println("That color is already taken.");
-                default -> System.out.println("Server Error.");
-            }
+            joinSwitch1(response, responses);
         } else {
             System.out.println("List games to see a game you can join.");
             System.out.println("If there are no games, create one!");
 
+        }
+    }
+
+    private static void joinSwitch1(HttpURLConnection response, List<String> responses) throws IOException {
+        switch (response.getResponseCode()) {
+            case 200 -> {
+                joinSwitch2(responses);
+            }
+            case 400 -> {
+                System.out.println("Color must be WHITE or BLACK.");
+                System.out.println("Number must be on the list.");
+            }
+            case 401 -> System.out.println("Unauthorized credentials. Please re-login.");
+            case 403 -> System.out.println("That color is already taken.");
+            default -> System.out.println("Server Error.");
+        }
+    }
+
+    private static void joinSwitch2(List<String> responses) {
+        switch (responses.getFirst()) {
+            // Implement Get ChessGame Logic Here,
+            // Modify printChessboard to take ChessGame chessGame and use chessGame.getBoard().getBoard()
+            case "WHITE" -> {
+                System.out.println("Game Successfully Joined!");
+                ChessGameEngine.printChessboard("WHITE");
+            }
+            case "BLACK" -> {
+                System.out.println("Game Successfully Joined!");
+                ChessGameEngine.printChessboard("BLACK");
+            }
         }
     }
 

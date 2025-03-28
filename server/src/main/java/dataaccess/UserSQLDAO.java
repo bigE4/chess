@@ -68,14 +68,4 @@ public class UserSQLDAO implements UserDAO {
             throw new DataAccessException("Error clearing users: " + e.getMessage());
         }
     }
-
-    public static void clear() throws DataAccessException {
-        String query = "TRUNCATE TABLE userData";
-        try (Connection connection = DatabaseManager.getConnection();
-             PreparedStatement prepared = connection.prepareStatement(query)) {
-            prepared.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataAccessException("Error clearing users: " + e.getMessage());
-        }
-    }
 }

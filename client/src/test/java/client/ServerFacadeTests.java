@@ -1,9 +1,11 @@
 package client;
 
+import dataaccess.AuthSQLDAO;
+import dataaccess.GameSQLDAO;
 import dataaccess.UserSQLDAO;
+import exceptions.DataAccessException;
 import org.junit.jupiter.api.*;
 import server.Server;
-import service.ClearService;
 
 import java.net.HttpURLConnection;
 
@@ -14,24 +16,32 @@ public class ServerFacadeTests {
 
     private static Server server;
     private static ServerFacade serverFacade;
+    static UserSQLDAO uDAO = new UserSQLDAO();
+    static AuthSQLDAO aDAO = new AuthSQLDAO();
+    static GameSQLDAO gDAO = new GameSQLDAO();
 
     @BeforeAll
-    public static void init() {
+    public static void init() throws DataAccessException {
         server = new Server();
         var port = server.run(0);
         serverFacade = new ServerFacade("http://localhost:" + port);
         System.out.println("Started test HTTP server on " + port);
+        uDAO.clearUsers();
+        aDAO.clearAuth();
+        gDAO.clearGames();
     }
 
     @AfterAll
-    static void stopServer() {
+    static void stopServer() throws DataAccessException {
         server.stop();
+        uDAO.clearUsers();
+        aDAO.clearAuth();
+        gDAO.clearGames();
     }
 
     @Test
     @Order(1)
     void testRegisterSuccess() throws Exception {
-        UserSQLDAO.clear();
         HttpURLConnection response = serverFacade.register("UserA", "password123", "userA@email.com");
         assertEquals(200, response.getResponseCode());
     }
@@ -71,6 +81,13 @@ public class ServerFacadeTests {
 
     @Test
     @Order(6)
+    void testCreateGameFail() throws Exception {
+        HttpURLConnection response = serverFacade.create("ChessGame", "Random Token");
+        assertEquals(401, response.getResponseCode());
+    }
+
+    @Test
+    @Order(7)
     void testJoinGameSuccess() throws Exception {
         HttpURLConnection loginResponse = serverFacade.login("UserA", "password123");
         ServerFacade.AuthResponse authResponse = ClientUtils.readBody(loginResponse, ServerFacade.AuthResponse.class);
@@ -81,7 +98,7 @@ public class ServerFacadeTests {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void testJoinGameFail() throws Exception {
         HttpURLConnection loginResponse = serverFacade.login("UserA", "password123");
         ServerFacade.AuthResponse authResponse = ClientUtils.readBody(loginResponse, ServerFacade.AuthResponse.class);
@@ -90,7 +107,7 @@ public class ServerFacadeTests {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void testLogoutSuccess() throws Exception {
         HttpURLConnection loginResponse = serverFacade.login("UserA", "password123");
         ServerFacade.AuthResponse authResponse = ClientUtils.readBody(loginResponse, ServerFacade.AuthResponse.class);
@@ -99,12 +116,57 @@ public class ServerFacadeTests {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
+    void testLogoutFailure() throws Exception {
+        HttpURLConnection response = serverFacade.logout("Random Token");
+        assertEquals(401, response.getResponseCode());
+    }
+
+    @Test
+    @Order(11)
     void testListGamesSuccess() throws Exception {
         HttpURLConnection loginResponse = serverFacade.login("UserA", "password123");
         ServerFacade.AuthResponse authResponse = ClientUtils.readBody(loginResponse, ServerFacade.AuthResponse.class);
         serverFacade.create("ChessGame", authResponse.authToken());
         HttpURLConnection response = serverFacade.list(authResponse.authToken());
         assertEquals(200, response.getResponseCode());
+    }
+
+    @Test
+    @Order(12)
+    void testListGamesFailure() throws Exception {
+        HttpURLConnection response = serverFacade.list("Random Token");
+        assertEquals(401, response.getResponseCode());
+    }
+
+    @Test
+    @Order(13)
+    void testMakeRequestSuccess() throws Exception {
+        assertDoesNotThrow(() -> {
+            serverFacade.makeRequest("DELETE", "/db", null, null);
+        });
+    }
+
+    @Test
+    @Order(43)
+    void testMakeRequestFail() {
+        assertThrows(RuntimeException.class, () ->
+                serverFacade.makeRequest("Bad", "Para", "meters", "& Token"));
+    }
+
+    @Test
+    @Order(15)
+    void testWriteBodySuccess() throws Exception {
+        HttpURLConnection loginResponse = serverFacade.login("UserA", "password123");
+        ServerFacade.AuthResponse authResponse = ClientUtils.readBody(loginResponse, ServerFacade.AuthResponse.class);
+        HttpURLConnection response = serverFacade.create("TestGame", authResponse.authToken());
+        assertEquals(200, response.getResponseCode());
+    }
+
+    @Test
+    @Order(16)
+    void testWriteBodyFail() {
+        assertThrows(RuntimeException.class, () ->
+                serverFacade.writeBody("Bad Parameters", null));
     }
 }
