@@ -20,10 +20,7 @@ public class ChessGameEngine {
         for (int row = 8; row >= 1; row--) {
             System.out.print(row + " ");
             for (int col = 1; col <= 8; col++) {
-                boolean isWhite = (row + col) % 2 == 0;
-                String bgColor = isWhite ? EscapeSequences.SET_BG_COLOR_WHITE : EscapeSequences.SET_BG_COLOR_BLACK;
-                System.out.print(bgColor + initialBoard[8 - row][col - 1]
-                    + EscapeSequences.RESET_BG_COLOR + EscapeSequences.RESET_TEXT_COLOR);
+                printHelper(initialBoard, row, col);
             }
             System.out.println(" " + (row));
         }
@@ -35,13 +32,17 @@ public class ChessGameEngine {
         for (int row = 1; row <= 8; row++) {
             System.out.print(row + " ");
             for (int col = 8; col >= 1; col--) {
-                boolean isWhite = (row + col) % 2 == 0;
-                String bgColor = isWhite ? EscapeSequences.SET_BG_COLOR_WHITE : EscapeSequences.SET_BG_COLOR_BLACK;
-                System.out.print(bgColor + initialBoard[8 - row][col - 1] + EscapeSequences.RESET_BG_COLOR + EscapeSequences.RESET_TEXT_COLOR);
+                printHelper(initialBoard, row, col);
             }
             System.out.println(" " + row);
         }
         System.out.println("   h  g  f  e  d  c  b  a");
+    }
+
+    private static void printHelper(String[][] initialBoard, int row, int col) {
+        boolean isWhite = (row + col) % 2 == 0;
+        String bgColor = isWhite ? EscapeSequences.SET_BG_COLOR_WHITE : EscapeSequences.SET_BG_COLOR_BLACK;
+        System.out.print(bgColor + initialBoard[8 - row][col - 1] + EscapeSequences.RESET_BG_COLOR + EscapeSequences.RESET_TEXT_COLOR);
     }
 
 }
