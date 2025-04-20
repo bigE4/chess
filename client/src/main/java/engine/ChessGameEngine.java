@@ -40,7 +40,7 @@ public class ChessGameEngine {
     }
 
     private static void printHelper(String[][] initialBoard, int row, int col) {
-        boolean isWhite = (row + col) % 2 == 0;
+        boolean isWhite = (row + col) % 2 == 1;
         String bgColor = isWhite ? EscapeSequences.SET_BG_COLOR_WHITE : EscapeSequences.SET_BG_COLOR_BLACK;
         System.out.print(bgColor + initialBoard[8 - row][col - 1] + EscapeSequences.RESET_BG_COLOR + EscapeSequences.RESET_TEXT_COLOR);
     }

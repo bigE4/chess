@@ -86,7 +86,7 @@ public class ServerFacade {
 
     public static record CreateResponse(int gameID) {}
 
-    public static record Game(int gameID, String gameName) {};
+    public static record Game(int gameID, String gameName, String whiteUsername, String blackUsername) {};
 
     public static record ListResponse(List<Game> games) {}
 

@@ -63,8 +63,12 @@ public class REPLTwo {
         joinMenu2.add("♕ Game List ♕");
         int i = 0;
         for (ServerFacade.Game game : listResponse.games()) {
+            String white = game.whiteUsername();
+            String black = game.blackUsername();
+            if (game.whiteUsername() == null) { white = "Empty"; }
+            if (game.blackUsername() == null) { black = "Empty"; }
             i++;
-            joinMenu2.add("Game " + i + ": " + game.gameName());
+            joinMenu2.add("Game " + i + ") " + game.gameName() + " | Users: White: " + white + " | Black: " + black);
             gameIDs.add(game.gameID());
         }
         ClientUtils.printMenu(joinMenu2);
@@ -137,6 +141,14 @@ public class REPLTwo {
 
     private static void spectate(List<String> spectateMenu, Scanner scanner, REPLFlags flags, ServerFacade facade, REPLToken authToken) {
         System.out.println("To Be Implemented in Phase 06");
+        List<String> responses = ClientUtils.queryMenu(spectateMenu, scanner);
+        List<String> valid = new ArrayList<>();
+        valid.add("1"); valid.add("2"); valid.add("3"); valid.add("4"); valid.add("5");
+        if (valid.contains(responses.getFirst())) {
+            ChessGameEngine.printChessboard("WHITE");
+        } else {
+            System.out.println("Number must be on the list.");
+        }
     }
 
     private static void logout(REPLFlags flags, REPLToken authToken, ServerFacade facade) throws Exception {
