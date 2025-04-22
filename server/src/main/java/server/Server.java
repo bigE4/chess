@@ -34,7 +34,7 @@ public class Server {
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Success!");
+        System.out.println("Database Exists!");
         //This line initializes the server and can be removed once you have a functioning endpoint
         Spark.init();
         Spark.awaitInitialization();
