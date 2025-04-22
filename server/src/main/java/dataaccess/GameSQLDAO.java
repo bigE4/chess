@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 public class GameSQLDAO implements GameDAO {
     @Override
     public boolean gameExists(int gameID) throws DataAccessException {
@@ -54,16 +52,26 @@ public class GameSQLDAO implements GameDAO {
         String querySelect = "SELECT moves FROM gameData WHERE gameID = ?";
         String queryUpdate = "UPDATE gameData SET moves = ? where gameID = ?";
         try (Connection connection = SQLDatabaseManager.getConnection()) {
+            List<ChessMove> moves = List.of();
+            // Get moves from db
             try (PreparedStatement select = connection.prepareStatement(querySelect)) {
                 select.setInt(1, gameID);
                 ResultSet results = select.executeQuery();
-                ChessGame game = DBUtils.deserializeGame(results.getString("game"));
-                List<ChessMove> moves = DBUtils.deserializeMoves(results.getString("moves"));
+                if (results.next()) {
+                    moves = DBUtils.deserializeMoves(results.getString("moves"));
+                }
+            }
+            // Add move to moves
+            moves.add(move);
+            // Put moves back in db
+            try (PreparedStatement update = connection.prepareStatement(queryUpdate)) {
+                update.setString(1, DBUtils.serializeMoves(moves));
+                update.setInt(2, gameID);
+                update.executeUpdate();
             }
         } catch (SQLException e) {
             throw new DataAccessException("Error updating game: " + e.getMessage());
         }
-
     }
 
     @Override
