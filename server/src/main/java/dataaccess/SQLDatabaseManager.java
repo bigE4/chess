@@ -56,7 +56,8 @@ public class SQLDatabaseManager {
                 "whiteUsername VARCHAR(255) NULL, " +
                 "blackUsername VARCHAR(255) NULL, " +
                 "gameName VARCHAR(255) NOT NULL," +
-                "game JSON NOT NULL" +
+                "game JSON NOT NULL," +
+                "moves JSON NOT NULL" +
                 ");";
 
         String createAuthDataTable = "CREATE TABLE IF NOT EXISTS authData (" +

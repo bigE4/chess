@@ -24,7 +24,7 @@ public class JoinGameService {
             GameData oldGameData = gDAO.retrieveGame(id);
             String username = aDAO.retrieveAuth(authToken).username();
             GameData newGameData = getGameData(playerColor, oldGameData, username);
-            gDAO.updatePlayerColors(newGameData);
+            gDAO.updateColors(newGameData);
             return new EmptyResponse();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -34,9 +34,9 @@ public class JoinGameService {
     private static GameData getGameData(String playerColor, GameData oldGameData, String username) {
         GameData newGameData;
         if (playerColor.equals("WHITE")) {
-            newGameData = new GameData(oldGameData.gameID(), username, oldGameData.blackUsername(), oldGameData.gameName(), oldGameData.game());
+            newGameData = new GameData(oldGameData.gameID(), username, oldGameData.blackUsername(), oldGameData.gameName(), oldGameData.game(), oldGameData.moves());
         } else {
-            newGameData = new GameData(oldGameData.gameID(), oldGameData.whiteUsername(), username, oldGameData.gameName(), oldGameData.game());
+            newGameData = new GameData(oldGameData.gameID(), oldGameData.whiteUsername(), username, oldGameData.gameName(), oldGameData.game(), oldGameData.moves());
         }
         return newGameData;
     }

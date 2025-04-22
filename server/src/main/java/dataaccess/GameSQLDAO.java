@@ -1,6 +1,7 @@
 package dataaccess;
 
 import chess.ChessGame;
+import chess.ChessMove;
 import dataaccess.interfaces.GameDAO;
 import exceptions.DataAccessException;
 import model.GameData;
@@ -15,7 +16,6 @@ import java.util.List;
 import com.google.gson.Gson;
 
 public class GameSQLDAO implements GameDAO {
-    private static final Gson GSON = new Gson();
     @Override
     public boolean gameExists(int gameID) throws DataAccessException {
         String query = "SELECT COUNT(*) FROM gameData WHERE gameID = ?";
@@ -34,15 +34,15 @@ public class GameSQLDAO implements GameDAO {
 
     @Override
     public void storeGame(GameData gameData) throws DataAccessException {
-        String query = "INSERT INTO gameData (gameID, whiteUsername, blackUsername, gameName, game) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO gameData (gameID, whiteUsername, blackUsername, gameName, game, moves) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setInt(1, gameData.gameID());
             prepared.setString(2, gameData.whiteUsername());
             prepared.setString(3, gameData.blackUsername());
             prepared.setString(4, gameData.gameName());
-            String gameJson = GSON.toJson(gameData.game());
-            prepared.setString(5, gameJson);
+            prepared.setString(5, DBUtils.serializeGame(gameData.game()));
+            prepared.setString(6, DBUtils.serializeMoves(gameData.moves()));
             prepared.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("Error storing game: " + e.getMessage());
@@ -50,7 +50,24 @@ public class GameSQLDAO implements GameDAO {
     }
 
     @Override
-    public void updatePlayerColors(GameData gameData) throws DataAccessException {
+    public void updateGame(int gameID, ChessMove move) throws DataAccessException {
+        String querySelect = "SELECT moves FROM gameData WHERE gameID = ?";
+        String queryUpdate = "UPDATE gameData SET moves = ? where gameID = ?";
+        try (Connection connection = SQLDatabaseManager.getConnection()) {
+            try (PreparedStatement select = connection.prepareStatement(querySelect)) {
+                select.setInt(1, gameID);
+                ResultSet results = select.executeQuery();
+                ChessGame game = DBUtils.deserializeGame(results.getString("game"));
+                List<ChessMove> moves = DBUtils.deserializeMoves(results.getString("moves"));
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error updating game: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void updateColors(GameData gameData) throws DataAccessException {
         String query = "UPDATE gameData SET whiteUsername = ?, blackUsername = ? WHERE gameID = ?";
         try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
@@ -71,14 +88,15 @@ public class GameSQLDAO implements GameDAO {
             prepared.setInt(1, gameID);
             ResultSet results = prepared.executeQuery();
             if (results.next()) {
-                String gameJson = results.getString("game");
-                ChessGame game = GSON.fromJson(gameJson, ChessGame.class);
+                ChessGame game = DBUtils.deserializeGame(results.getString("game"));
+                List<ChessMove> moves = DBUtils.deserializeMoves(results.getString("moves"));
                 return new GameData(
                         results.getInt("gameID"),
                         results.getString("whiteUsername"),
                         results.getString("blackUsername"),
                         results.getString("gameName"),
-                        game
+                        game,
+                        moves
                 );
             }
         } catch (SQLException e) {
@@ -95,14 +113,15 @@ public class GameSQLDAO implements GameDAO {
              PreparedStatement prepared = connection.prepareStatement(query);
              ResultSet results = prepared.executeQuery()) {
             while (results.next()) {
-                String gameJson = results.getString("game");
-                ChessGame game = GSON.fromJson(gameJson, ChessGame.class);
+                ChessGame game = DBUtils.deserializeGame(results.getString("game"));
+                List<ChessMove> moves = DBUtils.deserializeMoves(results.getString("moves"));
                 games.add(new GameData(
                         results.getInt("gameID"),
                         results.getString("whiteUsername"),
                         results.getString("blackUsername"),
                         results.getString("gameName"),
-                        game
+                        game,
+                        moves
                 ));
             }
         } catch (SQLException e) {

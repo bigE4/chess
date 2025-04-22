@@ -1,5 +1,6 @@
 package dataaccess.exampledatabase;
 
+import chess.ChessMove;
 import com.google.gson.reflect.TypeToken;
 import dataaccess.interfaces.GameDAO;
 import model.GameData;
@@ -36,7 +37,12 @@ public class GameDatabaseDAO implements GameDAO {
     }
 
     @Override
-    public void updatePlayerColors(GameData gameData) {
+    public void updateGame(int gameID, ChessMove move) {
+
+    }
+
+    @Override
+    public void updateColors(GameData gameData) {
         for (GameData data: gameDataList) {
             if (Objects.equals(data.gameID(), gameData.gameID())) {
                 deleteGame(gameData.gameID());

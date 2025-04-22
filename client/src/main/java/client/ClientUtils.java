@@ -11,13 +11,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClientUtils {
+
+    private static final Gson gson = new Gson();
+
     public static <T> T readBody(HttpURLConnection http, Class<T> responseClass) throws IOException {
         T response = null;
         if (http.getContentLength() < 0) {
             try (InputStream respBody = http.getInputStream()) {
                 InputStreamReader reader = new InputStreamReader(respBody);
                 if (responseClass != null) {
-                    response = new Gson().fromJson(reader, responseClass);
+                    response = gson.fromJson(reader, responseClass);
                 }
             }
         }

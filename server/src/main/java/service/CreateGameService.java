@@ -1,6 +1,7 @@
 package service;
 
 import chess.ChessGame;
+import chess.ChessMove;
 import dataaccess.*;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.GameDAO;
@@ -9,6 +10,9 @@ import exceptions.UnauthorizedException;
 import model.GameData;
 import request.CreateGameRequest;
 import response.CreateGameResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateGameService {
     public CreateGameResponse createGame(CreateGameRequest createGameRequest) throws Exception {
@@ -19,7 +23,8 @@ public class CreateGameService {
         try {
             int id = ServiceUtils.generateGameID();
             ChessGame chessGame = new ChessGame();
-            gDAO.storeGame(new GameData(id, null, null, createGameRequest.gameName(), chessGame));
+            List<ChessMove> moves = new ArrayList<>();
+            gDAO.storeGame(new GameData(id, null, null, createGameRequest.gameName(), chessGame, moves));
             return new CreateGameResponse(id);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
