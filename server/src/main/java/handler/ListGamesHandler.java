@@ -2,9 +2,9 @@ package handler;
 
 import com.google.gson.Gson;
 import exceptions.UnauthorizedException;
-import request.ListGamesRequest;
-import response.ErrorResponse;
-import response.ListGamesResponse;
+import records.ListGamesRequest;
+import records.ErrorResponse;
+import records.ListGamesResponse;
 import service.ListGamesService;
 import spark.Request;
 import spark.Response;

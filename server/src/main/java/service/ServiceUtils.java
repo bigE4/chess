@@ -4,8 +4,8 @@ import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.GameDAO;
 import dataaccess.interfaces.UserDAO;
 import exceptions.DataAccessException;
-import model.GameData;
-import request.*;
+import records.GameData;
+import records.*;
 
 import java.util.Random;
 import java.util.UUID;

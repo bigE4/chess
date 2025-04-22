@@ -1,7 +1,7 @@
 package dataaccess.interfaces;
 
 import exceptions.DataAccessException;
-import model.UserData;
+import records.UserData;
 
 public interface UserDAO {
     boolean userExists(String username) throws DataAccessException;

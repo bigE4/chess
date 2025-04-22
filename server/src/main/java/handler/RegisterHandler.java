@@ -3,10 +3,10 @@ package handler;
 import com.google.gson.Gson;
 import exceptions.BadRequestException;
 import exceptions.AlreadyTakenException;
-import response.ErrorResponse;
+import records.ErrorResponse;
 import service.RegisterService;
-import request.RegisterRequest;
-import response.RegisterResponse;
+import records.RegisterRequest;
+import records.RegisterResponse;
 import spark.Request;
 import spark.Response;
 

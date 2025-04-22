@@ -1,6 +1,4 @@
-package response;
-
-import model.GameDataDTO;
+package records;
 
 import java.util.List;
 

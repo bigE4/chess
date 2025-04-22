@@ -1,4 +1,4 @@
-package model;
+package records;
 
 public record GameDataDTO(int gameID, String whiteUsername, String blackUsername, String gameName) {
     public GameDataDTO(GameData gameData) {

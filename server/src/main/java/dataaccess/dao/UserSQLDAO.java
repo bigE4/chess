@@ -1,7 +1,8 @@
-package dataaccess;
+package dataaccess.dao;
 
+import dataaccess.SQLDatabaseManager;
 import dataaccess.interfaces.UserDAO;
-import model.UserData;
+import records.UserData;
 import exceptions.DataAccessException;
 import org.mindrot.jbcrypt.BCrypt;
 

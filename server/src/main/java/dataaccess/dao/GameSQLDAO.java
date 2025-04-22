@@ -1,10 +1,12 @@
-package dataaccess;
+package dataaccess.dao;
 
 import chess.ChessGame;
 import chess.ChessMove;
+import dataaccess.DBUtils;
+import dataaccess.SQLDatabaseManager;
 import dataaccess.interfaces.GameDAO;
 import exceptions.DataAccessException;
-import model.GameData;
+import records.GameData;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

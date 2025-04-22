@@ -1,9 +1,12 @@
 package dataaccess;
 
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.GameSQLDAO;
+import dataaccess.dao.UserSQLDAO;
 import exceptions.DataAccessException;
-import model.AuthData;
-import model.GameData;
-import model.UserData;
+import records.AuthData;
+import records.GameData;
+import records.UserData;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

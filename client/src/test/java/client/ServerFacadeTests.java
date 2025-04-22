@@ -1,8 +1,8 @@
 package client;
 
-import dataaccess.AuthSQLDAO;
-import dataaccess.GameSQLDAO;
-import dataaccess.UserSQLDAO;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.GameSQLDAO;
+import dataaccess.dao.UserSQLDAO;
 import exceptions.DataAccessException;
 import org.junit.jupiter.api.*;
 import server.Server;

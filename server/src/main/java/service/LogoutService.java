@@ -1,9 +1,9 @@
 package service;
 
-import dataaccess.AuthSQLDAO;
+import dataaccess.dao.AuthSQLDAO;
 import exceptions.UnauthorizedException;
-import request.LogoutRequest;
-import response.EmptyResponse;
+import records.LogoutRequest;
+import records.EmptyResponse;
 
 public class LogoutService {
 

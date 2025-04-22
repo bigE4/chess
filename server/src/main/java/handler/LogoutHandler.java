@@ -2,9 +2,9 @@ package handler;
 
 import com.google.gson.Gson;
 import exceptions.UnauthorizedException;
-import request.LogoutRequest;
-import response.ErrorResponse;
-import response.EmptyResponse;
+import records.LogoutRequest;
+import records.ErrorResponse;
+import records.EmptyResponse;
 import service.LogoutService;
 import spark.Request;
 import spark.Response;

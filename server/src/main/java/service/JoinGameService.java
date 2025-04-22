@@ -1,14 +1,15 @@
 package service;
 
-import dataaccess.*;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.GameSQLDAO;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.GameDAO;
 import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
-import model.GameData;
-import request.JoinGameRequest;
-import response.EmptyResponse;
+import records.GameData;
+import records.JoinGameRequest;
+import records.EmptyResponse;
 
 public class JoinGameService {
     public EmptyResponse joinGame(JoinGameRequest joinGameRequest) throws Exception {

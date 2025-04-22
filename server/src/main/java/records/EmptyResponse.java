@@ -1,4 +1,4 @@
-package response;
+package records;
 
 public record EmptyResponse() {
 }

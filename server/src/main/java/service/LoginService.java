@@ -1,12 +1,13 @@
 package service;
 
-import dataaccess.*;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.UserSQLDAO;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.UserDAO;
 import exceptions.UnauthorizedException;
-import model.AuthData;
-import request.LoginRequest;
-import response.LoginResponse;
+import records.AuthData;
+import records.LoginRequest;
+import records.LoginResponse;
 
 public class LoginService {
     public LoginResponse login(LoginRequest loginRequest) throws Exception {

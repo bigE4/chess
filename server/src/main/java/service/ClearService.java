@@ -1,10 +1,12 @@
 package service;
 
-import dataaccess.*;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.GameSQLDAO;
+import dataaccess.dao.UserSQLDAO;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.GameDAO;
 import dataaccess.interfaces.UserDAO;
-import response.EmptyResponse;
+import records.EmptyResponse;
 
 public class ClearService {
     public EmptyResponse clear() throws Exception {

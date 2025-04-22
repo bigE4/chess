@@ -1,13 +1,14 @@
 package service;
 
-import dataaccess.*;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.GameSQLDAO;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.GameDAO;
 import exceptions.UnauthorizedException;
-import model.GameData;
-import request.ListGamesRequest;
-import model.GameDataDTO;
-import response.ListGamesResponse;
+import records.GameData;
+import records.ListGamesRequest;
+import records.GameDataDTO;
+import records.ListGamesResponse;
 
 import java.util.ArrayList;
 import java.util.List;

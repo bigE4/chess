@@ -2,9 +2,9 @@ package handler;
 
 import com.google.gson.Gson;
 import exceptions.UnauthorizedException;
-import request.LoginRequest;
-import response.ErrorResponse;
-import response.LoginResponse;
+import records.LoginRequest;
+import records.ErrorResponse;
+import records.LoginResponse;
 import service.LoginService;
 import spark.Request;
 import spark.Response;

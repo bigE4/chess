@@ -1,14 +1,15 @@
 package service;
 
-import dataaccess.*;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.UserSQLDAO;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.UserDAO;
 import exceptions.BadRequestException;
 import exceptions.AlreadyTakenException;
-import model.AuthData;
-import model.UserData;
-import request.RegisterRequest;
-import response.RegisterResponse;
+import records.AuthData;
+import records.UserData;
+import records.RegisterRequest;
+import records.RegisterResponse;
 
 
 public class RegisterService {

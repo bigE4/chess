@@ -2,14 +2,15 @@ package service;
 
 import chess.ChessGame;
 import chess.ChessMove;
-import dataaccess.*;
+import dataaccess.dao.AuthSQLDAO;
+import dataaccess.dao.GameSQLDAO;
 import dataaccess.interfaces.AuthDAO;
 import dataaccess.interfaces.GameDAO;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
-import model.GameData;
-import request.CreateGameRequest;
-import response.CreateGameResponse;
+import records.GameData;
+import records.CreateGameRequest;
+import records.CreateGameResponse;
 
 import java.util.ArrayList;
 import java.util.List;
