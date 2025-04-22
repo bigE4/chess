@@ -1,6 +1,6 @@
 package service;
 
-import dataaccess.DatabaseManager;
+import dataaccess.SQLDatabaseManager;
 import exceptions.AlreadyTakenException;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
@@ -23,8 +23,8 @@ public class ServerTests {
 
     @BeforeEach
     void setUp() throws Exception {
-        DatabaseManager.createDatabase();
-        DatabaseManager.createTables();
+        SQLDatabaseManager.createDatabase();
+        SQLDatabaseManager.createTables();
         registerService = new RegisterService();
         loginService = new LoginService();
         logoutService = new LogoutService();

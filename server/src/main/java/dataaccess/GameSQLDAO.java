@@ -1,6 +1,7 @@
 package dataaccess;
 
 import chess.ChessGame;
+import dataaccess.interfaces.GameDAO;
 import exceptions.DataAccessException;
 import model.GameData;
 
@@ -13,12 +14,12 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-public class GameSQLDAO implements GameDAO{
+public class GameSQLDAO implements GameDAO {
     private static final Gson GSON = new Gson();
     @Override
     public boolean gameExists(int gameID) throws DataAccessException {
         String query = "SELECT COUNT(*) FROM gameData WHERE gameID = ?";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setInt(1, gameID);
             ResultSet results = prepared.executeQuery();
@@ -34,7 +35,7 @@ public class GameSQLDAO implements GameDAO{
     @Override
     public void storeGame(GameData gameData) throws DataAccessException {
         String query = "INSERT INTO gameData (gameID, whiteUsername, blackUsername, gameName, game) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setInt(1, gameData.gameID());
             prepared.setString(2, gameData.whiteUsername());
@@ -51,7 +52,7 @@ public class GameSQLDAO implements GameDAO{
     @Override
     public void updatePlayerColors(GameData gameData) throws DataAccessException {
         String query = "UPDATE gameData SET whiteUsername = ?, blackUsername = ? WHERE gameID = ?";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setString(1, gameData.whiteUsername());
             prepared.setString(2, gameData.blackUsername());
@@ -65,7 +66,7 @@ public class GameSQLDAO implements GameDAO{
     @Override
     public GameData retrieveGame(int gameID) throws DataAccessException {
         String query = "SELECT * FROM gameData WHERE gameID = ?";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setInt(1, gameID);
             ResultSet results = prepared.executeQuery();
@@ -90,7 +91,7 @@ public class GameSQLDAO implements GameDAO{
     public List<GameData> retrieveGames() throws DataAccessException {
         List<GameData> games = new ArrayList<>();
         String query = "SELECT * FROM gameData";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query);
              ResultSet results = prepared.executeQuery()) {
             while (results.next()) {
@@ -113,7 +114,7 @@ public class GameSQLDAO implements GameDAO{
     @Override
     public void deleteGame(int gameID) throws DataAccessException {
         String query = "DELETE FROM gameData WHERE gameID = ?";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setInt(1, gameID);
             prepared.executeUpdate();
@@ -125,7 +126,7 @@ public class GameSQLDAO implements GameDAO{
     @Override
     public void clearGames() throws DataAccessException {
         String query = "TRUNCATE TABLE gameData";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.executeUpdate();
         } catch (SQLException e) {

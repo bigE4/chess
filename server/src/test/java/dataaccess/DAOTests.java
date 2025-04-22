@@ -17,8 +17,8 @@ public class DAOTests {
 
     @BeforeEach
     void setUp() throws Exception {
-        DatabaseManager.createDatabase();
-        DatabaseManager.createTables();
+        SQLDatabaseManager.createDatabase();
+        SQLDatabaseManager.createTables();
         userDAO = new UserSQLDAO();
         gameDAO = new GameSQLDAO();
         authDAO = new AuthSQLDAO();

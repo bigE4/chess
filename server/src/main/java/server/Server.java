@@ -1,6 +1,6 @@
 package server;
 
-import dataaccess.DatabaseManager;
+import dataaccess.SQLDatabaseManager;
 import exceptions.DataAccessException;
 import handler.*;
 import spark.*;
@@ -29,8 +29,8 @@ public class Server {
         System.out.println("delete/db registered");
         System.out.println("Ensuring Database Exists With Correct Tables...");
         try {
-            DatabaseManager.createDatabase();
-            DatabaseManager.createTables();
+            SQLDatabaseManager.createDatabase();
+            SQLDatabaseManager.createTables();
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }

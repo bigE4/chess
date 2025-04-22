@@ -1,4 +1,4 @@
-package dataaccess;
+package dataaccess.exampledatabase;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,5 +1,6 @@
 package dataaccess;
 
+import dataaccess.interfaces.UserDAO;
 import model.UserData;
 import exceptions.DataAccessException;
 import org.mindrot.jbcrypt.BCrypt;
@@ -11,7 +12,7 @@ public class UserSQLDAO implements UserDAO {
     @Override
     public boolean userExists(String username) throws DataAccessException {
         String query = "SELECT COUNT(*) FROM userData WHERE username = ?";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setString(1, username);
             try (ResultSet results = prepared.executeQuery()) {
@@ -28,7 +29,7 @@ public class UserSQLDAO implements UserDAO {
     @Override
     public void storeUser(UserData userData) throws DataAccessException {
         String query = "INSERT INTO userData (username, password, email) VALUES (?, ?, ?)";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             String hashedPassword = BCrypt.hashpw(userData.password(), BCrypt.gensalt());
             prepared.setString(1, userData.username());
@@ -43,7 +44,7 @@ public class UserSQLDAO implements UserDAO {
     @Override
     public boolean authenticateUser(String username, String password) throws DataAccessException {
         String query = "SELECT password FROM userData WHERE username = ?";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setString(1, username);
             try (ResultSet results = prepared.executeQuery()) {
@@ -61,7 +62,7 @@ public class UserSQLDAO implements UserDAO {
     @Override
     public void clearUsers() throws DataAccessException {
         String query = "TRUNCATE TABLE userData";
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = SQLDatabaseManager.getConnection();
              PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.executeUpdate();
         } catch (SQLException e) {

@@ -1,6 +1,7 @@
-package dataaccess;
+package dataaccess.exampledatabase;
 
 import com.google.gson.reflect.TypeToken;
+import dataaccess.interfaces.UserDAO;
 import model.UserData;
 
 import java.util.ArrayList;

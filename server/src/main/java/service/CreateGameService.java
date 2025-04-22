@@ -2,6 +2,8 @@ package service;
 
 import chess.ChessGame;
 import dataaccess.*;
+import dataaccess.interfaces.AuthDAO;
+import dataaccess.interfaces.GameDAO;
 import exceptions.BadRequestException;
 import exceptions.UnauthorizedException;
 import model.GameData;

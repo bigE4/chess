@@ -1,4 +1,4 @@
-package dataaccess;
+package dataaccess.interfaces;
 
 import exceptions.DataAccessException;
 import model.UserData;

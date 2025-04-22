@@ -1,6 +1,8 @@
 package service;
 
 import dataaccess.*;
+import dataaccess.interfaces.AuthDAO;
+import dataaccess.interfaces.UserDAO;
 import exceptions.BadRequestException;
 import exceptions.AlreadyTakenException;
 import model.AuthData;
