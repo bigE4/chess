@@ -7,7 +7,7 @@ import websocket.messages.ServerMessage;
 
 import java.util.Scanner;
 
-public class REPL3 {
+public class REPL3 implements NotificationHandler {
 
     public void replMain(Scanner scanner, REPLFlags flags, WebsocketFacade facade, REPLToken authToken) throws Exception {
         System.out.println("♕ REPL3 ACCESSED! ♕");
