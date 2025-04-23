@@ -1,7 +1,7 @@
 import records.REPLFlags;
-import client.REPLOne;
-import client.REPLTwo;
-import client.ServerFacade;
+import client.REPL1;
+import client.REPL2;
+import facade.ServerFacade;
 import records.REPLToken;
 
 import java.util.Scanner;
@@ -14,9 +14,9 @@ public class ClientMain {
         ServerFacade facade = new ServerFacade("http://localhost:8080");
 
         while (flags.replOne || flags.replTwo) {
-            REPLOne.replMain(scanner, flags, token, facade);
+            REPL1.replMain(scanner, flags, token, facade);
             if (flags.replTwo) {
-                REPLTwo.replMain(scanner, flags, facade, token);
+                REPL2.replMain(scanner, flags, facade, token);
             }
         }
     }

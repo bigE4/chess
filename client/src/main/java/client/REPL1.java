@@ -1,6 +1,7 @@
 package client;
 
 import engine.ChessGameEngine;
+import facade.ServerFacade;
 import records.REPLFlags;
 import records.REPLToken;
 
@@ -8,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.Scanner;
 
-public class REPLOne {
+public class REPL1 {
     public static void replMain(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
         System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 

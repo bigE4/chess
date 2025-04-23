@@ -1,4 +1,4 @@
-package websocket;
+package facade;
 
 public class WebsocketFacade {
 }

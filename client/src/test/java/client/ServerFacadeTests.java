@@ -4,6 +4,7 @@ import dataaccess.dao.AuthSQLDAO;
 import dataaccess.dao.GameSQLDAO;
 import dataaccess.dao.UserSQLDAO;
 import exceptions.DataAccessException;
+import facade.ServerFacade;
 import org.junit.jupiter.api.*;
 import server.Server;
 

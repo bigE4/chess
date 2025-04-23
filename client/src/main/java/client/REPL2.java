@@ -1,6 +1,7 @@
 package client;
 
 import engine.ChessGameEngine;
+import facade.ServerFacade;
 import records.REPLFlags;
 import records.REPLToken;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class REPLTwo {
+public class REPL2 {
     public static void replMain(Scanner scanner, REPLFlags flags, ServerFacade facade, REPLToken authToken) throws Exception {
         System.out.println("♕ Login Successful! ♕");
 

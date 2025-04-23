@@ -1,4 +1,4 @@
-package client;
+package facade;
 
 import com.google.gson.Gson;
 
