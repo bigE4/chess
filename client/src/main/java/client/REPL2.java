@@ -111,8 +111,7 @@ public class REPL2 {
     private static void joinSwitch1(HttpURLConnection response, List<String> responses, REPLFlags flags) throws IOException {
         switch (response.getResponseCode()) {
             case 200 -> {
-                joinSwitch2(responses);
-                switchToREPL3(flags);
+                joinSwitch2(responses, flags);
             }
             case 400 -> {
                 System.out.println("Color must be WHITE or BLACK.");
@@ -124,10 +123,12 @@ public class REPL2 {
         }
     }
 
-    private static void joinSwitch2(List<String> responses) {
+    private static void joinSwitch2(List<String> responses, REPLFlags flags) {
         switch (responses.getFirst()) {
+
             // Implement Get ChessGame Logic Here,
             // Modify printChessboard to take ChessGame chessGame and use chessGame.getBoard().getBoard()
+
             case "WHITE" -> {
                 System.out.println("Game Successfully Joined!");
                 ChessGameEngine.printChessboard("WHITE");
@@ -137,11 +138,15 @@ public class REPL2 {
                 ChessGameEngine.printChessboard("BLACK");
             }
         }
+        switchToREPL3(flags);
     }
 
     private static void spectate(List<String> spectateMenu, Scanner scanner, REPLFlags flags, ServerFacade facade, REPLToken authToken) {
         System.out.println("To Be Implemented in Phase 06");
         ChessGameEngine.printChessboard("WHITE");
+
+        // There's going to be a lot more work here.
+
         switchToREPL3(flags);
     }
 
