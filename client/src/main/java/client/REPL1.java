@@ -44,6 +44,7 @@ public class REPL1 {
         if (code == 200) {
             ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
             token.authToken = authResponse.authToken();
+            flags.replOne = false;
             flags.replTwo = true;
         } else {
             System.out.println("Unauthorized credentials.");
@@ -57,6 +58,7 @@ public class REPL1 {
             case 200 -> {
                 ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
                 token.authToken = authResponse.authToken();
+                flags.replOne = false;
                 flags.replTwo = true;
             }
             case 400 -> System.out.println("Username, Password, or Email cannot be empty.");

@@ -1,8 +1,10 @@
 import records.REPLFlags;
+import records.REPLToken;
 import client.REPL1;
 import client.REPL2;
+import client.REPL3;
 import facade.ServerFacade;
-import records.REPLToken;
+import facade.WebsocketFacade;
 
 import java.util.Scanner;
 
@@ -11,12 +13,20 @@ public class ClientMain {
         Scanner scanner = new Scanner(System.in);
         REPLFlags flags = new REPLFlags(true, false, false, false);
         REPLToken token = new REPLToken("");
-        ServerFacade facade = new ServerFacade("http://localhost:8080");
+        ServerFacade serverFacade = new ServerFacade("http://localhost:8080");
 
-        while (flags.replOne || flags.replTwo) {
-            REPL1.replMain(scanner, flags, token, facade);
+        REPL3 repl3 = new REPL3();
+        WebsocketFacade websocketFacade = new WebsocketFacade();
+
+        while (flags.replOne || flags.replTwo || flags.replThree) {
+            if (flags.replOne) {
+            REPL1.replMain(scanner, flags, token, serverFacade);
+            }
             if (flags.replTwo) {
-                REPL2.replMain(scanner, flags, facade, token);
+                REPL2.replMain(scanner, flags, serverFacade, token);
+            }
+            if (flags.replThree) {
+                repl3.replMain(scanner, flags, websocketFacade, token);
             }
         }
     }
