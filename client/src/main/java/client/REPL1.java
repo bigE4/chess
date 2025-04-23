@@ -44,8 +44,7 @@ public class REPL1 {
         if (code == 200) {
             ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
             token.authToken = authResponse.authToken();
-            flags.replOne = false;
-            flags.replTwo = true;
+            switchToREPL2(flags);
         } else {
             System.out.println("Unauthorized credentials.");
         }
@@ -58,12 +57,16 @@ public class REPL1 {
             case 200 -> {
                 ServerFacade.AuthResponse authResponse = ClientUtils.readBody(response, ServerFacade.AuthResponse.class);
                 token.authToken = authResponse.authToken();
-                flags.replOne = false;
-                flags.replTwo = true;
+                switchToREPL2(flags);
             }
             case 400 -> System.out.println("Username, Password, or Email cannot be empty.");
             case 403 -> System.out.println("Username already taken.");
             default -> System.out.println("Server Error.");
         }
+    }
+
+    private static void switchToREPL2(REPLFlags flags) {
+        flags.replOne = false;
+        flags.replTwo = true;
     }
 }
