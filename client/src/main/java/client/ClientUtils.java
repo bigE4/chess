@@ -66,10 +66,23 @@ public class ClientUtils {
                 "Select a Game: (Type the number of the game you want to join)"
         );
         List<String> spectateMenu = List.of(
-                "Select a Game: (Type the number of the game you want to join)"
+            "Select a Game: (Type the number of the game you want to join)"
         );
 
         return List.of(helpMenu, createMenu, joinMenu, spectateMenu);
+    }
+
+    static List<List<String>> initMenusThree() {
+        List<String> helpMenu = List.of(
+                "Options:",
+                "Help: (H, h, Help, help)",
+                "Draw Chessboard: (D, d, Draw, draw)",
+                "Move: (M, m, Move, move)",
+                "Resign: (R, r, Resign, resign)",
+                "Leave: (Q, q, Quit, quit)"
+        );
+
+        return List.of(helpMenu);
     }
 
     public static void printMenu(List<String> menu) {
