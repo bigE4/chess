@@ -19,10 +19,10 @@ public class WSConnectionManager {
 
     public void broadcast(ServerMessage message, int gameID) {
         for (WSConnection connection : connections.values()) {
-            if (connection.isOpen() && connection.getGameID() == gameID) {
+            if (connection.isOpen() && connection.gameID() == gameID) {
                 connection.send(message);
             } else if (!connection.isOpen()) {
-                connections.remove(connection.getUsername());
+                connections.remove(connection.username());
             }
         }
     }
