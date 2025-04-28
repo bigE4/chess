@@ -13,6 +13,9 @@ public class REPL1 {
     public static void replMain(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
         System.out.println("♕ Welcome to Ian's cs240 Chess Client. Sign in or register to begin. ♕");
 
+        // Code Cleanup, reduce ambient clutter
+        REPLData data = new REPLData(scanner, flags, token, facade);
+
         var menus = ClientUtils.initMenusOne();
         var helpMenu = menus.get(0);
         var loginMenu = menus.get(1);
@@ -69,4 +72,7 @@ public class REPL1 {
         flags.replOne = false;
         flags.replTwo = true;
     }
+
+    public static record REPLData(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) {}
+
 }
