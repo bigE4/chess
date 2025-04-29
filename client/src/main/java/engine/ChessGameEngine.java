@@ -1,16 +1,42 @@
 package engine;
 
-import chess.ChessBoard;
+import chess.*;
+
+import java.util.Collection;
+import java.util.List;
 
 public class ChessGameEngine {
+    private static ChessGame game;
+    private static ChessGame.TeamColor playerColor;
 
-    public static void printChessboard(String playerColor) {
-        ChessBoard gameBoard = new ChessBoard();
-        gameBoard.resetBoard();
-        String[][] stringBoard = ChessBoardConverter.toStringBoard(gameBoard.getChessBoard());
-        if (playerColor.equals("WHITE")) {
+    public ChessGameEngine(ChessGame.TeamColor teamColor) {
+        playerColor = teamColor;
+    }
+
+    public void loadFromMoves(List<ChessMove> moves) throws InvalidMoveException{
+        game = new ChessGame();
+        game.setBoard(new ChessBoard());
+        for (ChessMove move : moves) {
+            game.makeMove(move);
+        }
+    }
+
+    public boolean isValidMove(ChessMove move) {
+        ChessPosition start = move.getStartPosition();
+        Collection<ChessMove> validMoves = game.validMoves(start);
+        return validMoves != null && validMoves.contains(move);
+    }
+
+    public void applyMove(ChessMove move) throws InvalidMoveException {
+        game.makeMove(move);
+    }
+
+    public static void render() {
+        ChessBoard board = game.getBoard();
+        String[][] stringBoard = ChessBoardConverter.toStringBoard(board.getChessBoard());
+        if (playerColor == ChessGame.TeamColor.WHITE) {
             whitePerspective(stringBoard);
-        } else if (playerColor.equals("BLACK")) {
+        } else if (playerColor == ChessGame.TeamColor.BLACK) {
             blackPerspective(stringBoard);
         }
     }

@@ -79,8 +79,15 @@ public class ClientUtils {
                 "Draw Chessboard: (D, d, Draw, draw)",
                 "Move: (M, m, Move, move)",
                 "Resign: (R, r, Resign, resign)",
+                "Highlight Legal Moves: (L, l, Legal, legal)",
                 "Leave: (Q, q, Quit, quit)"
         );
+
+        List<String> moveMenu = List.of(
+                "Move Starting Position:",
+                "Move Ending Position:"
+        );
+
 
         return List.of(helpMenu);
     }

@@ -2,20 +2,32 @@ package client;
 
 import engine.ChessGameEngine;
 import facade.WebsocketFacade;
-import records.REPLFlags;
-import records.REPLToken;
+import records.REPLData;
 import websocket.messages.ServerMessage;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class REPL3 implements NotificationHandler {
 
-    public void replMain(Scanner scanner, REPLFlags flags, WebsocketFacade facade, REPLToken authToken) throws Exception {
+    private Scanner scanner;
+    private REPLData flags;
+    private WebsocketFacade facade;
+    private ChessGameEngine engine;
+
+    public void replMain(Scanner scanner, REPLData flags, WebsocketFacade facade) throws Exception {
         System.out.println("♕ Game Menu ♕");
 
-        var menus = ClientUtils.initMenusThree();
-        var helpMenu = menus.getFirst();
+        this.engine = new ChessGameEngine(flags.color);
+        this.scanner = scanner;
+        this.flags = flags;
+        this.facade = facade;
 
+        var menus = ClientUtils.initMenusThree();
+        var helpMenu = menus.get(0);
+        var moveMenu = menus.get(1);
+
+        engine.render();
         ClientUtils.printMenu(helpMenu);
 
         // Initialize the game engine.
@@ -29,9 +41,10 @@ public class REPL3 implements NotificationHandler {
             String response = scanner.nextLine();
             switch (response) {
                 case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
-                case "D", "d", "Draw", "draw" -> ChessGameEngine.printChessboard("WHITE");
-                case "M", "m", "Move", "move" -> System.out.println("Moves!");
-                case "R", "r", "Resign", "resign" -> System.out.println("Resigns!");
+                case "D", "d", "Draw", "draw" -> draw();
+                case "M", "m", "Move", "move" -> move(moveMenu, scanner);
+                case "R", "r", "Resign", "resign" -> resign();
+                case "L", "l", "Legal", "legal" -> legal();
                 case "Q", "q", "Quit", "quit" -> switchToREPL2(flags);
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
             }
@@ -39,7 +52,22 @@ public class REPL3 implements NotificationHandler {
         }
     }
 
-    public void switchToREPL2(REPLFlags flags) {
+    private void draw() {
+        engine.render();
+    }
+
+    private void move() {
+        List<String> responses = ClientUtils.queryMenu(moveMenu, scanner);
+
+    }
+
+    private void resign() {
+    }
+
+    private void legal() {
+    }
+
+    public void switchToREPL2(REPLData flags) {
         flags.replTwo = true;
         flags.replThree = false;
     }
