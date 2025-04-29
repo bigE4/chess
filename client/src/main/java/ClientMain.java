@@ -1,5 +1,5 @@
-import records.REPLFlags;
-import records.REPLToken;
+import chess.ChessGame;
+import records.REPLData;
 import client.REPL1;
 import client.REPL2;
 import client.REPL3;
@@ -11,8 +11,7 @@ import java.util.Scanner;
 public class ClientMain {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        REPLFlags flags = new REPLFlags(true, false, false, false);
-        REPLToken token = new REPLToken("");
+        REPLData flags = new REPLData(true, false, false, false, "", ChessGame.TeamColor.WHITE);
         ServerFacade sFacade = new ServerFacade("http://localhost:8080");
 
         REPL3 repl3 = new REPL3();
@@ -20,13 +19,13 @@ public class ClientMain {
 
         while (flags.replOne || flags.replTwo || flags.replThree) {
             if (flags.replOne) {
-            REPL1.replMain(scanner, flags, token, sFacade);
+            REPL1.replMain(scanner, flags, sFacade);
             }
             if (flags.replTwo) {
-                REPL2.replMain(scanner, flags, token, sFacade);
+                REPL2.replMain(scanner, flags, sFacade);
             }
             if (flags.replThree) {
-                repl3.replMain(scanner, flags, wsFacade, token);
+                repl3.replMain(scanner, flags, wsFacade);
             }
         }
     }

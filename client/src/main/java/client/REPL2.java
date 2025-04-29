@@ -1,9 +1,8 @@
 package client;
 
-import engine.ChessGameEngine;
+import chess.ChessGame;
 import facade.ServerFacade;
-import records.REPLFlags;
-import records.REPLToken;
+import records.REPLData;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -12,11 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class REPL2 {
-    public static void replMain(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) throws Exception {
+    public static void replMain(Scanner scanner, REPLData flags, ServerFacade facade) throws Exception {
         System.out.println("♕ Main Menu ♕");
-
-        // Code Cleanup, reduce ambient clutter
-        REPL1.REPLData data = new REPL1.REPLData(scanner, flags, token, facade);
 
         List<String> joinMenu2 = new ArrayList<>();
         joinMenu2.add("♕ Game List ♕");
@@ -34,20 +30,20 @@ public class REPL2 {
             String response = scanner.nextLine();
             switch (response) {
                 case "H", "h", "Help", "help" -> ClientUtils.printMenu(helpMenu);
-                case "C", "c", "Create", "create" -> create(createMenu, scanner, token, facade);
-                case "L", "l", "List", "list" -> list(joinMenu2, gameIDs, flags, token, facade);
-                case "J", "j", "Join", "join" -> join(joinMenu, gameIDs, scanner, flags, token, facade);
-                case "S", "s", "Spectate", "spectate" -> spectate(spectateMenu, scanner, flags, token, facade);
-                case "Q", "q", "Quit", "quit" -> logout(flags, token, facade);
+                case "C", "c", "Create", "create" -> create(createMenu, scanner, flags, facade);
+                case "L", "l", "List", "list" -> list(joinMenu2, gameIDs, flags, facade);
+                case "J", "j", "Join", "join" -> join(joinMenu, gameIDs, scanner, flags, facade);
+                case "S", "s", "Spectate", "spectate" -> spectate(spectateMenu, scanner, flags, facade);
+                case "Q", "q", "Quit", "quit" -> logout(flags, facade);
                 default -> System.out.println("'" + response + "' is not a valid input. Try again.");
             }
             System.out.println("----------");
         }
     }
 
-    private static void create(List<String> createMenu, Scanner scanner, REPLToken authToken, ServerFacade facade) throws Exception {
+    private static void create(List<String> createMenu, Scanner scanner, REPLData flags, ServerFacade facade) throws Exception {
         List<String> responses = ClientUtils.queryMenu(createMenu, scanner);
-        HttpURLConnection response = facade.create(responses.getFirst(), authToken.authToken);
+        HttpURLConnection response = facade.create(responses.getFirst(), flags.authToken);
         switch (response.getResponseCode()) {
             case 200 -> System.out.println("Game -" + responses.getFirst() + "- successfully created!");
             case 400 -> System.out.println("Name cannot be empty.");
@@ -56,8 +52,8 @@ public class REPL2 {
         }
     }
 
-    private static void list(List<String> joinMenu2, List<Integer> gameIDs, REPLFlags flags, REPLToken authToken, ServerFacade facade) throws Exception {
-        HttpURLConnection response = facade.list(authToken.authToken);
+    private static void list(List<String> joinMenu2, List<Integer> gameIDs, REPLData flags, ServerFacade facade) throws Exception {
+        HttpURLConnection response = facade.list(flags.authToken);
         switch (response.getResponseCode()) {
             case 200 -> {
                 listHelper(joinMenu2, gameIDs, flags, response);
@@ -67,7 +63,7 @@ public class REPL2 {
         }
     }
 
-    private static void listHelper(List<String> joinMenu2, List<Integer> gameIDs, REPLFlags flags, HttpURLConnection response) throws IOException {
+    private static void listHelper(List<String> joinMenu2, List<Integer> gameIDs, REPLData flags, HttpURLConnection response) throws IOException {
         ServerFacade.ListResponse listResponse = ClientUtils.readBody(response, ServerFacade.ListResponse.class);
         joinMenu2 = new ArrayList<>();
         joinMenu2.add("♕ Game List ♕");
@@ -87,7 +83,7 @@ public class REPL2 {
         }
     }
 
-    private static void join(List<String> joinMenu, List<Integer> gameIDs, Scanner scanner, REPLFlags flags, REPLToken authToken, ServerFacade facade
+    private static void join(List<String> joinMenu, List<Integer> gameIDs, Scanner scanner, REPLData flags, ServerFacade facade
     ) throws Exception {
         if (flags.listQueried) {
             List<String> responses = ClientUtils.queryMenu(joinMenu, scanner);
@@ -97,7 +93,7 @@ public class REPL2 {
                 int selectionIndex = Integer.parseInt(selectionString) - 1;
                 gameID = gameIDs.get(selectionIndex);
             } catch (Exception ignored) {}
-            HttpURLConnection response = facade.join(responses.getFirst(), String.valueOf(gameID), authToken.authToken);
+            HttpURLConnection response = facade.join(responses.getFirst(), String.valueOf(gameID), flags.authToken);
             joinSwitch1(response, responses, flags);
         } else {
             System.out.println("List games to see a game you can join.");
@@ -106,7 +102,7 @@ public class REPL2 {
         }
     }
 
-    private static void joinSwitch1(HttpURLConnection response, List<String> responses, REPLFlags flags) throws IOException {
+    private static void joinSwitch1(HttpURLConnection response, List<String> responses, REPLData flags) throws IOException {
         switch (response.getResponseCode()) {
             case 200 -> {
                 joinSwitch2(responses, flags);
@@ -121,7 +117,7 @@ public class REPL2 {
         }
     }
 
-    private static void joinSwitch2(List<String> responses, REPLFlags flags) {
+    private static void joinSwitch2(List<String> responses, REPLData flags) {
         switch (responses.getFirst()) {
 
             // Implement Get ChessGame Logic Here,
@@ -129,27 +125,26 @@ public class REPL2 {
 
             case "WHITE" -> {
                 System.out.println("Game Successfully Joined!");
-                ChessGameEngine.printChessboard("WHITE");
+                flags.color = ChessGame.TeamColor.WHITE;
             }
             case "BLACK" -> {
                 System.out.println("Game Successfully Joined!");
-                ChessGameEngine.printChessboard("BLACK");
+                flags.color = ChessGame.TeamColor.BLACK;
             }
         }
         switchToREPL3(flags);
     }
 
-    private static void spectate(List<String> spectateMenu, Scanner scanner, REPLFlags flags, REPLToken authToken, ServerFacade facade) {
+    private static void spectate(List<String> spectateMenu, Scanner scanner, REPLData flags, ServerFacade facade) {
         System.out.println("To Be Implemented in Phase 06");
-        ChessGameEngine.printChessboard("WHITE");
 
         // There's going to be a lot more work here.
 
         switchToREPL3(flags);
     }
 
-    private static void logout(REPLFlags flags, REPLToken authToken, ServerFacade facade) throws Exception {
-        HttpURLConnection response = facade.logout(authToken.authToken);
+    private static void logout(REPLData flags, ServerFacade facade) throws Exception {
+        HttpURLConnection response = facade.logout(flags.authToken);
         switch (response.getResponseCode()) {
             case 200 -> {
                 switchToREPL1(flags);
@@ -160,17 +155,15 @@ public class REPL2 {
         }
     }
 
-    public static void switchToREPL1(REPLFlags flags) {
+    public static void switchToREPL1(REPLData flags) {
         flags.replOne = true;
         flags.replTwo = false;
         flags.listQueried = false;
     }
 
-    public static void switchToREPL3(REPLFlags flags) {
+    public static void switchToREPL3(REPLData flags) {
         flags.replTwo = false;
         flags.replThree = true;
     }
-
-    public static record REPLData(Scanner scanner, REPLFlags flags, REPLToken token, ServerFacade facade) {}
 
 }
