@@ -10,14 +10,15 @@ public class ChessBoardConverter {
         for (int col = 0; col < 8; col++) {
             for (int row = 0; row < 8; row++) {
                 ChessPiece piece = chessBoard[col][row];
+                int flippedRow = 7 - row;
                 if (piece == null) {
-                    stringBoard[row][col] = "   ";
+                    stringBoard[flippedRow][col] = "   ";
                 } else {
                     String color = (piece.getTeamColor() == ChessGame.TeamColor.WHITE)
                             ? EscapeSequences.SET_TEXT_COLOR_RED
                             : EscapeSequences.SET_TEXT_COLOR_BLUE;
                     String symbol = getCharacter(piece.getPieceType());
-                    stringBoard[7 - row][col] = color + " " + symbol + " ";
+                    stringBoard[flippedRow][col] = color + " " + symbol + " ";
                 }
             }
         }

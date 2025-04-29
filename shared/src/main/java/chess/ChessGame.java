@@ -77,8 +77,6 @@ public class ChessGame {
         ChessPiece temp = makeMoveHelper1(move);
         boolean inCheck = isInCheck(teamColor);
         makeMoveHelper2(move, temp);
-        System.out.println(move);
-        System.out.println(!inCheck);
         return !inCheck;
     }
 

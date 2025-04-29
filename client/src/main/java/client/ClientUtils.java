@@ -1,5 +1,7 @@
 package client;
 
+import chess.ChessMove;
+import chess.ChessPosition;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -25,6 +27,32 @@ public class ClientUtils {
             }
         }
         return response;
+    }
+
+    public static ChessMove moveParser(String startString, String endString, String promoString) {
+        ChessPosition start = parsePosition(startString);
+        ChessPosition end = parsePosition(endString);
+        return new ChessMove(start, end, null);
+    }
+
+    private static ChessPosition parsePosition(String input) {
+        int col = input.toLowerCase().charAt(0) - 'a' + 1;
+        int row = Character.getNumericValue(input.charAt(1));
+        return new ChessPosition(row, col);
+    }
+
+    public static boolean isNotAValidChessSquare(String input) {
+        List<String> validColumns = List.of("a", "b", "c", "d", "e", "f", "g", "h");
+        List<String> validRows = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+
+        if (input == null || input.length() != 2) {
+            return true;
+        }
+
+        String col = String.valueOf(input.toLowerCase().charAt(0));
+        String row = String.valueOf(input.charAt(1));
+
+        return !validColumns.contains(col) || !validRows.contains(row);
     }
 
     static List<List<String>> initMenusOne() {
@@ -88,8 +116,12 @@ public class ClientUtils {
                 "Move Ending Position:"
         );
 
+        List<String> promoMenu = List.of(
+                "Select Promotion Type: (Q, R, B, K)"
+        );
 
-        return List.of(helpMenu);
+
+        return List.of(helpMenu, moveMenu, promoMenu);
     }
 
     public static void printMenu(List<String> menu) {
