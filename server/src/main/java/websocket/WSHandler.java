@@ -1,7 +1,6 @@
 package websocket;
 
 import dataaccess.dao.AuthSQLDAO;
-import dataaccess.interfaces.AuthDAO;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
@@ -10,7 +9,13 @@ import websocket.messages.ServerMessage;
 
 @WebSocket
 public class WSHandler {
+    private final AuthSQLDAO aDAO = new AuthSQLDAO();
+    private final ServerMessage loadGame = new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME);
+    private final ServerMessage error = new ServerMessage(ServerMessage.ServerMessageType.ERROR);
+    private final ServerMessage notification = new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION);
     private WSConnectionManager connectionManager = new WSConnectionManager();
+
+
 
     public WSHandler(WSConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -22,7 +27,6 @@ public class WSHandler {
             // deserialize the string from client into a UserGameCommand
             UserGameCommand command = Serializer.CommandDeserializer(message);
             // Authenticate authToken, retrieve username via AuthData retrieval
-            AuthDAO aDAO = new AuthSQLDAO();
             String authToken = command.getAuthToken();
             if (!aDAO.authenticateAuth(authToken)) {throw new Exception("Unauthorized access");}
             String username = aDAO.retrieveAuth(command.getAuthToken()).username();
@@ -40,22 +44,24 @@ public class WSHandler {
         }
     }
 
-    private void connect(WSConnectionManager connectionManager, ConnData connData) {
-        connectionManager.add(connData.gameID, connData.username(), connData.session());
-        connectionManager.broadcast(new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION), connData.gameID);
-        connectionManager.broadcast(new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME), connData.gameID);
+    private void connect(WSConnectionManager connectionManager, ConnData data) {
+        connectionManager.add(data.gameID, data.username, data.session);
+        connectionManager.broadcastToUser(data.username, loadGame);
+        connectionManager.broadcastToGame(data.gameID, notification);
     }
 
-    private void move(WSConnectionManager connectionManager, ConnData connData) {
-
+    private void move(WSConnectionManager connectionManager, ConnData data) {
+        connectionManager.broadcastToGame(data.gameID, loadGame);
     }
 
     private void resign(WSConnectionManager connectionManager, ConnData data) {
-
+        connectionManager.remove(data.username());
+        connectionManager.broadcastToGame(data.gameID, notification);
     }
 
-    private void leave(WSConnectionManager connectionManager, ConnData connData) {
-        
+    private void leave(WSConnectionManager connectionManager, ConnData data) {
+        connectionManager.remove(data.username());
+        connectionManager.broadcastToGame(data.gameID, notification);
     }
 
     public static record ConnData(int gameID, String username, Session session) {}

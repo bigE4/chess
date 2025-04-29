@@ -17,13 +17,22 @@ public class WSConnectionManager {
         connections.remove(username);
     }
 
-    public void broadcast(ServerMessage message, int gameID) {
+    public void broadcastToGame(int gameID, ServerMessage message) {
         for (WSConnection connection : connections.values()) {
             if (connection.isOpen() && connection.gameID() == gameID) {
                 connection.send(message);
             } else if (!connection.isOpen()) {
                 connections.remove(connection.username());
             }
+        }
+    }
+
+    public void broadcastToUser(String username, ServerMessage message) {
+        WSConnection connection = connections.get(username);
+        if (connection.isOpen()) {
+            connection.send(message);
+        } else if (!connection.isOpen()) {
+            connections.remove(connection.username());
         }
     }
 }
