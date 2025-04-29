@@ -56,9 +56,9 @@ public class REPL3 implements NotificationHandler {
         engine.render();
     }
 
-    private void move() {
+    private void move(List<String> moveMenu, Scanner scanner) {
         List<String> responses = ClientUtils.queryMenu(moveMenu, scanner);
-
+        System.out.println(responses);
     }
 
     private void resign() {
