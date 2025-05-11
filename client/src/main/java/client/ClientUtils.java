@@ -116,12 +116,16 @@ public class ClientUtils {
                 "Move Ending Position:"
         );
 
+        List<String> legalMenu = List.of(
+                "Move Starting Position:"
+        );
+
         List<String> promoMenu = List.of(
                 "Select Promotion Type: (Q, R, B, K)"
         );
 
 
-        return List.of(helpMenu, moveMenu, promoMenu);
+        return List.of(helpMenu, moveMenu, legalMenu ,promoMenu);
     }
 
     public static void printMenu(List<String> menu) {

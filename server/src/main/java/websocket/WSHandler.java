@@ -15,8 +15,6 @@ public class WSHandler {
     private final ServerMessage notification = new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION);
     private WSConnectionManager connectionManager = new WSConnectionManager();
 
-
-
     public WSHandler(WSConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }

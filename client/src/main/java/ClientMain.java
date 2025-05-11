@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class ClientMain {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        REPLData flags = new REPLData(true, false, false, false, "", ChessGame.TeamColor.WHITE);
+        REPLData flags = new REPLData(true, false, false, false, "", ChessGame.TeamColor.WHITE, 0);
         ServerFacade sFacade = new ServerFacade("http://localhost:8080");
 
         REPL3 repl3 = new REPL3();

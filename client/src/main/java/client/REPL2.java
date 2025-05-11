@@ -55,9 +55,7 @@ public class REPL2 {
     private static void list(List<String> joinMenu2, List<Integer> gameIDs, REPLData flags, ServerFacade facade) throws Exception {
         HttpURLConnection response = facade.list(flags.authToken);
         switch (response.getResponseCode()) {
-            case 200 -> {
-                listHelper(joinMenu2, gameIDs, flags, response);
-            }
+            case 200 -> listHelper(joinMenu2, gameIDs, flags, response);
             case 401 -> System.out.println("Unauthorized credentials. Please re-login.");
             default -> System.out.println("Server Error.");
         }
@@ -92,6 +90,7 @@ public class REPL2 {
             try {
                 int selectionIndex = Integer.parseInt(selectionString) - 1;
                 gameID = gameIDs.get(selectionIndex);
+                flags.gameID = gameID;
             } catch (Exception ignored) {}
             HttpURLConnection response = facade.join(responses.getFirst(), String.valueOf(gameID), flags.authToken);
             joinSwitch1(response, responses, flags);

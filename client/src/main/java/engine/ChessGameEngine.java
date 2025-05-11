@@ -1,25 +1,18 @@
 package engine;
 
 import chess.*;
+import client.REPL3;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class ChessGameEngine {
     private ChessGame game;
-    private List<ChessMove> moves;
     private final ChessGame.TeamColor playerColor;
 
-    public ChessGameEngine(ChessGame.TeamColor teamColor) throws InvalidMoveException {
+    public ChessGameEngine(ChessGame.TeamColor teamColor, REPL3 repl3) throws InvalidMoveException {
         playerColor = teamColor;
-        // THIS IS WHERE IM INITIALIZING MOVES LIST FOR TESTING
-        // REMOVE THIS EVENTUALLY
-        // NEED TO INITIALIZE MOVE LIST FROM SERVER
-        // SHOULD THIS BE PASSED INTO THE CONSTRUCTOR FROM REPL3??
-        // YES ABSOLUTELY
-        this.moves = new ArrayList<>();
-        loadFromMoves(new ArrayList<>());
+        loadFromMoves(repl3.getMoves());
     }
 
     public void loadFromMoves(List<ChessMove> moves) throws InvalidMoveException{
@@ -39,7 +32,6 @@ public class ChessGameEngine {
     }
 
     public void applyMove(ChessMove move) throws InvalidMoveException {
-        moves.add(move);
         game.makeMove(move);
         render();
     }
@@ -47,6 +39,17 @@ public class ChessGameEngine {
     public void render() {
         ChessBoard board = game.getBoard();
         String[][] stringBoard = ChessBoardConverter.toStringBoard(board.getChessBoard());
+        if (playerColor == ChessGame.TeamColor.WHITE) {
+            whitePerspective(stringBoard);
+        } else if (playerColor == ChessGame.TeamColor.BLACK) {
+            blackPerspective(stringBoard);
+        }
+    }
+
+    public void renderLegal(ChessPosition start) {
+        ChessBoard board = game.getBoard();
+        String[][] stringBoard = ChessBoardConverter.toStringBoard(board.getChessBoard());
+        System.out.println(game.validMoves(start));
         if (playerColor == ChessGame.TeamColor.WHITE) {
             whitePerspective(stringBoard);
         } else if (playerColor == ChessGame.TeamColor.BLACK) {
@@ -85,7 +88,4 @@ public class ChessGameEngine {
     }
 
     // THIS NEEDS TO BE REMOVED AS WELL, AND MOVED TO REPL3
-    public List<ChessMove> getMoves() {
-        return moves;
-    }
 }

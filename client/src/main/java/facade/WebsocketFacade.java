@@ -10,5 +10,7 @@ public class WebsocketFacade {
         return null;
     }
 
-    public void sendMove() {}
+    public void sendMove(ChessMove move, int gameID) {
+
+    }
 }
