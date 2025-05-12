@@ -29,13 +29,13 @@ public class ClientUtils {
         return response;
     }
 
-    public static ChessMove moveParser(String startString, String endString, String promoString) {
+    public static ChessMove parseMove(String startString, String endString, String promoString) {
         ChessPosition start = parsePosition(startString);
         ChessPosition end = parsePosition(endString);
         return new ChessMove(start, end, null);
     }
 
-    private static ChessPosition parsePosition(String input) {
+    public static ChessPosition parsePosition(String input) {
         int col = input.toLowerCase().charAt(0) - 'a' + 1;
         int row = Character.getNumericValue(input.charAt(1));
         return new ChessPosition(row, col);

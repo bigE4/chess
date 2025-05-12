@@ -2,6 +2,7 @@ package client;
 
 import chess.ChessGame;
 import chess.ChessMove;
+import chess.ChessPosition;
 import engine.ChessGameEngine;
 import facade.WebsocketFacade;
 import records.REPLData;
@@ -59,28 +60,39 @@ public class REPL3 implements NotificationHandler {
         List<String> responses = ClientUtils.queryMenu(moveMenu, scanner);
         String start = responses.get(0);
         String end = responses.get(1);
+
+
         // DEBUGGING CODES
         // USEFUL FOR NOW REMOVE LATER
         System.out.println(responses);
         System.out.println(getMoves());
         System.out.println(getMoves().size());
         System.out.println(flags.color);
+        // DEBUGGING CODES
+        // USEFUL FOR NOW REMOVE LATER
+
 
         if ((getMoves().size() % 2 == 1 && flags.color == ChessGame.TeamColor.WHITE) || (getMoves().size() % 2 == 0 && flags.color == ChessGame.TeamColor.BLACK)) {
-            System.out.println("Wait your turn!");
+            System.out.println("Wait your turn.");
             return;
         }
 
         if (ClientUtils.isNotAValidChessSquare(start) || ClientUtils.isNotAValidChessSquare(end)) {
-            System.out.println("Invalid chess notation!");
+            System.out.println("Invalid chess notation.");
             System.out.println("Select the starting and ending squares with (a1 - h8)");
             return;
         }
+        ChessPosition startPosition = ClientUtils.parsePosition(start);
 
-        ChessMove move = ClientUtils.moveParser(start, end, null);
+        if (engine.game.getBoard().getPiece(startPosition).getTeamColor() != flags.color) {
+            System.out.println("That's not your piece.");
+            return;
+        }
+
+        ChessMove move = ClientUtils.parseMove(start, end, null);
 
         if (!engine.isValidMove(move)) {
-            System.out.println("Illegal move! Please try again.");
+            System.out.println("Illegal move. To see legal moves use the legal command.");
             return;
         }
 
@@ -100,6 +112,15 @@ public class REPL3 implements NotificationHandler {
     private void legal(List<String> legalMenu, Scanner scanner) {
         List<String> responses = ClientUtils.queryMenu(legalMenu, scanner);
         String start = responses.getFirst();
+
+        if (ClientUtils.isNotAValidChessSquare(start)) {
+            System.out.println("Invalid chess notation!");
+            System.out.println("Select the starting position with (a1 - h8)");
+            return;
+        }
+
+        ChessPosition pos = ClientUtils.parsePosition(start);
+        engine.legalRender(pos);
     }
 
     public void switchToREPL2(REPLData flags) {
