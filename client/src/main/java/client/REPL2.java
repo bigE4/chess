@@ -103,9 +103,7 @@ public class REPL2 {
 
     private static void joinSwitch1(HttpURLConnection response, List<String> responses, REPLData flags) throws IOException {
         switch (response.getResponseCode()) {
-            case 200 -> {
-                joinSwitch2(responses, flags);
-            }
+            case 200 -> joinSwitch2(responses, flags);
             case 400 -> {
                 System.out.println("Color must be WHITE or BLACK.");
                 System.out.println("Number must be on the list.");

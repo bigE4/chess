@@ -1,6 +1,7 @@
 package facade;
 
 import chess.ChessMove;
+import records.REPLData;
 
 import java.util.List;
 
@@ -10,7 +11,19 @@ public class WebsocketFacade {
         return null;
     }
 
-    public void sendMove(ChessMove move, int gameID) {
+    public void connect(REPLData flags) {
+
+    }
+
+    public void sendMove(ChessMove move, REPLData flags) {
+
+    }
+
+    public void resign(REPLData flags) {
+
+    }
+
+    public void quit(REPLData flags) {
 
     }
 }

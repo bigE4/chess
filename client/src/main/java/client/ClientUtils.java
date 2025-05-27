@@ -120,12 +120,11 @@ public class ClientUtils {
                 "Move Starting Position:"
         );
 
-        List<String> promoMenu = List.of(
-                "Select Promotion Type: (Q, R, B, K)"
+        List<String> resignMenu = List.of(
+                "Are you sure you want to resign? (Y/N, y/n)"
         );
 
-
-        return List.of(helpMenu, moveMenu, legalMenu ,promoMenu);
+        return List.of(helpMenu, moveMenu, legalMenu, resignMenu);
     }
 
     public static void printMenu(List<String> menu) {
